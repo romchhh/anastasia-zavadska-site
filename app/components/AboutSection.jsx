@@ -419,6 +419,8 @@ export default function AboutSection() {
             justify-content: center !important;
             padding: 22px 20px 12px !important;
             gap: 8px 12px !important;
+            min-height: 96px;
+            align-content: flex-start;
           }
           #про-мене .about-tags-strip span span:first-child {
             color: #555 !important;
@@ -431,7 +433,7 @@ export default function AboutSection() {
           #про-мене .about-content {
             width: 100% !important;
             margin-left: 0 !important;
-            padding: 80px 28px 80px !important;
+            padding: 132px 28px 80px !important;
             justify-content: center !important;
             align-items: center !important;
           }
