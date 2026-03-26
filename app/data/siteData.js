@@ -24,7 +24,7 @@ export const HERO_PHOTO =
   "/hero.jpg";
 
 export const ABOUT_PHOTO =
-  "/about.png";
+  "/about.jpg";
 
 export const SERVICES = [
   {
