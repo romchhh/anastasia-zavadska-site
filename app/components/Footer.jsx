@@ -24,7 +24,7 @@ export default function Footer() {
       <div
         className="footer-inner"
         style={{
-          padding: "clamp(40px, 5vw, 64px) clamp(24px, 6vw, 120px) clamp(28px, 4vw, 40px)",
+          padding: "clamp(40px, 5vw, 64px) 120px clamp(28px, 4vw, 40px)",
           display: "flex",
           flexWrap: "wrap",
           alignItems: "flex-start",
@@ -238,7 +238,7 @@ export default function Footer() {
         className="footer-credit-wrap"
         style={{
           borderTop: "1px solid rgba(255,255,255,.22)",
-          padding: "16px clamp(24px, 6vw, 120px) 24px",
+          padding: "16px 120px 24px",
           textAlign: "center",
         }}
       >
@@ -284,7 +284,7 @@ export default function Footer() {
             justify-content: center !important;
             text-align: center !important;
             gap: 44px !important;
-            padding: 48px 28px 40px !important;
+            padding: 48px 40px 40px !important;
           }
           .footer-brand {
             align-items: center !important;
@@ -341,7 +341,7 @@ export default function Footer() {
             padding: 0 20px 0 36px !important;
           }
           .footer-credit-wrap {
-            padding: 20px 28px 28px !important;
+            padding: 20px 40px 28px !important;
           }
           .footer-credit-link {
             font-size: 14px !important;

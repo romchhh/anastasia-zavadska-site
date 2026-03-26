@@ -113,12 +113,13 @@ export default function ContactSection() {
                 color: C.accent,
                 textDecoration: "none",
                 transition: "opacity .2s",
+                minWidth: 0,
               }}
               onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.8"; }}
               onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
             >
               <span style={{ flexShrink: 0, display: "flex" }}>{icon}</span>
-              {text}
+              <span className="contact-link-text">{text}</span>
             </a>
           ))}
         </div>
@@ -217,6 +218,21 @@ export default function ContactSection() {
           .contact-section-outer {
             padding: 56px 24px 72px !important;
           }
+          .contact-info-card {
+            min-width: 0 !important;
+            width: 100% !important;
+            padding: clamp(28px, 7vw, 44px) clamp(20px, 6vw, 34px) !important;
+          }
+          .contact-link-row {
+            min-width: 0 !important;
+            gap: 14px !important;
+          }
+          .contact-link-text {
+            min-width: 0 !important;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            line-height: 1.35;
+          }
           .contact-section-row {
             flex-direction: column;
             align-items: stretch !important;
@@ -239,6 +255,36 @@ export default function ContactSection() {
             width: 54px !important;
             height: 54px !important;
             font-size: 24px !important;
+          }
+        }
+        @media (max-width: 420px) {
+          .contact-section-outer {
+            padding: 44px 16px 56px !important;
+          }
+          .contact-info-card {
+            border-radius: 28px !important;
+            gap: 18px !important;
+            padding: 22px 14px !important;
+          }
+          .contact-link-row {
+            gap: 12px !important;
+            font-size: 16px !important;
+          }
+          .contact-social-icon {
+            width: 30px !important;
+            height: 30px !important;
+          }
+          .contact-telegram-cta {
+            font-size: 12px !important;
+            letter-spacing: 0.04em !important;
+            padding: 12px 12px 12px 16px !important;
+            gap: 10px !important;
+            min-height: 48px !important;
+          }
+          .contact-telegram-cta-arrow {
+            width: 38px !important;
+            height: 38px !important;
+            font-size: 18px !important;
           }
         }
       `}</style>

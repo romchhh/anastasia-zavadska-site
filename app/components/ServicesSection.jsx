@@ -57,7 +57,7 @@ export default function ServicesSection() {
           lineHeight: 1,
           margin: "0 0 16px 0",
         }}>
-          Мої послуги
+          Як ми можемо працювати разом
         </h2>
         <p style={{
           fontFamily: "'Montserrat', sans-serif",
@@ -66,8 +66,7 @@ export default function ServicesSection() {
           lineHeight: 1.6,
           margin: 0,
         }}>
-          Як ми можемо працювати разом<br />
-          Усі формати — онлайн, у твоєму темпі та просторі
+          Формат — онлайн
         </p>
       </div>
 
@@ -183,6 +182,19 @@ export default function ServicesSection() {
                       color: "#111", textAlign: "left",
                       margin: "0 0 16px 0",
                     }}>{s.price}</p>
+                  )}
+
+                  {s.note && (
+                    <p style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: "12px",
+                      color: "#4b5f87",
+                      lineHeight: 1.6,
+                      textAlign: "left",
+                      margin: "0 0 16px 0",
+                    }}>
+                      {s.note}
+                    </p>
                   )}
 
                   {isActive ? (

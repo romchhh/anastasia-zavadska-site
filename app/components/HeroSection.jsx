@@ -14,7 +14,7 @@ export default function HeroSection() {
       }}
     >
       <div className="hero-text" style={{ minWidth: 0 }}>
-        <h1 style={{
+        <h1 className="hero-title" style={{
           fontFamily: "'Montserrat', sans-serif",
           fontSize: "clamp(56px, 7.5vw, 100px)",
           fontWeight: 900,
@@ -24,7 +24,7 @@ export default function HeroSection() {
           letterSpacing: "-0.01em",
           margin: "0 0 24px 0",
         }}>
-          Анастасія<br />Завадська
+          Анастасія Завадська
         </h1>
 
         <p style={{
@@ -37,9 +37,9 @@ export default function HeroSection() {
           margin: "0 0 20px 0",
           letterSpacing: "0.01em",
         }}>
-          Гештальт-психологиня ·<br />
-          Індивідуальна та групова<br />
-          терапія онлайн
+          Психологиня<br />
+          Працюю в гештальт-підході<br />
+          Індивідуальна та групова терапія онлайн
         </p>
 
         <p style={{
@@ -52,7 +52,7 @@ export default function HeroSection() {
           letterSpacing: "0.04em",
           margin: "0 0 48px 0",
         }}>
-          Терапія, що повертає тебе до себе — м&apos;яко й у твоєму ритмі
+          Терапія, яка допомагає повернутися до себе
         </p>
       </div>
 
@@ -155,6 +155,10 @@ export default function HeroSection() {
           align-self: center;
         }
         @media (max-width: 768px) {
+          .hero-title {
+            font-size: clamp(40px, 11vw, 56px) !important;
+            line-height: 0.98 !important;
+          }
           .hero-section {
             grid-template-columns: 1fr;
             grid-template-rows: auto auto auto;
@@ -189,6 +193,11 @@ export default function HeroSection() {
             padding: 14px 16px 14px 24px !important;
             white-space: normal !important;
             text-align: left;
+          }
+        }
+        @media (max-width: 420px) {
+          .hero-title {
+            font-size: clamp(34px, 12vw, 44px) !important;
           }
         }
       `}</style>
