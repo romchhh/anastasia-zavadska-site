@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { REVIEWS } from "../data/siteData";
+import { ArrowIcon } from "./ArrowIcon";
 
 const CARD_W = "min(360px, 82vw)";
 const STEP = "min(380px, calc(82vw + 20px))";
@@ -254,7 +255,7 @@ export default function ReviewsSection() {
               boxShadow: "0 2px 12px rgba(100,140,200,.12)",
             }}
           >
-            ←
+            <ArrowIcon variant="blue" direction="left" height={16} />
           </button>
         )}
         {active < REVIEWS.length - 1 && (
@@ -282,7 +283,7 @@ export default function ReviewsSection() {
               boxShadow: "0 2px 12px rgba(100,140,200,.12)",
             }}
           >
-            →
+            <ArrowIcon variant="blue" height={16} />
           </button>
         )}
       </div>

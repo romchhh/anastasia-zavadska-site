@@ -150,3 +150,13 @@ a { text-decoration: none; }
   width: 100%; line-height: 0;
   pointer-events: none;
 }
+
+/* Стрілки в кнопках навбару / футера: hover інвертує колір */
+.nav-cta-btn:hover .dual-round-arrow--blue,
+.footer-cta-btn:hover .dual-round-arrow--blue {
+  display: none !important;
+}
+.nav-cta-btn:hover .dual-round-arrow--white,
+.footer-cta-btn:hover .dual-round-arrow--white {
+  display: block !important;
+}

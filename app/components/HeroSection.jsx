@@ -1,6 +1,7 @@
 "use client";
 
 import { HERO_PHOTO } from "../data/siteData";
+import CtaPillButton from "./CtaPillButton";
 
 export default function HeroSection() {
   return (
@@ -81,55 +82,7 @@ export default function HeroSection() {
         />
       </div>
 
-      <button
-        type="button"
-        className="hero-cta"
-        style={{
-          width: "fit-content",
-          maxWidth: "100%",
-          background: "#A8BFFF",
-          border: "none",
-          borderRadius: "60px",
-          padding: "18px 20px 18px 36px",
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "24px",
-          fontWeight: 700,
-          fontStyle: "normal",
-          color: "#fff",
-          cursor: "pointer",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "16px",
-          textTransform: "uppercase",
-          letterSpacing: "0",
-          lineHeight: "100%",
-          transition: "box-shadow .2s, transform .15s",
-          whiteSpace: "nowrap",
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.boxShadow = "0 8px 28px rgba(146,178,255,.5)";
-          e.currentTarget.style.transform = "translateY(-2px)";
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.boxShadow = "none";
-          e.currentTarget.style.transform = "none";
-        }}
-      >
-        Записатися на консультацію
-        <span style={{
-          background: "#fff",
-          borderRadius: "50%",
-          width: 48,
-          height: 48,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#92B2FF",
-          fontSize: 22,
-          fontWeight: 700,
-          flexShrink: 0,
-        }}>→</span>
-      </button>
+      <CtaPillButton className="hero-cta">Записатися на консультацію</CtaPillButton>
 
       <style>{`
         .hero-section {
@@ -189,10 +142,6 @@ export default function HeroSection() {
             width: fit-content !important;
             max-width: 100%;
             box-sizing: border-box;
-            font-size: clamp(16px, 4.2vw, 24px) !important;
-            padding: 14px 16px 14px 24px !important;
-            white-space: normal !important;
-            text-align: left;
           }
         }
         @media (max-width: 420px) {

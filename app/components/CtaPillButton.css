@@ -1,0 +1,68 @@
+.cta-pill {
+  width: fit-content;
+  max-width: 100%;
+  background: #a8bfff;
+  border: none;
+  border-radius: 60px;
+  padding: 18px 20px 18px 36px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  font-style: normal;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .cta-pill:hover {
+    box-shadow: 0 8px 28px rgba(146, 178, 255, 0.5);
+    transform: translateY(-2px);
+  }
+}
+
+.cta-pill__arrow {
+  background: #fff;
+  border-radius: 999px;
+  width: 58px;
+  height: 48px;
+  min-width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.cta-pill--full {
+  width: 100%;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .cta-pill {
+    font-size: clamp(16px, 4.2vw, 24px);
+    padding: 14px 16px 14px 24px;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .cta-pill__arrow {
+    width: 52px;
+    height: 44px;
+    min-width: 52px;
+  }
+
+  .cta-pill__arrow img {
+    height: 18px !important;
+  }
+}

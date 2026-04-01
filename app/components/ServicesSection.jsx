@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Link from "next/link";
 import { SERVICES } from "../data/siteData";
+import { ArrowIcon } from "./ArrowIcon";
 
 export default function ServicesSection() {
   const [active, setActive] = useState(0);
@@ -44,7 +46,16 @@ export default function ServicesSection() {
   };
 
   return (
-    <section id="послуги" style={{ background: "#fff", padding: "72px 0 80px", textAlign: "center", overflow: "hidden" }}>
+    <section
+      id="послуги"
+      style={{
+        background: "#fff",
+        padding: "72px 0 80px",
+        textAlign: "center",
+        overflow: "hidden",
+        scrollMarginTop: "88px",
+      }}
+    >
 
       {/* Header */}
       <div style={{ padding: "0 48px", marginBottom: "52px" }}>
@@ -55,18 +66,33 @@ export default function ServicesSection() {
           color: "#111",
           textTransform: "uppercase",
           lineHeight: 1,
-          margin: "0 0 16px 0",
+          margin: "0 0 20px 0",
+          letterSpacing: ".02em",
         }}>
-          Як ми можемо працювати разом
+          Мої послуги
         </h2>
         <p style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(15px, 1.4vw, 19px)",
-          color: "#444",
-          lineHeight: 1.6,
-          margin: 0,
+          fontSize: "clamp(16px, 1.5vw, 22px)",
+          fontWeight: 600,
+          color: "#111",
+          lineHeight: 1.45,
+          margin: "0 0 10px 0",
         }}>
-          Формат — онлайн
+          Як ми можемо працювати разом
+        </p>
+        <p style={{
+          fontFamily: "'Montserrat', sans-serif",
+          fontSize: "clamp(14px, 1.25vw, 18px)",
+          fontWeight: 500,
+          color: "#444",
+          lineHeight: 1.55,
+          margin: 0,
+          maxWidth: "640px",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}>
+          Усі формати — онлайн, у твоєму темпі та просторі
         </p>
       </div>
 
@@ -95,33 +121,47 @@ export default function ServicesSection() {
           {SERVICES.map((s, i) => {
             const isActive = i === active;
             const dist = Math.abs(i - active);
+            const cardBg = isActive ? "#A3BEFF" : "#C5D6FF";
+            const cardBorder = isActive
+              ? "2px solid rgba(255,255,255,0.65)"
+              : "2px solid rgba(255,255,255,0.45)";
+            const accentBlue = "#A3BEFF";
+            const titleSize = isActive ? "clamp(20px, 2.2vw, 26px)" : "clamp(16px, 1.8vw, 20px)";
+            const bodyFont = isActive ? "13px" : "12px";
+            const cardPad = isActive ? "clamp(20px, 4vw, 28px)" : "clamp(16px, 3.5vw, 22px)";
+
             return (
               <div
                 key={s.id}
                 onClick={() => { if (!dragMoved.current) setActive(i); }}
                 style={{
-                  background: isActive ? "#b8ccf0" : "#d8e6f8",
-                  borderRadius: "24px",
+                  background: cardBg,
+                  borderRadius: "36px",
                   width: "min(480px, 90vw)",
                   flexShrink: 0,
                   display: "flex",
                   flexDirection: "column",
                   overflow: "hidden",
-                  border: isActive ? "2.5px solid #8aaad8" : "2.5px solid transparent",
-                  opacity: dist === 0 ? 1 : dist === 1 ? 0.7 : 0.4,
+                  border: cardBorder,
+                  boxSizing: "border-box",
+                  padding: cardPad,
+                  boxShadow: isActive ? "0 12px 40px rgba(100, 130, 210, 0.28)" : "none",
+                  opacity: dist === 0 ? 1 : dist === 1 ? 0.88 : 0.5,
                   transform: isActive ? "scale(1)" : "scale(0.93)",
-                  transition: "opacity .4s, transform .4s, border-color .3s, background .3s",
+                  transition: "opacity .4s, transform .4s, border-color .3s, background .3s, box-shadow .3s",
                   cursor: isActive ? "default" : "pointer",
                   userSelect: "none",
                 }}
               >
-                {/* Image */}
+                {/* Фото ~40% висоти картки: широкий кадр 2:1 */}
                 <div style={{
-                  margin: "14px 14px 0",
-                  borderRadius: "14px",
+                  borderRadius: "18px",
                   overflow: "hidden",
-                  background: isActive ? "#ccdaf4" : "#e4eef8",
-                  aspectRatio: "16/10",
+                  background: "rgba(255,255,255,0.25)",
+                  aspectRatio: isActive ? "2 / 1" : "2.1 / 1",
+                  width: "100%",
+                  flexShrink: 0,
+                  marginBottom: isActive ? "18px" : "14px",
                 }}>
                   {s.img && (
                     <img src={s.img} alt={s.title}
@@ -129,17 +169,22 @@ export default function ServicesSection() {
                   )}
                 </div>
 
-                {/* Body */}
-                <div style={{ padding: "20px 22px 24px", display: "flex", flexDirection: "column", flex: 1 }}>
+                {/* Контент: зображення → заголовок → опис → тривалість → ціна → кнопка */}
+                <div style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flex: 1,
+                  minHeight: 0,
+                }}>
                   <h3 style={{
                     fontFamily: "'Montserrat', sans-serif",
-                    fontSize: isActive ? "22px" : "18px",
+                    fontSize: titleSize,
                     fontWeight: 900,
-                    color: "#111",
+                    color: "#FFFFFF",
                     textTransform: "uppercase",
-                    letterSpacing: ".01em",
-                    lineHeight: 1.1,
-                    margin: "0 0 14px 0",
+                    letterSpacing: ".03em",
+                    lineHeight: 1.06,
+                    margin: "0 0 12px 0",
                     textAlign: "left",
                     transition: "font-size .3s",
                   }}>
@@ -148,11 +193,11 @@ export default function ServicesSection() {
 
                   <p style={{
                     fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "13px",
-                    color: "#333",
-                    lineHeight: 1.7,
+                    fontSize: bodyFont,
+                    fontWeight: 400,
+                    color: "#FFFFFF",
+                    lineHeight: 1.55,
                     textAlign: "left",
-                    flex: 1,
                     margin: "0 0 12px 0",
                   }}>
                     {s.desc}
@@ -161,89 +206,158 @@ export default function ServicesSection() {
                   {s.extra && (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "13px", color: "#555",
-                      textAlign: "left", margin: "0 0 10px 0",
+                      fontSize: bodyFont,
+                      fontWeight: 400,
+                      color: "#FFFFFF",
+                      textAlign: "left",
+                      margin: "0 0 10px 0",
+                      lineHeight: 1.45,
                     }}>{s.extra}</p>
                   )}
 
                   {s.status && (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "14px", fontWeight: 700,
-                      fontStyle: "italic", color: "#4a74c8",
-                      textAlign: "left", margin: "0 0 16px 0",
+                      fontSize: bodyFont,
+                      fontWeight: 600,
+                      fontStyle: "italic",
+                      color: "#3d62d8",
+                      textAlign: "left",
+                      margin: "0 0 12px 0",
                     }}>{s.status}</p>
                   )}
 
-                  {s.price && (
+                  {s.priceLine && s.priceEmphasis ? (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "20px", fontWeight: 800,
-                      color: "#111", textAlign: "left",
-                      margin: "0 0 16px 0",
+                      color: "#FFFFFF",
+                      textAlign: "left",
+                      margin: "0 0 20px 0",
+                      lineHeight: 1.2,
+                    }}>
+                      <span style={{ fontSize: bodyFont, fontWeight: 600 }}>{s.priceLine} </span>
+                      <span style={{
+                        fontSize: isActive ? "clamp(24px, 3vw, 28px)" : "clamp(18px, 2.2vw, 22px)",
+                        fontWeight: 800,
+                      }}>{s.priceEmphasis}</span>
+                    </p>
+                  ) : s.price ? (
+                    <p style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: isActive ? "clamp(24px, 3vw, 28px)" : "clamp(18px, 2.2vw, 22px)",
+                      fontWeight: 800,
+                      color: "#FFFFFF",
+                      textAlign: "left",
+                      margin: "0 0 20px 0",
                     }}>{s.price}</p>
-                  )}
+                  ) : null}
 
                   {s.note && (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: "12px",
-                      color: "#4b5f87",
-                      lineHeight: 1.6,
+                      fontWeight: 400,
+                      color: "#FFFFFF",
+                      lineHeight: 1.55,
                       textAlign: "left",
-                      margin: "0 0 16px 0",
+                      margin: "0 0 18px 0",
                     }}>
                       {s.note}
                     </p>
                   )}
 
                   {isActive ? (
-                    <button style={{
-                      background: "#92B2FF",
-                      border: "none",
-                      borderRadius: "50px",
-                      padding: "14px 14px 14px 28px",
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "14px", fontWeight: 800,
-                      color: "#fff", cursor: "pointer",
-                      display: "flex", alignItems: "center",
-                      justifyContent: "space-between",
-                      textTransform: "uppercase",
-                      letterSpacing: ".04em", width: "100%",
-                    }}
-                      onMouseEnter={e => e.currentTarget.style.boxShadow = "0 6px 24px rgba(146,178,255,.45)"}
-                      onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}
+                    <Link
+                      href={`/poslugy/${s.slug}`}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        background: "#FFFFFF",
+                        border: "none",
+                        borderRadius: "999px",
+                        padding: "16px 32px",
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "clamp(13px, 1.4vw, 15px)",
+                        fontWeight: 800,
+                        color: accentBlue,
+                        cursor: "pointer",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "10px",
+                        textTransform: "uppercase",
+                        letterSpacing: ".08em",
+                        width: "100%",
+                        maxWidth: "100%",
+                        marginTop: "auto",
+                        textDecoration: "none",
+                        boxSizing: "border-box",
+                        boxShadow: "0 4px 20px rgba(255,255,255,0.35)",
+                        transition: "box-shadow .2s ease, transform .2s ease",
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.boxShadow = "0 6px 28px rgba(0,0,0,.12)";
+                        e.currentTarget.style.transform = "translateY(-1px)";
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.boxShadow = "0 4px 20px rgba(255,255,255,0.35)";
+                        e.currentTarget.style.transform = "none";
+                      }}
                     >
-                      {s.btnLabel}
-                      <span style={{
-                        background: "#fff", borderRadius: "50%",
-                        width: 36, height: 36,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        color: "#92B2FF", fontSize: 18, fontWeight: 900, flexShrink: 0,
-                      }}>→</span>
-                    </button>
+                      <span>{s.btnLabel}</span>
+                      <ArrowIcon variant="blue" height={20} />
+                    </Link>
                   ) : (
-                    <button style={{
-                      background: "transparent",
-                      border: "2px solid rgba(100,140,210,0.4)",
-                      borderRadius: "50px",
-                      padding: "11px 12px 11px 22px",
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "12px", fontWeight: 800,
-                      color: "#4a74c8", cursor: "pointer",
-                      display: "flex", alignItems: "center",
-                      justifyContent: "space-between",
-                      textTransform: "uppercase",
-                      letterSpacing: ".04em", width: "100%",
-                    }}>
-                      {s.btnLabel}
+                    <Link
+                      href={`/poslugy/${s.slug}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="services-card-btn-inactive"
+                      style={{
+                        background: "transparent",
+                        border: "2px solid rgba(255,255,255,0.9)",
+                        borderRadius: "50px",
+                        padding: "12px 12px 12px 18px",
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "11px",
+                        fontWeight: 800,
+                        color: "#fff",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "10px",
+                        textTransform: "uppercase",
+                        letterSpacing: ".04em",
+                        width: "100%",
+                        textDecoration: "none",
+                        boxSizing: "border-box",
+                        minHeight: "52px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          flex: 1,
+                          minWidth: 0,
+                          lineHeight: 1.3,
+                          textAlign: "left",
+                          whiteSpace: "normal",
+                          hyphens: "auto",
+                        }}
+                      >
+                        {s.btnLabel}
+                      </span>
                       <span style={{
-                        border: "2px solid rgba(100,140,210,0.4)",
-                        borderRadius: "50%", width: 28, height: 28,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        color: "#4a74c8", fontSize: 14, flexShrink: 0,
-                      }}>→</span>
-                    </button>
+                        border: "2px solid rgba(255,255,255,0.9)",
+                        borderRadius: "50%",
+                        width: 30,
+                        height: 30,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}>
+                        <ArrowIcon variant="white" height={11} />
+                      </span>
+                    </Link>
                   )}
                 </div>
               </div>
@@ -295,7 +409,7 @@ export default function ServicesSection() {
               cursor: "pointer",
             }}
           >
-            ←
+            <ArrowIcon variant="blue" direction="left" height={16} />
           </button>
         )}
         {active < SERVICES.length - 1 && (
@@ -323,7 +437,7 @@ export default function ServicesSection() {
               cursor: "pointer",
             }}
           >
-            →
+            <ArrowIcon variant="blue" height={16} />
           </button>
         )}
       </div>
@@ -353,6 +467,9 @@ export default function ServicesSection() {
       </div>
 
       <style>{`
+        .services-card-btn-inactive:hover {
+          background: rgba(255,255,255,0.12) !important;
+        }
         @media (max-width: 768px) {
           .services-edge-fade {
             display: none !important;

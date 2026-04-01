@@ -29,20 +29,26 @@ export const ABOUT_PHOTO =
 export const SERVICES = [
   {
     id: 1,
+    slug: "indyvidualna-terapevtychna-sesiya",
     title: "Індивідуальна терапевтична сесія",
     img: "https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=420&q=80",
     desc: "Це простір тільки для вас. Ви приходите із тим, що вас турбує — і ми разом досліджуємо, що з вами відбувається, щоб ви могли краще зрозуміти себе і знайти свій спосіб бути з цим. Я поруч у процесі — допомагаю краще зрозуміти себе і знайти свої відповіді.",
     extra: "Тривалість: 50 хвилин",
+    priceLine: "Ціна онлайн:",
+    priceEmphasis: "$50",
     price: "Ціна онлайн: $50",
     btnLabel: "Записатися",
     active: true,
   },
   {
     id: 2,
+    slug: "hrupova-terapiya",
     title: "Групова терапія",
     img: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=420&q=80",
     desc: "Маленька група 6–8 людей, де можна побачити себе через взаємодію з іншими. Тут стає видно те, що складно помітити наодинці. І з'являється відчуття: я не один/одна з цим. Це безпечний простір, де можна пробувати проявлятися по-новому — і поступово переносити цей досвід у своє життя.",
     extra: "Формат: раз на тиждень / 3 години",
+    priceLine: "Ціна:",
+    priceEmphasis: "$20 / зустріч",
     price: "Ціна: $20 / зустріч",
     btnLabel: "Дізнатися більше",
     note: "Група зустрічається щочетверга, але в діючу групу нові люди не додаються. Про старт нової групи повідомлю за номером, який ви залишили, відповідно вашого запиту.",
@@ -50,14 +56,23 @@ export const SERVICES = [
   },
   {
     id: 3,
+    slug: "branchi-ta-retryty",
     title: "Бранчі та ретрити",
     img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=420&q=80",
     desc: "Офлайн-зустрічі для глибшого занурення в себе — у форматі живого спілкування, практик та внутрішньої роботи у групі.",
     status: "Статус: У підготовці",
-    btnLabel: "Повідомити мені",
+    btnLabel: "Підписатися на оновлення",
     active: false,
   },
 ];
+
+export function getServiceBySlug(slug) {
+  return SERVICES.find((s) => s.slug === slug) ?? null;
+}
+
+export function getServiceSlugs() {
+  return SERVICES.map((s) => s.slug);
+}
 
 export const PRAKTIKUM_WITH = [
   "Усе із самостійного формату",
@@ -121,3 +136,12 @@ export const CONTACTS = {
 
 export const FOOTER_MENU = ["Про мене", "Послуги", "Практикум", "Відгуки", "Контакти"];
 export const FOOTER_LEGAL = ["Публічна оферта", "Політика конфіденційності"];
+
+/** Посилання в меню: «Послуги» → блок #послуги на головній. */
+export function navLinkHref(label, pathname = "/") {
+  if (label === "Послуги") {
+    return pathname === "/" ? "#послуги" : "/#послуги";
+  }
+  const slug = label.toLowerCase().replace(/\s/g, "-");
+  return pathname === "/" ? `#${slug}` : `/#${slug}`;
+}

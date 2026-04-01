@@ -1,9 +1,12 @@
 "use client";
 import { useState } from "react";
-import { NAV_LINKS } from "../data/siteData";
+import { usePathname } from "next/navigation";
+import { NAV_LINKS, navLinkHref } from "../data/siteData";
+import { DualRoundArrow, ArrowIcon } from "./ArrowIcon";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <>
@@ -54,7 +57,7 @@ export default function Navbar() {
           {NAV_LINKS.map((l) => (
             <li key={l}>
               <a
-                href={`#${l.toLowerCase().replace(/\s/g, "-")}`}
+                href={navLinkHref(l, pathname)}
                 style={{
                   color: "#fff",
                   fontFamily: "'Montserrat', sans-serif",
@@ -88,9 +91,10 @@ export default function Navbar() {
               border: "2px solid rgba(255,255,255,0.85)",
               borderRadius: "50px",
               boxSizing: "border-box",
-              height: "80%",
-              padding: "0 18px 0 44px",
-              minWidth: "268px",
+              height: 48,
+              alignSelf: "center",
+              padding: "0 14px 0 36px",
+              minWidth: "252px",
               fontFamily: "'Montserrat', sans-serif",
               fontSize: "17px",
               fontWeight: 700,
@@ -99,7 +103,7 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              gap: "16px",
+              gap: "12px",
               letterSpacing: ".04em",
               transition: "background .2s, color .2s, box-shadow .2s",
               whiteSpace: "nowrap",
@@ -109,21 +113,23 @@ export default function Navbar() {
             <span
               className="nav-cta-btn-arrow"
               style={{
-                background: "rgba(255,255,255,0.25)",
-                border: "2px solid rgba(255,255,255,0.7)",
-                borderRadius: "50%",
-                width: 34,
-                height: 34,
+                background: "#fff",
+                border: "2px solid transparent",
+                borderRadius: 999,
+                width: 38,
+                height: 28,
+                minWidth: 38,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#fff",
-                fontSize: 17,
                 flexShrink: 0,
+                lineHeight: 1,
                 transition: "background .2s, border-color .2s, color .2s",
                 boxSizing: "border-box",
               }}
-            >→</span>
+            >
+              <DualRoundArrow height={12} />
+            </span>
           </button>
 
           {/* Burger button */}
@@ -194,7 +200,7 @@ export default function Navbar() {
           {NAV_LINKS.map((l, i) => (
             <a
               key={l}
-              href={`#${l.toLowerCase().replace(/\s/g, "-")}`}
+              href={navLinkHref(l, pathname)}
               onClick={() => setMenuOpen(false)}
               style={{
                 color: "#fff",
@@ -218,7 +224,9 @@ export default function Navbar() {
         </div>
 
         {/* Bottom CTA */}
-        <button
+        <a
+          href={pathname === "/" || pathname.startsWith("/poslugy") ? "#контакти" : "/#контакти"}
+          onClick={() => setMenuOpen(false)}
           style={{
             background: "#fff",
             border: "none",
@@ -238,23 +246,30 @@ export default function Navbar() {
             opacity: menuOpen ? 1 : 0,
             transform: menuOpen ? "translateY(0)" : "translateY(16px)",
             transition: "opacity .35s ease .36s, transform .35s ease .36s",
+            textDecoration: "none",
+            boxSizing: "border-box",
           }}
-          onClick={() => setMenuOpen(false)}
         >
           Записатися на консультацію
-          <span style={{
-            background: "#92B2FF",
-            borderRadius: "50%",
-            width: 44,
-            height: 44,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#fff",
-            fontSize: 20,
-            flexShrink: 0,
-          }}>→</span>
-        </button>
+          <span
+            className="mobile-menu-cta-arrow"
+            style={{
+              background: "#fff",
+              border: "2px solid #92B2FF",
+              borderRadius: 999,
+              width: 52,
+              height: 42,
+              minWidth: 52,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              boxSizing: "border-box",
+            }}
+          >
+            <ArrowIcon variant="blue" height={16} />
+          </span>
+        </a>
       </div>
 
       <style>{`
@@ -281,6 +296,12 @@ export default function Navbar() {
           .nav-desktop { display: none !important; }
           .nav-cta-btn { display: none !important; }
           .burger-btn { display: flex !important; }
+          .mobile-menu-cta-arrow {
+            width: 48px !important;
+            height: 38px !important;
+            min-width: 48px !important;
+            font-size: 18px !important;
+          }
         }
       `}</style>
     </>

@@ -1,6 +1,7 @@
 "use client";
 
 import { PRAKTIKUM_WITH, PRAKTIKUM_SELF } from "../data/siteData";
+import { ArrowIcon } from "./ArrowIcon";
 
 function PrCard({ title, features, oldPrice, price, btnLabel }) {
   return (
@@ -156,9 +157,10 @@ function PrCard({ title, features, oldPrice, price, btnLabel }) {
             width: 40,
             height: 40,
             display: "flex", alignItems: "center", justifyContent: "center",
-            color: "#92B2FF",
-            fontSize: 19, fontWeight: 900, flexShrink: 0,
-          }}>→</span>
+            flexShrink: 0,
+          }}>
+            <ArrowIcon variant="blue" height={16} />
+          </span>
         </button>
       </div>
     </div>

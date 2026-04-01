@@ -1,37 +1,53 @@
 "use client";
 
 import { CONTACTS } from "../data/siteData";
+import CtaPillButton from "./CtaPillButton";
 
-const C = {
-  border: "#A5C3FF",
-  accent: "#8DAFFF",
-  ctaBg: "#94AFFF",
-  text: "#111",
-  arrowInCircle: "#5c5c5c",
-};
-
+const accent = "#99B2F8";
 const font = "'Montserrat', sans-serif";
-
-function SocialIcon({ src, alt }) {
-  return (
-    <img
-      className="contact-social-icon"
-      src={src}
-      alt={alt}
-      width={38}
-      height={38}
-      style={{ width: 38, height: 38, objectFit: "contain", display: "block", flexShrink: 0 }}
-    />
-  );
-}
 
 const instagramHref = `https://www.instagram.com/${CONTACTS.instagram.replace(/^@/, "")}/`;
 
+const ICON = 76;
+
+function IconTelegram() {
+  return (
+    <svg width={ICON} height={ICON} viewBox="0 0 48 48" fill="none" aria-hidden>
+      <circle cx="24" cy="24" r="21" stroke={accent} strokeWidth="1.75" />
+      <path
+        d="M14.5 23.2L32.8 15.5c1.1-.5 1 .3.8 1l-3.4 16c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.3-7.5c.4-.3-.1-.5-.6-.2l-10.3 6.5-4.4-1.4c-1-.3-1-1 .2-1.5Z"
+        stroke={accent}
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconInstagram() {
+  return (
+    <svg width={ICON} height={ICON} viewBox="0 0 48 48" fill="none" aria-hidden>
+      <rect x="10" y="10" width="28" height="28" rx="8" stroke={accent} strokeWidth="1.75" />
+      <circle cx="24" cy="24" r="6.5" stroke={accent} strokeWidth="1.75" />
+      <circle cx="31.5" cy="16.5" r="1.25" fill={accent} />
+    </svg>
+  );
+}
+
+function IconEmail() {
+  return (
+    <svg width={ICON} height={ICON} viewBox="0 0 48 48" fill="none" aria-hidden>
+      <rect x="8" y="14" width="32" height="22" rx="2.5" stroke={accent} strokeWidth="1.75" />
+      <path d="M8.9 15.5L24 26.5l15.1-11" stroke={accent} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function ContactSection() {
-  const rows = [
-    { icon: <SocialIcon src="/telegram.png" alt="Telegram" />, text: CONTACTS.telegram, href: CONTACTS.telegramLink },
-    { icon: <SocialIcon src="/insta.png" alt="Instagram" />, text: CONTACTS.instagram, href: instagramHref },
-    { icon: <SocialIcon src="/mail.png" alt="Email" />, text: CONTACTS.email, href: `mailto:${CONTACTS.email}` },
+  const iconLinks = [
+    { href: CONTACTS.telegramLink, label: "Telegram", icon: <IconTelegram /> },
+    { href: instagramHref, label: "Instagram", icon: <IconInstagram /> },
+    { href: `mailto:${CONTACTS.email}`, label: "Email", icon: <IconEmail />, external: false },
   ];
 
   return (
@@ -40,251 +56,144 @@ export default function ContactSection() {
       className="contact-section-outer"
       style={{
         background: "#fff",
-        padding: "80px 120px 96px",
+        padding: "clamp(72px, 10vw, 120px) clamp(24px, 6vw, 48px) clamp(88px, 11vw, 120px)",
         boxSizing: "border-box",
       }}
     >
-      <h2
-        style={{
-          fontFamily: font,
-          fontSize: "clamp(28px, 5vw, 56px)",
-          fontWeight: 900,
-          color: C.text,
-          textTransform: "uppercase",
-          letterSpacing: ".02em",
-          lineHeight: 1.05,
-          margin: "0 0 20px 0",
-        }}
-      >
-        Зв&apos;яжіться зі мною
-      </h2>
-      <p
-        style={{
-          fontFamily: font,
-          fontSize: "clamp(15px, 1.5vw, 20px)",
-          fontWeight: 400,
-          color: "#444",
-          lineHeight: 1.55,
-          margin: "0 0 52px 0",
-          maxWidth: "600px",
-        }}
-      >
-        Напишіть — і ми разом знайдемо формат, який підійде саме вам
-      </p>
-
       <div
-        className="contact-section-row"
+        className="contact-inner"
         style={{
+          maxWidth: "860px",
+          margin: "0 auto",
+          textAlign: "center",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-between",
-          gap: "clamp(24px, 4vw, 56px)",
-          flexWrap: "wrap",
         }}
       >
-        <div
-          className="contact-info-card"
+        <h2
+          className="contact-hero-title"
           style={{
-            border: `1.5px solid ${C.border}`,
-            borderRadius: "36px",
-            padding: "clamp(40px, 5vw, 65px) clamp(40px, 5.5vw, 70px)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "clamp(28px, 3.5vw, 40px)",
-            minWidth: "min(100%, 380px)",
-            flex: "0 1 auto",
-            boxSizing: "border-box",
+            fontFamily: font,
+            fontSize: "clamp(56px, 7.5vw, 100px)",
+            fontWeight: 900,
+            lineHeight: "0.96",
+            color: "#111",
+            textTransform: "uppercase",
+            letterSpacing: "-0.01em",
+            margin: "0 0 24px 0",
           }}
         >
-          {rows.map(({ icon, text, href }) => (
+          Зв&apos;яжіться зі мною
+        </h2>
+        <p
+          className="contact-hero-sub"
+          style={{
+            fontFamily: font,
+            fontSize: "clamp(20px, 2.5vw, 34px)",
+            fontWeight: 600,
+            color: "#111",
+            textTransform: "uppercase",
+            lineHeight: "1.15",
+            margin: "0 0 clamp(32px, 5vw, 48px) 0",
+            letterSpacing: "0.01em",
+            maxWidth: "min(100%, 720px)",
+          }}
+        >
+          Напишіть — і ми разом знайдемо формат, який підійде саме вам
+        </p>
+
+        <div
+          className="contact-icons-row"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "clamp(40px, 8vw, 72px)",
+            margin: "0 0 clamp(44px, 6.5vw, 64px) 0",
+          }}
+        >
+          {iconLinks.map(({ href, label, icon, external }) => (
             <a
-              className="contact-link-row"
-              key={text}
+              key={label}
               href={href}
-              target="_blank"
-              rel="noreferrer"
+              target={external === false ? undefined : "_blank"}
+              rel={external === false ? undefined : "noreferrer"}
+              aria-label={label}
+              className="contact-icon-link"
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "20px",
-                fontFamily: font,
-                fontSize: "clamp(17px, 1.75vw, 24px)",
-                fontWeight: 500,
-                color: C.accent,
+                justifyContent: "center",
                 textDecoration: "none",
-                transition: "opacity .2s",
-                minWidth: 0,
+                color: accent,
+                transition: "opacity 0.2s, transform 0.2s",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.8"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "0.85";
+                e.currentTarget.style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "1";
+                e.currentTarget.style.transform = "none";
+              }}
             >
-              <span style={{ flexShrink: 0, display: "flex" }}>{icon}</span>
-              <span className="contact-link-text">{text}</span>
+              {icon}
             </a>
           ))}
         </div>
 
-        <a
-          className="contact-telegram-link"
-          href={CONTACTS.telegramLink}
-          target="_blank"
-          rel="noreferrer"
-          style={{ textDecoration: "none", flexShrink: 0 }}
+        <div
+          className="contact-cta-wrap"
+          style={{
+            width: "100%",
+            maxWidth: "min(100%, 520px)",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          <span
-            className="contact-telegram-cta"
-            style={{
-              fontFamily: font,
-              background: C.ctaBg,
-              border: "none",
-              borderRadius: "999px",
-              padding: "clamp(12px, 1.5vw, 18px) clamp(18px, 1.8vw, 22px) clamp(12px, 1.5vw, 18px) clamp(28px, 3vw, 44px)",
-              fontSize: "clamp(11px, 1.15vw, 16px)",
-              fontWeight: 800,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "#fff",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "clamp(12px, 1.4vw, 18px)",
-              cursor: "pointer",
-              boxShadow: "0 4px 24px rgba(148, 175, 255, 0.35)",
-              transition: "transform .2s, box-shadow .2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 10px 32px rgba(148, 175, 255, 0.5)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "none";
-              e.currentTarget.style.boxShadow = "0 4px 24px rgba(148, 175, 255, 0.35)";
-            }}
+          <CtaPillButton
+            href={CONTACTS.telegramLink}
+            target="_blank"
+            rel="noreferrer"
+            fullWidth
           >
             Написати в телеграм
-            <span
-              className="contact-telegram-cta-arrow"
-              style={{
-                width: "clamp(40px, 4vw, 52px)",
-                height: "clamp(40px, 4vw, 52px)",
-                borderRadius: "50%",
-                background: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "clamp(17px, 1.6vw, 22px)",
-                color: C.arrowInCircle,
-                flexShrink: 0,
-                lineHeight: 1,
-              }}
-              aria-hidden
-            >
-              →
-            </span>
-          </span>
-        </a>
+          </CtaPillButton>
+        </div>
       </div>
 
       <style>{`
-        @media (min-width: 769px) {
-          .contact-section-row {
-            gap: clamp(32px, 4vw, 73px) !important;
-          }
-          .contact-info-card {
-            border-radius: 47px !important;
-            padding: clamp(52px, 6.5vw, 85px) clamp(52px, 7vw, 91px) !important;
-            gap: clamp(36px, 4.5vw, 52px) !important;
-            min-width: min(100%, 494px) !important;
-          }
-          .contact-link-row {
-            gap: 26px !important;
-            font-size: clamp(22px, 1.75vw, 31px) !important;
-          }
-          .contact-social-icon {
-            width: 50px !important;
-            height: 50px !important;
-          }
-          .contact-telegram-cta {
-            padding: clamp(16px, 1.5vw, 24px) clamp(23px, 1.8vw, 29px) clamp(16px, 1.5vw, 24px) clamp(36px, 3vw, 57px) !important;
-            font-size: clamp(14px, 1.15vw, 21px) !important;
-            gap: clamp(16px, 1.4vw, 24px) !important;
-          }
-          .contact-telegram-cta-arrow {
-            width: clamp(52px, 4vw, 68px) !important;
-            height: clamp(52px, 4vw, 68px) !important;
-            font-size: clamp(22px, 1.6vw, 29px) !important;
-          }
-        }
         @media (max-width: 768px) {
           .contact-section-outer {
             padding: 56px 24px 72px !important;
           }
-          .contact-info-card {
-            min-width: 0 !important;
-            width: 100% !important;
-            padding: clamp(28px, 7vw, 44px) clamp(20px, 6vw, 34px) !important;
+          .contact-hero-title {
+            font-size: clamp(40px, 11vw, 56px) !important;
+            line-height: 0.98 !important;
           }
-          .contact-link-row {
-            min-width: 0 !important;
-            gap: 14px !important;
+          .contact-icons-row {
+            gap: 40px !important;
+            margin-bottom: 40px !important;
           }
-          .contact-link-text {
-            min-width: 0 !important;
-            overflow-wrap: anywhere;
-            word-break: break-word;
-            line-height: 1.35;
-          }
-          .contact-section-row {
-            flex-direction: column;
-            align-items: stretch !important;
-          }
-          .contact-section-row > a {
-            align-self: center;
-            width: 100%;
-            max-width: 400px;
-          }
-          .contact-telegram-cta {
-            width: 100% !important;
-            justify-content: center !important;
-            box-sizing: border-box !important;
-            padding: 18px 22px 18px 28px !important;
-            font-size: 15px !important;
-            gap: 18px !important;
-            min-height: 58px;
-          }
-          .contact-telegram-cta-arrow {
-            width: 54px !important;
-            height: 54px !important;
-            font-size: 24px !important;
+          .contact-icon-link svg {
+            width: 68px !important;
+            height: 68px !important;
           }
         }
         @media (max-width: 420px) {
           .contact-section-outer {
             padding: 44px 16px 56px !important;
           }
-          .contact-info-card {
-            border-radius: 28px !important;
-            gap: 18px !important;
-            padding: 22px 14px !important;
+          .contact-hero-title {
+            font-size: clamp(34px, 12vw, 44px) !important;
           }
-          .contact-link-row {
-            gap: 12px !important;
-            font-size: 16px !important;
+          .contact-icons-row {
+            gap: 28px !important;
           }
-          .contact-social-icon {
-            width: 30px !important;
-            height: 30px !important;
-          }
-          .contact-telegram-cta {
-            font-size: 12px !important;
-            letter-spacing: 0.04em !important;
-            padding: 12px 12px 12px 16px !important;
-            gap: 10px !important;
-            min-height: 48px !important;
-          }
-          .contact-telegram-cta-arrow {
-            width: 38px !important;
-            height: 38px !important;
-            font-size: 18px !important;
+          .contact-icon-link svg {
+            width: 56px !important;
+            height: 56px !important;
           }
         }
       `}</style>

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { EDUCATION_DOCUMENTS } from "../data/siteData";
+import { ArrowIcon } from "./ArrowIcon";
 
 function DiplomaSlide({ doc, onOpen }) {
   const hasImage = Boolean(doc.src);
@@ -284,7 +285,7 @@ export default function EducationSection() {
               onClick={() => scrollTrack(-1)}
               style={{ ...arrowBtnBase, width: 48, height: 48 }}
             >
-              ←
+              <ArrowIcon variant="blue" direction="left" height={16} />
             </button>
             <div
               ref={trackRef}
@@ -314,7 +315,7 @@ export default function EducationSection() {
               onClick={() => scrollTrack(1)}
               style={{ ...arrowBtnBase, width: 48, height: 48 }}
             >
-              →
+              <ArrowIcon variant="blue" height={16} />
             </button>
           </div>
           <div className="education-dots-mobile" role="tablist" aria-label="Слайди документів">
@@ -452,7 +453,7 @@ export default function EducationSection() {
                     flexShrink: 0,
                   }}
                 >
-                  ←
+                  <ArrowIcon variant="blue" direction="left" height={16} />
                 </button>
 
                 <div
@@ -522,7 +523,7 @@ export default function EducationSection() {
                     flexShrink: 0,
                   }}
                 >
-                  →
+                  <ArrowIcon variant="blue" height={16} />
                 </button>
               </div>
 

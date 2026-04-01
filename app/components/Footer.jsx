@@ -1,15 +1,14 @@
 "use client";
 
-import { FOOTER_MENU, FOOTER_LEGAL, CONTACTS } from "../data/siteData";
+import { usePathname } from "next/navigation";
+import { FOOTER_MENU, FOOTER_LEGAL, CONTACTS, navLinkHref } from "../data/siteData";
+import { DualRoundArrow } from "./ArrowIcon";
 
 const BG = "#a1b6f9";
 const font = "'Montserrat', sans-serif";
 
-function menuHref(label) {
-  return `#${label.toLowerCase().replace(/\s/g, "-")}`;
-}
-
 export default function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
 
   return (
@@ -55,18 +54,18 @@ export default function Footer() {
               border: "2px solid rgba(255,255,255,0.85)",
               borderRadius: "50px",
               boxSizing: "border-box",
-              padding: "0 clamp(16px, 2vw, 22px) 0 clamp(28px, 3.5vw, 44px)",
-              height: "calc(0.8 * 84px)",
-              minWidth: "min(100%, 268px)",
+              height: 48,
+              padding: "0 14px 0 36px",
+              minWidth: "252px",
               fontFamily: font,
-              fontSize: "clamp(14px, 1.35vw, 17px)",
+              fontSize: "17px",
               fontWeight: 700,
               color: "#fff",
               cursor: "pointer",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "space-between",
-              gap: "16px",
+              gap: "12px",
               letterSpacing: ".04em",
               transition: "background .2s, color .2s, box-shadow .2s",
               whiteSpace: "nowrap",
@@ -76,23 +75,23 @@ export default function Footer() {
             <span
               className="footer-cta-btn-arrow"
               style={{
-                background: "rgba(255,255,255,0.25)",
-                border: "2px solid rgba(255,255,255,0.7)",
-                borderRadius: "50%",
-                width: 34,
-                height: 34,
+                background: "#fff",
+                border: "2px solid transparent",
+                borderRadius: 999,
+                width: 38,
+                height: 28,
+                minWidth: 38,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#fff",
-                fontSize: 17,
                 flexShrink: 0,
+                lineHeight: 1,
                 transition: "background .2s, border-color .2s, color .2s",
                 boxSizing: "border-box",
               }}
               aria-hidden
             >
-              →
+              <DualRoundArrow height={12} />
             </span>
           </a>
 
@@ -165,7 +164,7 @@ export default function Footer() {
               {FOOTER_MENU.map((item) => (
                 <li key={item}>
                   <a
-                    href={menuHref(item)}
+                    href={navLinkHref(item, pathname)}
                     style={{
                       fontSize: "clamp(14px, 1.25vw, 17px)",
                       color: "#fff",
@@ -269,12 +268,12 @@ export default function Footer() {
       <style>{`
         .footer-cta-btn:hover {
           background: #fff !important;
-          color: #a1b6f9 !important;
+          color: #92b2ff !important;
           box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
         }
         .footer-cta-btn:hover .footer-cta-btn-arrow {
-          background: #a1b6f9 !important;
-          border-color: #a1b6f9 !important;
+          background: #92b2ff !important;
+          border-color: #92b2ff !important;
           color: #fff !important;
         }
         @media (max-width: 768px) {
@@ -336,9 +335,9 @@ export default function Footer() {
             min-width: 0 !important;
             width: 100%;
             max-width: 340px;
-            height: calc(0.8 * 68px) !important;
-            font-size: 16px !important;
-            padding: 0 20px 0 36px !important;
+            height: 48px !important;
+            font-size: 17px !important;
+            padding: 0 14px 0 36px !important;
           }
           .footer-credit-wrap {
             padding: 20px 40px 28px !important;

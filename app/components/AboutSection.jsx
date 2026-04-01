@@ -1,4 +1,5 @@
 import { TAGS, ABOUT_PHOTO } from "../data/siteData";
+import CtaPillButton from "./CtaPillButton";
 
 export default function AboutSection() {
   return (
@@ -44,81 +45,38 @@ export default function AboutSection() {
           zIndex: 0,
         }} />
 
-        {/* Блюр-шар у зоні переходу */}
-        <div style={{
-          position: "absolute",
-          top: 0,
-          left: "38%",
-          bottom: 0,
-          width: "22%",
-          backdropFilter: "blur(18px)",
-          WebkitBackdropFilter: "blur(18px)",
-          maskImage: "linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%)",
-          zIndex: 1,
-          pointerEvents: "none",
-        }} />
+        {/* Блюр — по центру зони переходу фото (58%) → сірий */}
+        <div
+          className="about-desktop-blur"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: "calc(58% - 11%)",
+            bottom: 0,
+            width: "22%",
+            backdropFilter: "blur(18px)",
+            WebkitBackdropFilter: "blur(18px)",
+            maskImage: "linear-gradient(to right, transparent 0%, black 28%, black 72%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 28%, black 72%, transparent 100%)",
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        />
 
-        {/* Плавний перехід фото → сірий */}
+        {/* Плавний перехід фото → сірий (зсунуто правіше під новий блюр) */}
         <div
           className="about-desktop-fade"
           style={{
             position: "absolute",
             top: 0,
-            left: "20%",
+            left: "30%",
             bottom: 0,
-            width: "50%",
-            background: "linear-gradient(to right, transparent 0%, rgba(232,232,232,0.15) 20%, rgba(232,232,232,0.5) 45%, rgba(232,232,232,0.88) 68%, #e8e8e8 85%)",
+            width: "48%",
+            background: "linear-gradient(to right, transparent 0%, rgba(232,232,232,0.12) 18%, rgba(232,232,232,0.48) 42%, rgba(232,232,232,0.9) 64%, #e8e8e8 82%)",
             zIndex: 2,
             pointerEvents: "none",
           }}
         />
-
-        <div
-          className="about-tags-strip"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 2,
-            width: "100%",
-            boxSizing: "border-box",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "12px 10px",
-            padding: "28px clamp(20px, 6vw, 120px) 16px",
-            pointerEvents: "none",
-          }}
-        >
-          {TAGS.map((tag, i) => (
-            <span key={tag} style={{ display: "inline-flex", alignItems: "center" }}>
-              <span style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: "clamp(14px, 1.35vw, 17px)",
-                fontWeight: 600,
-                color: "#fff",
-                letterSpacing: ".04em",
-                whiteSpace: "nowrap",
-                textShadow: "0 0 18px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.75)",
-              }}>
-                {tag}
-              </span>
-              {i < TAGS.length - 1 && (
-                <span style={{
-                  color: "#fff",
-                  fontSize: "clamp(16px, 1.5vw, 20px)",
-                  lineHeight: 1,
-                  margin: "0 4px",
-                  opacity: 0.95,
-                  textShadow: "0 0 14px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.7)",
-                }}>·</span>
-              )}
-            </span>
-          ))}
-        </div>
 
         <div
           className="about-content"
@@ -132,7 +90,7 @@ export default function AboutSection() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            padding: "88px 120px 140px 28px",
+            padding: "88px 96px 140px clamp(44px, 5vw, 80px)",
             textAlign: "center",
           }}
         >
@@ -234,175 +192,286 @@ export default function AboutSection() {
         className="about-work-section"
         style={{
           background: "#fff",
-          padding: "clamp(56px, 8vw, 96px) 120px clamp(64px, 9vw, 112px)",
+          padding: "clamp(56px, 8vw, 96px) clamp(24px, 8vw, 120px) clamp(64px, 9vw, 112px)",
           boxSizing: "border-box",
         }}
       >
         <div
-          className="about-work-inner"
+          className="about-work-stack"
           style={{
-            maxWidth: "1200px",
+            maxWidth: "1180px",
             margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "clamp(40px, 6vw, 96px)",
-            alignItems: "start",
+            display: "flex",
+            flexDirection: "column",
+            gap: "clamp(48px, 7vw, 88px)",
           }}
         >
-          {/* Ліва колонка */}
-          <div>
-            <h3 style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(32px, 6.5vw, 64px)",
-              fontWeight: 900,
-              color: "#111",
-              textTransform: "uppercase",
-              lineHeight: "100%",
-              margin: "0 0 clamp(24px, 3vw, 40px) 0",
-              whiteSpace: "nowrap",
-            }}>
+          {/* Верх: заголовок, текст, картки, CTA — по центру */}
+          <div
+            className="about-work-intro"
+            style={{
+              textAlign: "center",
+              maxWidth: "820px",
+              margin: "0 auto",
+              width: "100%",
+            }}
+          >
+            <h3
+              className="about-work-title about-work-title-services-match"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "clamp(36px, 6vw, 72px)",
+                fontWeight: 900,
+                color: "#111",
+                textTransform: "uppercase",
+                lineHeight: 1,
+                margin: "0 0 16px 0",
+              }}
+            >
               З чим я працюю
             </h3>
-            <p style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(15px, 1.3vw, 18px)",
-              fontWeight: 400,
-              lineHeight: 1.75,
-              color: "#444",
-              margin: "0 0 clamp(20px, 2.5vw, 32px) 0",
-            }}>
+            <p
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "clamp(15px, 1.35vw, 18px)",
+                fontWeight: 400,
+                lineHeight: 1.75,
+                color: "#000",
+                margin: "0 auto clamp(28px, 4vw, 40px)",
+                maxWidth: "640px",
+              }}
+            >
               Буває, що проблему не завжди легко назвати одним словом на першому сеансі — і це нормально. Іноді ти просто відчуваєш, що щось не так. Ми починаємо з цього відчуття і поступово розбираємося, що за ним стоїть.
             </p>
 
-            {/* Три стани */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "clamp(10px, 1.5vw, 14px)",
+                margin: "0 0 clamp(36px, 5vw, 48px) 0",
+                textAlign: "left",
+              }}
+            >
               {[
-                { label: "важкість, тривога і ніби всередині порожньо" },
-                { label: "хвиля, яка накриває, і складно впоратися з думками або емоціями" },
-                { label: "ззовні ніби все нормально, але жити так більше не хочеться" },
-              ].map(({ label }) => (
+                "важкість, тривога і ніби всередині порожньо",
+                "хвиля, яка накриває, і складно впоратися з думками або емоціями",
+                "ззовні ніби все нормально, але жити так більше не хочеться",
+              ].map((label) => (
                 <div
                   key={label}
+                  className="about-work-pill-row"
                   style={{
                     display: "flex",
                     alignItems: "flex-start",
-                    gap: "14px",
-                    background: "#f5f7ff",
-                    borderRadius: "14px",
-                    padding: "14px 18px",
+                    gap: "clamp(12px, 2vw, 16px)",
+                    background: "#E1E9FF",
+                    borderRadius: "999px",
+                    padding: "clamp(14px, 2vw, 18px) clamp(18px, 2.5vw, 24px)",
                   }}
                 >
-                  <span style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: "#94AFFF",
-                    flexShrink: 0,
-                    marginTop: "7px",
-                  }} />
-                  <span style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "clamp(14px, 1.2vw, 16px)",
-                    fontWeight: 500,
-                    color: "#222",
-                    lineHeight: 1.6,
-                  }}>
+                  <span
+                    style={{
+                      flexShrink: 0,
+                      marginTop: "1px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    aria-hidden
+                  >
+                    <img
+                      src="/icon.svg"
+                      alt=""
+                      width={20}
+                      height={21}
+                      style={{
+                        width: "clamp(17px, 2vw, 22px)",
+                        height: "auto",
+                        display: "block",
+                      }}
+                    />
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: "clamp(14px, 1.15vw, 16px)",
+                      fontWeight: 500,
+                      color: "#000",
+                      lineHeight: 1.55,
+                    }}
+                  >
                     {label}
                   </span>
                 </div>
               ))}
             </div>
-          </div>
 
-          {/* Права колонка */}
-          <div>
-            <p style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(13px, 1.1vw, 15px)",
-              fontWeight: 700,
-              letterSpacing: ".08em",
-              textTransform: "uppercase",
-              color: "#111",
-              margin: "0 0 20px 0",
-              paddingBottom: "12px",
-              borderBottom: "1.5px solid #e8eeff",
-            }}>
-              Я працюю з різними станами і запитами:
+            <p
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "clamp(14px, 1.2vw, 17px)",
+                fontWeight: 500,
+                color: "#000",
+                lineHeight: 1.5,
+                margin: "0 0 clamp(18px, 2.5vw, 24px) 0",
+              }}
+            >
+              Знайоме відчуття? Можемо розібрати це разом
             </p>
 
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "2px" }}>
-              {[
-                "емоційне виснаження і вигорання",
-                "складнощі у стосунках",
-                "відчуття «я не розумію, чого хочу»",
-                "тривога, напруга, постійне «не відпускає»",
-                "депресивні стани, втрата енергії і сенсу",
-                "наслідки травматичного досвіду, ПТСР",
-                "нав'язливі думки і дії (ОКР)",
-                "залежності — як хімічні, так і поведінкові",
-              ].map((item, idx) => (
-                <li
-                  key={item}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "12px 4px",
-                    borderBottom: idx < 7 ? "1px solid #f0f2fa" : "none",
-                  }}
-                >
-                  <span style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "clamp(11px, .9vw, 13px)",
-                    fontWeight: 700,
-                    color: "#c8d5fa",
-                    minWidth: "22px",
-                    textAlign: "right",
-                    flexShrink: 0,
-                  }}>
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <span style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "clamp(14px, 1.2vw, 16px)",
-                    fontWeight: 500,
-                    color: "#222",
-                    lineHeight: 1.5,
-                  }}>
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <div
+              className="about-work-cta-link"
+              style={{
+                display: "inline-flex",
+                maxWidth: "100%",
+                justifyContent: "center",
+              }}
+            >
+              <CtaPillButton href="#послуги">Записатися на консультацію</CtaPillButton>
+            </div>
+          </div>
 
+          {/* Дві колонки: список + синій блок */}
+          <div
+            className="about-work-split"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)",
+              gap: "clamp(28px, 5vw, 56px)",
+              alignItems: "stretch",
+            }}
+          >
+            <div className="about-work-list-col">
+              <h3
+                className="about-work-title-services-match"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: "clamp(36px, 6vw, 72px)",
+                  fontWeight: 900,
+                  color: "#111",
+                  textTransform: "uppercase",
+                  lineHeight: 1,
+                  margin: "0 0 clamp(22px, 3vw, 32px) 0",
+                  textAlign: "left",
+                }}
+              >
+                Я працюю з різними станами і запитами:
+              </h3>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "clamp(10px, 1.2vw, 14px)",
+                }}
+              >
+                {[
+                  "емоційне виснаження і вигорання",
+                  "складнощі у стосунках",
+                  "відчуття «я не розумію, чого хочу»",
+                  "тривога, напруга, постійне «не відпускає»",
+                  "депресивні стани, втрата енергії і сенсу",
+                  "наслідки травматичного досвіду, ПТСР",
+                  "нав'язливі думки і дії (ОКР)",
+                  "залежності — як хімічні, так і поведінкові",
+                ].map((item, idx) => (
+                  <li
+                    key={item}
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      gap: "clamp(12px, 2vw, 18px)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "clamp(12px, 1vw, 14px)",
+                        fontWeight: 700,
+                        color: "#B4C2E8",
+                        minWidth: "28px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "clamp(14px, 1.15vw, 17px)",
+                        fontWeight: 500,
+                        color: "#000",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div
+              className="about-work-visual"
+              style={{
+                background: "#C7D4FF",
+                borderRadius: "clamp(20px, 3vw, 32px)",
+                minHeight: "clamp(280px, 42vw, 420px)",
+                width: "100%",
+              }}
+              aria-hidden
+            />
           </div>
 
           <div
             className="about-thought-cloud"
             style={{
-              gridColumn: "1 / -1",
-              marginTop: "clamp(10px, 1.8vw, 18px)",
-              background: "linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%)",
-              border: "1.5px solid #dce7ff",
-              borderRadius: "48px",
-              padding: "clamp(24px, 3vw, 38px) clamp(22px, 4vw, 56px)",
-              boxShadow: "0 16px 36px rgba(124, 156, 235, 0.16)",
+              background:
+                "linear-gradient(90deg, rgba(165, 180, 252, 0.38) 0%, #fff 10%, #fff 90%, rgba(165, 180, 252, 0.38) 100%)",
+              border: "none",
+              borderRadius: "clamp(24px, 3vw, 36px)",
+              padding: "clamp(28px, 3.5vw, 44px) clamp(22px, 4vw, 48px)",
+              boxShadow:
+                "0 12px 40px rgba(0, 0, 0, 0.07), -26px 0 42px -8px rgba(153, 178, 248, 0.55), 26px 0 42px -8px rgba(153, 178, 248, 0.55)",
             }}
           >
-            <p style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(16px, 1.4vw, 22px)",
-              fontWeight: 500,
-              lineHeight: 1.75,
-              color: "#2f3f66",
-              margin: 0,
-              textAlign: "center",
-              maxWidth: "980px",
-              marginInline: "auto",
-            }}>
-              Ми починаємо з симптому, але робота з психологом — про глибше: зрозуміти себе і поступово змінювати те, що заважає жити так, як хочеться.
+            <p
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "clamp(15px, 1.35vw, 20px)",
+                fontWeight: 500,
+                lineHeight: 1.75,
+                color: "#000",
+                margin: 0,
+                textAlign: "center",
+                maxWidth: "920px",
+                marginInline: "auto",
+              }}
+            >
+              Ми починаємо з симптому, але{" "}
+              <strong style={{ fontWeight: 800 }}>робота з психологом — про глибше:</strong>{" "}
+              зрозуміти себе і поступово змінювати те, що заважає жити так, як хочеться.
             </p>
           </div>
+
+          <p
+            className="about-work-tags-line"
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: "clamp(12px, 1.05vw, 15px)",
+              fontWeight: 500,
+              color: "#555",
+              textAlign: "center",
+              lineHeight: 1.6,
+              margin: 0,
+              paddingTop: "clamp(4px, 1vw, 8px)",
+            }}
+          >
+            {TAGS.join(" · ")}
+          </p>
         </div>
       </section>
 
@@ -414,22 +483,8 @@ export default function AboutSection() {
           }
           #про-мене .about-bg-img { display: none !important; }
           #про-мене .about-desktop-fade { display: none !important; }
+          #про-мене .about-desktop-blur { display: none !important; }
           #про-мене .about-desktop-wave { display: none !important; }
-          #про-мене .about-tags-strip {
-            justify-content: center !important;
-            padding: 22px 20px 12px !important;
-            gap: 8px 12px !important;
-            min-height: 96px;
-            align-content: flex-start;
-          }
-          #про-мене .about-tags-strip span span:first-child {
-            color: #555 !important;
-            text-shadow: none !important;
-          }
-          #про-мене .about-tags-strip span span:last-child {
-            color: #999 !important;
-            text-shadow: none !important;
-          }
           #про-мене .about-content {
             width: 100% !important;
             margin-left: 0 !important;
@@ -456,13 +511,31 @@ export default function AboutSection() {
             position: relative;
             z-index: 3;
           }
-          .about-work-inner {
-            grid-template-columns: 1fr !important;
+          .about-work-stack {
             gap: 40px !important;
           }
+          .about-work-split {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+          }
+          .about-work-visual {
+            min-height: 220px !important;
+          }
+          .about-work-pill-row {
+            border-radius: 22px !important;
+          }
+          .about-work-cta-link {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+          .about-work-cta-link .cta-pill {
+            width: 100% !important;
+            max-width: 100% !important;
+            justify-content: space-between !important;
+          }
           .about-thought-cloud {
-            border-radius: 28px !important;
-            padding: 20px 18px !important;
+            border-radius: 24px !important;
+            padding: 22px 20px !important;
           }
         }
         @media (max-width: 420px) {
