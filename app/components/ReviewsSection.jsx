@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { REVIEWS, PRAKTIKUM_JOURNEY_URL } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
 import CtaPillButton from "./CtaPillButton";
-import { SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import { PAGE_GUTTER_X, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 const CARD_W = "min(360px, 82vw)";
 const STEP = "min(380px, calc(82vw + 20px))";
@@ -139,24 +139,30 @@ export default function ReviewsSection() {
     <section
       id="відгуки"
       style={{
-        background: "#fff",
-        padding: "80px 0 88px",
+        marginTop: "clamp(-56px, -7vw, -40px)",
+        padding: `clamp(136px, 15vw, 168px) ${PAGE_GUTTER_X} 88px`,
         overflow: "hidden",
         boxSizing: "border-box",
+        background: "#fff",
       }}
     >
       <div style={{
-        padding: "0 120px",
+        padding: 0,
         marginBottom: "48px",
         boxSizing: "border-box",
       }}
         className="reviews-header"
       >
-        <h2 style={{
-          ...SECTION_INTRO_TITLE,
-          margin: 0,
-          textAlign: "left",
-        }}>
+        <h2
+          style={{
+            ...SECTION_INTRO_TITLE,
+            marginTop: 0,
+            marginBottom: 0,
+            marginLeft: 0,
+            marginRight: "auto",
+            textAlign: "left",
+          }}
+        >
           Живі усвідомлення учасниць
         </h2>
       </div>
@@ -233,7 +239,7 @@ export default function ReviewsSection() {
             aria-label="Попередній відгук"
             style={{
               position: "absolute",
-              left: "clamp(16px, 4vw, 48px)",
+              left: PAGE_GUTTER_X,
               top: "50%",
               transform: "translateY(-50%)",
               zIndex: 3,
@@ -261,7 +267,7 @@ export default function ReviewsSection() {
             aria-label="Наступний відгук"
             style={{
               position: "absolute",
-              right: "clamp(16px, 4vw, 48px)",
+              right: PAGE_GUTTER_X,
               top: "50%",
               transform: "translateY(-50%)",
               zIndex: 3,
@@ -329,7 +335,7 @@ export default function ReviewsSection() {
       <style>{`
         .reviews-footer {
           margin-top: 36px;
-          padding: 0 120px;
+          padding: 0;
           box-sizing: border-box;
         }
         .reviews-practicum-cta-wrap {
@@ -338,11 +344,7 @@ export default function ReviewsSection() {
         }
         @media (max-width: 768px) {
           .reviews-header {
-            padding: 0 40px !important;
             margin-bottom: 36px !important;
-          }
-          .reviews-footer {
-            padding: 0 40px !important;
           }
         }
       `}</style>

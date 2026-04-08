@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FOOTER_MENU, FOOTER_LEGAL_LINKS, navLinkHref } from "../data/siteData";
+import { PAGE_GUTTER_X } from "./sectionIntroStyles";
 
 const BG = "#a1b6f9";
 const font = "'Montserrat', sans-serif";
@@ -23,7 +24,7 @@ export default function Footer() {
       <div
         className="footer-inner"
         style={{
-          padding: "clamp(40px, 5vw, 64px) 120px clamp(28px, 4vw, 40px)",
+          padding: `clamp(40px, 5vw, 64px) ${PAGE_GUTTER_X} clamp(28px, 4vw, 40px)`,
           display: "flex",
           flexWrap: "wrap",
           alignItems: "flex-start",
@@ -187,7 +188,7 @@ export default function Footer() {
         className="footer-credit-wrap"
         style={{
           borderTop: "1px solid rgba(255,255,255,.22)",
-          padding: "16px 120px 24px",
+          padding: `16px ${PAGE_GUTTER_X} 24px`,
           textAlign: "center",
         }}
       >
@@ -223,7 +224,7 @@ export default function Footer() {
             justify-content: center !important;
             text-align: center !important;
             gap: 44px !important;
-            padding: 48px 40px 40px !important;
+            padding: 48px ${PAGE_GUTTER_X} 40px !important;
           }
           .footer-brand {
             align-items: center !important;
@@ -269,7 +270,7 @@ export default function Footer() {
             font-size: 18px !important;
           }
           .footer-credit-wrap {
-            padding: 20px 40px 28px !important;
+            padding: 20px ${PAGE_GUTTER_X} 28px !important;
           }
           .footer-credit-link {
             font-size: 14px !important;

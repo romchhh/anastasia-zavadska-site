@@ -2,7 +2,7 @@
 
 import { CONTACTS } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
-import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 const accent = "#92B2FF";
 
@@ -47,7 +47,7 @@ export default function ContactSection() {
       className="contact-section-outer"
       style={{
         background: "#fff",
-        padding: "clamp(48px, 6vw, 80px) clamp(24px, 6vw, 120px) clamp(72px, 9vw, 100px)",
+        padding: `clamp(48px, 6vw, 80px) ${PAGE_GUTTER_X} clamp(72px, 9vw, 100px)`,
         boxSizing: "border-box",
       }}
     >
@@ -66,6 +66,8 @@ export default function ContactSection() {
             style={{
               ...SECTION_INTRO_TITLE,
               textAlign: "left",
+              marginLeft: 0,
+              marginRight: "auto",
             }}
           >
             Зв&apos;яжіться зі мною
@@ -154,8 +156,8 @@ export default function ContactSection() {
         }
         @media (min-width: 769px) {
           .contact-section-outer {
-            padding-left: 120px !important;
-            padding-right: 120px !important;
+            padding-left: ${PAGE_GUTTER_X} !important;
+            padding-right: ${PAGE_GUTTER_X} !important;
           }
           .contact-bottom-row {
             flex-wrap: nowrap !important;
@@ -163,7 +165,7 @@ export default function ContactSection() {
         }
         @media (max-width: 768px) {
           .contact-section-outer {
-            padding: 44px 40px 64px !important;
+            padding: 44px ${PAGE_GUTTER_X} 64px !important;
           }
           .contact-bottom-row {
             flex-direction: column;
@@ -194,11 +196,12 @@ export default function ContactSection() {
           }
           .contact-hero-sub {
             max-width: min(100%, 48ch) !important;
+            font-size: clamp(16px, 2.8vw, 22px) !important;
           }
         }
         @media (max-width: 420px) {
           .contact-section-outer {
-            padding: 36px 40px 52px !important;
+            padding: 36px ${PAGE_GUTTER_X} 52px !important;
           }
           .contact-social-icon {
             width: 36px !important;

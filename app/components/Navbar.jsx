@@ -308,7 +308,7 @@ export default function Navbar() {
       <style>{`
         .main-nav {
           height: 84px;
-          padding: 0 120px;
+          padding: 0 clamp(40px, 8vw, 120px);
         }
         .nav-cta-btn:hover {
           background: #fff !important;
@@ -323,7 +323,7 @@ export default function Navbar() {
         @media (max-width: 768px) {
           .main-nav {
             height: 68px;
-            padding: 0 40px;
+            padding: 0 clamp(40px, 8vw, 120px);
           }
           .nav-mobile-brand { display: flex !important; }
           .nav-desktop { display: none !important; }

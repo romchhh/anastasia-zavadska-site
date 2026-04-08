@@ -359,11 +359,12 @@ export default function AboutSection() {
                 className="about-work-states-heading"
                 style={{
                   ...SECTION_INTRO_TITLE,
+                  fontSize: "clamp(26px, 5.2vw, 52px)",
                   margin: "0 0 clamp(22px, 3vw, 32px) 0",
                   textAlign: "left",
                 }}
               >
-                Я працюю з різними станами і запитами:
+                Я працюю з індивідуальними запитами:
               </h3>
               <ul
                 style={{
@@ -418,7 +419,7 @@ export default function AboutSection() {
                     <span
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "clamp(17px, 1.5vw, 22px)",
+                        fontSize: "clamp(15px, 1.35vw, 20px)",
                         fontWeight: 500,
                         color: "#000",
                         lineHeight: 1.55,
@@ -583,9 +584,11 @@ export default function AboutSection() {
           .about-work-visual img {
             min-height: 220px !important;
           }
-          .about-work-intro-heading,
-          .about-work-states-heading {
+          .about-work-intro-heading {
             font-size: clamp(24px, 8vw, 40px) !important;
+          }
+          .about-work-states-heading {
+            font-size: clamp(22px, 7vw, 36px) !important;
           }
           .about-work-tags-line {
             font-size: clamp(12px, 3.2vw, 16px) !important;

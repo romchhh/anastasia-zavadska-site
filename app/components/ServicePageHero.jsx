@@ -1,5 +1,5 @@
 import CtaPillButton from "./CtaPillButton";
-import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 const font = "'Montserrat', sans-serif";
 
@@ -16,7 +16,7 @@ export default function ServicePageHero({ service }) {
       className="service-page-hero"
       style={{
         background: "#fff",
-        padding: "64px 120px 72px 120px",
+        padding: `64px ${PAGE_GUTTER_X} 72px ${PAGE_GUTTER_X}`,
         minHeight: "unset",
         boxSizing: "border-box",
       }}
@@ -27,7 +27,8 @@ export default function ServicePageHero({ service }) {
           style={{
             ...SECTION_INTRO_TITLE,
             textAlign: "left",
-            maxWidth: "min(100%, 920px)",
+            marginLeft: 0,
+            marginRight: "auto",
           }}
         >
           {service.title}
@@ -50,7 +51,7 @@ export default function ServicePageHero({ service }) {
           <p
             style={{
               fontFamily: font,
-              fontSize: "clamp(13px, 1.2vw, 17px)",
+              fontSize: "clamp(15px, 1.35vw, 17px)",
               fontWeight: 600,
               color: "#999",
               textTransform: "uppercase",
@@ -67,7 +68,7 @@ export default function ServicePageHero({ service }) {
           <p
             style={{
               fontFamily: font,
-              fontSize: "clamp(13px, 1.2vw, 17px)",
+              fontSize: "clamp(15px, 1.35vw, 17px)",
               fontWeight: 700,
               fontStyle: "italic",
               color: "#4a74c8",
@@ -86,7 +87,7 @@ export default function ServicePageHero({ service }) {
             <span
               style={{
                 fontFamily: font,
-                fontSize: "clamp(13px, 1.2vw, 17px)",
+                fontSize: "clamp(15px, 1.35vw, 17px)",
                 fontWeight: 600,
                 color: "#999",
                 textTransform: "uppercase",
@@ -210,13 +211,13 @@ export default function ServicePageHero({ service }) {
             line-height: 1.05 !important;
           }
           .service-hero-lead {
-            font-size: clamp(14px, 3.8vw, 18px) !important;
+            font-size: clamp(16px, 4.2vw, 19px) !important;
             line-height: 1.45 !important;
           }
           .service-page-hero {
             flex-direction: column;
             align-items: stretch;
-            padding: 40px 40px 48px !important;
+            padding: 40px ${PAGE_GUTTER_X} 48px !important;
             min-height: unset !important;
             gap: 32px;
           }

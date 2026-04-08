@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { EDUCATION_DOCUMENTS } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
-import { SECTION_INTRO_LEAD } from "./sectionIntroStyles";
+import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_TITLE_MAX_WIDTH } from "./sectionIntroStyles";
 
 function DiplomaSlide({ doc, onOpen }) {
   const hasImage = Boolean(doc.src);
@@ -189,7 +189,7 @@ export default function EducationSection() {
       id="освіта"
       style={{
         background: "#fff",
-        padding: "clamp(56px, 7vw, 96px) clamp(40px, 6vw, 120px) clamp(72px, 9vw, 112px)",
+        padding: `clamp(56px, 7vw, 96px) ${PAGE_GUTTER_X} clamp(72px, 9vw, 112px)`,
         boxSizing: "border-box",
       }}
       className="education-section-outer"
@@ -227,13 +227,20 @@ export default function EducationSection() {
               fontWeight: 900,
               color: "#111",
               lineHeight: 1.1,
-              margin: "0 0 clamp(14px, 2vw, 20px) 0",
+              marginTop: 0,
+              marginBottom: "clamp(14px, 2vw, 20px)",
+              marginLeft: 0,
+              marginRight: "auto",
               letterSpacing: "-0.02em",
+              width: "100%",
+              maxWidth: SECTION_TITLE_MAX_WIDTH,
+              boxSizing: "border-box",
             }}
           >
             Освіта та кваліфікація
           </h2>
           <p
+            className="education-panel-lead"
             style={{
               ...SECTION_INTRO_LEAD,
               margin: "0 0 clamp(24px, 3vw, 32px) 0",
@@ -327,7 +334,7 @@ export default function EducationSection() {
                 scrollSnapType: "x mandatory",
                 WebkitOverflowScrolling: "touch",
                 paddingBottom: "10px",
-                marginRight: "clamp(-12px, -1vw, 0px)",
+                marginRight: 0,
                 scrollbarWidth: "thin",
                 width: "100%",
                 minHeight: "min(52vw, 420px)",
@@ -611,6 +618,9 @@ export default function EducationSection() {
           }
         }
         @media (max-width: 768px) {
+          .education-panel-lead {
+            font-size: clamp(16px, 2.75vw, 22px) !important;
+          }
           .education-section-outer {
             padding: 48px clamp(20px, 5vw, 32px) 64px !important;
           }

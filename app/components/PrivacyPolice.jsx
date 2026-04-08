@@ -1,4 +1,5 @@
 import React from "react";
+import { PAGE_GUTTER_X, SECTION_TITLE_MAX_WIDTH } from "./sectionIntroStyles";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const tokens = {
@@ -104,11 +105,19 @@ const PrivacyPolicyPage = () => {
       {/* HERO */}
       <div
         style={{
-          padding: "56px 40px",
+          padding: `56px ${PAGE_GUTTER_X}`,
           textAlign: "center",
         }}
       >
-        <h1 style={{ fontWeight: 800 }}>
+        <h1 style={{
+          fontWeight: 800,
+          width: "100%",
+          maxWidth: SECTION_TITLE_MAX_WIDTH,
+          marginLeft: "auto",
+          marginRight: "auto",
+          boxSizing: "border-box",
+        }}
+        >
           Політика конфіденційності
         </h1>
         <p style={{ fontSize: 14, color: tokens.textMuted, fontWeight: 500, margin: "12px 0 0", lineHeight: 1.65 }}>
@@ -116,7 +125,7 @@ const PrivacyPolicyPage = () => {
         </p>
       </div>
 
-      <div style={{ padding: "0 32px" }}>
+      <div style={{ padding: `0 ${PAGE_GUTTER_X}` }}>
 
         {/* INTRO */}
         <Card>

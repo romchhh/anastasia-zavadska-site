@@ -333,7 +333,13 @@ const formStyles = `
     text-align: center;
     text-transform: uppercase;
     color: #111;
-    margin: 0 0 clamp(20px, 3vw, 28px);
+    width: 100%;
+    max-width: min(100%, 920px);
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: clamp(20px, 3vw, 28px);
+    box-sizing: border-box;
   }
 
   .bf-slot-hint {

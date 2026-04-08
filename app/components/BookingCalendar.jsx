@@ -288,7 +288,10 @@ export default function BookingCalendar({ onSelect }) {
           text-align: center;
           text-transform: uppercase;
           color: #6391FF;
-          margin: 0;
+          width: 100%;
+          max-width: min(100%, 920px);
+          margin: 0 auto;
+          box-sizing: border-box;
         }
         .bcal-range {
           font-size: 13px;

@@ -63,7 +63,7 @@ const BOOKING_SECTION_STYLES = `
   .service-booking-section {
     background: #fff;
     box-sizing: border-box;
-    padding: clamp(48px, 6vw, 64px) 120px clamp(56px, 8vw, 96px);
+    padding: clamp(48px, 6vw, 64px) clamp(40px, 8vw, 120px) clamp(56px, 8vw, 96px);
   }
   #booking-calendar,
   #booking-form {
@@ -71,7 +71,7 @@ const BOOKING_SECTION_STYLES = `
   }
   @media (max-width: 768px) {
     .service-booking-section {
-      padding: clamp(40px, 5vw, 48px) 40px clamp(48px, 7vw, 64px);
+      padding: clamp(40px, 5vw, 48px) clamp(40px, 8vw, 120px) clamp(48px, 7vw, 64px);
     }
     #booking-calendar,
     #booking-form {
@@ -175,56 +175,6 @@ export default function ServiceBookingSection({ service }) {
           onlinePayment={onlinePayment}
           onSubmit={handleFormSubmit}
         />
-
-        <p
-          style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: 14,
-            fontWeight: 600,
-            color: "#666",
-            textAlign: "center",
-            margin: "clamp(40px, 6vw, 56px) 0 20px",
-          }}
-        >
-          Або напишіть напряму
-        </p>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "clamp(24px, 5vw, 40px)",
-          }}
-        >
-          {iconLinks.map(({ href, label, icon, external }) => (
-            <a
-              key={label}
-              href={href}
-              target={external === false ? undefined : "_blank"}
-              rel={external === false ? undefined : "noreferrer"}
-              aria-label={label}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-                color: accent,
-                transition: "opacity 0.2s, transform 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "0.85";
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "1";
-                e.currentTarget.style.transform = "none";
-              }}
-            >
-              {icon}
-            </a>
-          ))}
-        </div>
         </div>
       </section>
     </>

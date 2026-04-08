@@ -35,6 +35,9 @@ export default function HeroSection() {
             textTransform: "uppercase",
             letterSpacing: "-0.03em",
             margin: "0 0 clamp(18px, 2.5vw, 28px) 0",
+            width: "100%",
+            maxWidth: "min(100%, 920px)",
+            boxSizing: "border-box",
           }}
         >
           <span className="hero-title-line">Анастасія</span>
@@ -111,7 +114,7 @@ export default function HeroSection() {
           className="hero-tagline"
           style={{
             ...SECTION_INTRO_LEAD,
-            fontSize: "clamp(17px, 2.3vw, 26px)",
+            fontSize: "clamp(19px, 2.5vw, 26px)",
             textAlign: "left",
             margin: "0 0 clamp(14px, 2vw, 22px) 0",
             maxWidth: "min(100%, 44ch)",
@@ -207,6 +210,9 @@ export default function HeroSection() {
           .hero-text .hero-bullet-list,
           .hero-text .hero-tagline {
             text-align: left !important;
+          }
+          .hero-text .hero-tagline {
+            font-size: clamp(19px, 4.2vw, 26px) !important;
           }
           .hero-photo {
             order: 2;

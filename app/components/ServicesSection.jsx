@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { SERVICES } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
-import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 export default function ServicesSection() {
   const [active, setActive] = useState(0);
@@ -59,21 +59,24 @@ export default function ServicesSection() {
     >
 
       {/* Header (~10% компактніше за базову секційну типографіку) */}
-      <div style={{ padding: "0 48px", marginBottom: "clamp(40px, 5vw, 47px)" }}>
+      <div style={{ padding: `0 ${PAGE_GUTTER_X}`, marginBottom: "clamp(40px, 5vw, 47px)" }}>
         <h2
           style={{
             ...SECTION_INTRO_TITLE,
             fontSize: "clamp(29px, 5.85vw, 58px)",
-            margin: "0 auto clamp(18px, 2.7vw, 25px)",
-            maxWidth: "min(100%, 920px)",
+            marginTop: 0,
+            marginBottom: "clamp(18px, 2.7vw, 25px)",
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         >
           Як ми можемо працювати разом
         </h2>
         <p
+          className="services-section-lead"
           style={{
             ...SECTION_INTRO_LEAD,
-            fontSize: "clamp(13px, 1.8vw, 20px)",
+            fontSize: "clamp(16px, 2.15vw, 20px)",
             margin: "0 auto",
             maxWidth: "min(100%, 920px)",
           }}
@@ -437,6 +440,9 @@ export default function ServicesSection() {
           transform: translateY(0);
         }
         @media (max-width: 768px) {
+          .services-section-lead {
+            font-size: clamp(16px, 3.2vw, 20px) !important;
+          }
           .services-edge-fade {
             display: none !important;
           }

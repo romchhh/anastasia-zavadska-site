@@ -2,19 +2,10 @@
 
 import { PRAKTIKUM_SELF_FEATURES, PRAKTIKUM_WITH_FEATURES } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
-import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 const PILL_BLUE = "#B4C7F9";
 const RING_BLUE = "#92B2FF";
-
-const BTN_TEXT = {
-  fontFamily: "'Montserrat', sans-serif",
-  fontSize: "clamp(15px, 1.75vw, 20px)",
-  fontWeight: 700,
-  fontStyle: "normal",
-  lineHeight: 1,
-  letterSpacing: 0,
-};
 
 const cardStyle = {
   background: "#fff",
@@ -25,15 +16,17 @@ const cardStyle = {
   boxSizing: "border-box",
 };
 
+const FEATURE_ICON = 36;
+
 function FeatureCell({ active, text }) {
   return (
     <div
       style={{
         display: "flex",
         alignItems: "flex-start",
-        gap: "16px",
-        minHeight: "clamp(48px, 5.5vw, 58px)",
-        padding: "clamp(6px, 1vw, 10px) 0",
+        gap: "clamp(14px, 2vw, 18px)",
+        minHeight: "clamp(52px, 5.8vw, 64px)",
+        padding: "clamp(8px, 1.1vw, 12px) 0",
         boxSizing: "border-box",
       }}
     >
@@ -41,11 +34,11 @@ function FeatureCell({ active, text }) {
         <span
           aria-hidden
           style={{
-            width: 28,
-            height: 28,
-            marginTop: 3,
+            width: FEATURE_ICON,
+            height: FEATURE_ICON,
+            marginTop: 2,
             borderRadius: "50%",
-            border: `2.5px solid ${RING_BLUE}`,
+            border: `3px solid ${RING_BLUE}`,
             flexShrink: 0,
             boxSizing: "border-box",
             background: "transparent",
@@ -55,18 +48,18 @@ function FeatureCell({ active, text }) {
         <span
           aria-hidden
           style={{
-            width: 28,
-            height: 28,
+            width: FEATURE_ICON,
+            height: FEATURE_ICON,
             marginTop: 0,
             flexShrink: 0,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "22px",
-            fontWeight: 300,
-            color: "#c4c4c4",
-            lineHeight: 1,
+            fontSize: "clamp(30px, 4.2vw, 38px)",
+            fontWeight: 500,
+            color: "#9ca8c4",
+            lineHeight: 0.85,
           }}
         >
           ×
@@ -75,11 +68,12 @@ function FeatureCell({ active, text }) {
       <span
         style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(15px, 1.65vw, 18px)",
-          fontWeight: 500,
-          color: active ? "#111" : "#b8b8b8",
-          lineHeight: 1.55,
+          fontSize: "clamp(16px, 1.85vw, 19px)",
+          fontWeight: active ? 700 : 600,
+          color: active ? "#111" : "#5c6478",
+          lineHeight: 1.5,
           textAlign: "left",
+          letterSpacing: active ? "-0.01em" : 0,
         }}
       >
         {text}
@@ -138,13 +132,19 @@ function CtaButton({ btnLabel }) {
   return (
     <button
       type="button"
+      className="praktikum-cta-btn"
       style={{
         background: PILL_BLUE,
         border: "none",
         borderRadius: "999px",
-        padding: "16px 18px 16px 28px",
-        minHeight: "58px",
-        ...BTN_TEXT,
+        padding: "clamp(14px, 2vw, 20px) clamp(16px, 2.5vw, 22px) clamp(14px, 2vw, 20px) clamp(24px, 3vw, 32px)",
+        minHeight: "clamp(48px, 6.5vw, 60px)",
+        fontFamily: "'Montserrat', sans-serif",
+        fontWeight: 500,
+        fontStyle: "normal",
+        fontSize: "clamp(14px, 2.4vw, 18px)",
+        lineHeight: "100%",
+        letterSpacing: 0,
         color: "#fff",
         cursor: "pointer",
         display: "flex",
@@ -165,20 +165,23 @@ function CtaButton({ btnLabel }) {
         e.currentTarget.style.transform = "none";
       }}
     >
-      <span style={{ textAlign: "left", flex: "1 1 auto", paddingRight: 12 }}>{btnLabel}</span>
+      <span style={{ textAlign: "left", flex: "1 1 auto", paddingRight: 12, minWidth: 0 }}>{btnLabel}</span>
       <span
+        className="praktikum-cta-btn__arrow-ring"
         style={{
-          background: "#fff",
+          background: "transparent",
+          border: "2px solid #fff",
           borderRadius: "50%",
-          width: 44,
-          height: 44,
+          width: 48,
+          height: 48,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           flexShrink: 0,
+          boxSizing: "border-box",
         }}
       >
-        <ArrowIcon variant="periwinkle" height={18} />
+        <ArrowIcon variant="white" height={20} />
       </span>
     </button>
   );
@@ -253,53 +256,21 @@ export default function PraktikumSection() {
       id="практикум"
       style={{
         background: "#fff",
-        padding: "clamp(64px, 8vw, 96px) clamp(24px, 6vw, 120px) clamp(72px, 9vw, 104px)",
+        padding: `clamp(64px, 8vw, 96px) ${PAGE_GUTTER_X} clamp(88px, 11vw, 128px)`,
         boxSizing: "border-box",
         textAlign: "center",
         position: "relative",
-        overflow: "hidden",
+        overflow: "visible",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-18%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "min(1000px, 120vw)",
-          height: "min(900px, 110vw)",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle at center, rgba(180, 205, 255, 0.55) 0%, rgba(220, 232, 255, 0.35) 45%, transparent 70%)",
-          filter: "blur(40px)",
-          opacity: 0.85,
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      />
-
-      <div
-        style={{
-          position: "absolute",
-          bottom: "8%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "min(520px, 70vw)",
-          height: "min(520px, 70vw)",
-          borderRadius: "50%",
-          background: "radial-gradient(circle at center, rgba(180, 200, 250, 0.4) 0%, transparent 65%)",
-          filter: "blur(48px)",
-          opacity: 0.6,
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      />
-
       <div className="praktikum-inner" style={{ position: "relative", zIndex: 1, maxWidth: "1120px", margin: "0 auto" }}>
         <h2
           style={{
             ...SECTION_INTRO_TITLE,
-            margin: "0 0 clamp(20px, 3vw, 28px) 0",
+            marginTop: 0,
+            marginBottom: "clamp(20px, 3vw, 28px)",
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         >
           Практикум «Подорож до себе»
@@ -339,6 +310,7 @@ export default function PraktikumSection() {
         </div>
 
         <p
+          className="praktikum-intro-lead"
           style={{
             ...SECTION_INTRO_LEAD,
             margin: "0 auto clamp(40px, 6vw, 56px)",
@@ -351,38 +323,91 @@ export default function PraktikumSection() {
         </p>
 
         <div
-          className="praktikum-cards"
+          className="praktikum-cards-wrap"
           style={{
-            display: "flex",
-            gap: "clamp(20px, 3vw, 32px)",
-            justifyContent: "center",
-            alignItems: "stretch",
-            flexWrap: "wrap",
+            position: "relative",
             width: "100%",
+            overflow: "hidden",
           }}
         >
-          <PrCard
-            title={"Самостійний старт\n\n"}
-            features={PRAKTIKUM_SELF_FEATURES}
-            oldPrice="4500 грн"
-            price="595 грн"
-            btnLabel="Почати самостійно"
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "min(1400px, 100vw)",
+              height: "min(1100px, 100vw)",
+              borderRadius: "50%",
+              background:
+                "radial-gradient(circle at center, rgba(110, 145, 230, 0.78) 0%, rgba(150, 175, 235, 0.5) 38%, rgba(210, 222, 255, 0.28) 58%, transparent 72%)",
+              filter: "blur(52px)",
+              opacity: 0.98,
+              zIndex: 0,
+              pointerEvents: "none",
+            }}
           />
-          <PrCard
-            title={"З підтримкою\nпсихолога"}
-            features={PRAKTIKUM_WITH_FEATURES}
-            oldPrice="10500 грн"
-            price="5400 грн"
-            btnLabel="Почати з психологом"
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "min(780px, 92vw)",
+              height: "min(780px, 92vw)",
+              borderRadius: "50%",
+              background:
+                "radial-gradient(circle at center, rgba(95, 130, 220, 0.55) 0%, rgba(160, 185, 240, 0.35) 42%, transparent 68%)",
+              filter: "blur(56px)",
+              opacity: 0.88,
+              zIndex: 0,
+              pointerEvents: "none",
+            }}
           />
+          <div
+            className="praktikum-cards"
+            style={{
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              gap: "clamp(20px, 3vw, 32px)",
+              justifyContent: "center",
+              alignItems: "stretch",
+              flexWrap: "wrap",
+              width: "100%",
+            }}
+          >
+            <PrCard
+              title={"Самостійний старт\n\n"}
+              features={PRAKTIKUM_SELF_FEATURES}
+              oldPrice="4500 грн"
+              price="595 грн"
+              btnLabel="Почати самостійно"
+            />
+            <PrCard
+              title={"З підтримкою\nпсихолога"}
+              features={PRAKTIKUM_WITH_FEATURES}
+              oldPrice="10500 грн"
+              price="5400 грн"
+              btnLabel="Почати з психологом"
+            />
+          </div>
         </div>
       </div>
 
       <style>{`
+        #практикум .praktikum-cta-btn {
+          leading-trim: none;
+        }
         @media (max-width: 768px) {
+          #практикум .praktikum-intro-lead {
+            font-size: clamp(16px, 2.75vw, 22px) !important;
+          }
           #практикум .praktikum-tagline-pill {
             padding: 14px 22px !important;
-            font-size: clamp(14px, 3.6vw, 17px) !important;
+            font-size: clamp(16px, 3.9vw, 17px) !important;
           }
           #практикум .praktikum-cards {
             flex-direction: column !important;

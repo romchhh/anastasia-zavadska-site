@@ -1,3 +1,5 @@
+import { PAGE_GUTTER_X, SECTION_TITLE_MAX_WIDTH } from "./sectionIntroStyles";
+
 // ─── Design tokens (відповідають siteData / глобальним стилям) ────────────────
 const tokens = {
   blue: "#6391FF",
@@ -204,7 +206,7 @@ const OfertaPage = () => {
       {/* Hero */}
       <div
         style={{
-          padding: "56px 48px 52px",
+          padding: `56px ${PAGE_GUTTER_X} 52px`,
           textAlign: "center",
           position: "relative",
         }}
@@ -215,7 +217,13 @@ const OfertaPage = () => {
             fontWeight: 800,
             lineHeight: 1.2,
             color: tokens.text,
+            marginTop: 0,
             marginBottom: 12,
+            marginLeft: "auto",
+            marginRight: "auto",
+            width: "100%",
+            maxWidth: SECTION_TITLE_MAX_WIDTH,
+            boxSizing: "border-box",
           }}
         >
           Договір про надання
