@@ -39,6 +39,10 @@ export const SERVICES = [
     price: "Тривалість: 50 хвилин. Вартість: $50",
     btnLabel: "Записатися",
     active: true,
+    /** Календар слотів + обов’язковий вибір часу */
+    showBookingCalendar: true,
+    /** Кнопка «Оплатити» та блок ціни в формі */
+    onlinePayment: true,
   },
   {
     id: 2,
@@ -52,7 +56,9 @@ export const SERVICES = [
     price: "Вартість: $20 / зустріч",
     btnLabel: "Дізнатися більше",
     note: "Група зустрічається щочетверга, але в діючу групу нові люди не додаються. Про старт нової групи повідомлю за номером, який ви залишили, відповідно вашого запиту.",
-    active: false,
+    active: true,
+    showBookingCalendar: false,
+    onlinePayment: false,
   },
   {
     id: 3,
@@ -61,8 +67,10 @@ export const SERVICES = [
     img: "/branches.png",
     desc: "Офлайн-зустрічі для глибшого занурення в себе – у форматі живого спілкування, практик та внутрішньої роботи у групі.",
     status: "Статус: У підготовці",
-    btnLabel: "Повідомити мені / підписатися на оновлення",
-    active: false,
+    btnLabel: "Підписатися на оновлення",
+    active: true,
+    showBookingCalendar: false,
+    onlinePayment: false,
   },
 ];
 

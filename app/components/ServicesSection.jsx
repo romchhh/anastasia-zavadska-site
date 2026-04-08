@@ -51,19 +51,20 @@ export default function ServicesSection() {
       id="послуги"
       style={{
         background: "#fff",
-        padding: "72px 0 80px",
+        padding: "65px 0 72px",
         textAlign: "center",
         overflow: "hidden",
         scrollMarginTop: "88px",
       }}
     >
 
-      {/* Header */}
-      <div style={{ padding: "0 48px", marginBottom: "52px" }}>
+      {/* Header (~10% компактніше за базову секційну типографіку) */}
+      <div style={{ padding: "0 48px", marginBottom: "clamp(40px, 5vw, 47px)" }}>
         <h2
           style={{
             ...SECTION_INTRO_TITLE,
-            margin: "0 auto clamp(20px, 3vw, 28px)",
+            fontSize: "clamp(29px, 5.85vw, 58px)",
+            margin: "0 auto clamp(18px, 2.7vw, 25px)",
             maxWidth: "min(100%, 920px)",
           }}
         >
@@ -72,11 +73,12 @@ export default function ServicesSection() {
         <p
           style={{
             ...SECTION_INTRO_LEAD,
+            fontSize: "clamp(13px, 1.8vw, 20px)",
             margin: "0 auto",
             maxWidth: "min(100%, 920px)",
           }}
         >
-          Формат—онлайн
+          Терапія онлайн, щоб працювати у твоєму темпі та просторі
         </p>
       </div>
 
@@ -94,11 +96,10 @@ export default function ServicesSection() {
         {/* Track — центруємо активну картку */}
         <div style={{
           display: "flex",
-          gap: "20px",
+          gap: "18px",
           transition: "transform .5s cubic-bezier(.4,0,.2,1)",
-          // картка min(580px, 90vw), gap 20px → крок = min(600px, 90vw+20px)
-          // центруємо: 50% - (active * крок) - половина_картки
-          transform: `translateX(calc(50% - ${active} * min(600px, calc(90vw + 20px)) - min(290px, 45vw)))`,
+          // картка min(522px, 90vw), gap 18px → крок = min(540px, 90vw+18px)
+          transform: `translateX(calc(50% - ${active} * min(540px, calc(90vw + 18px)) - min(261px, 45vw)))`,
           willChange: "transform",
           paddingLeft: "0",
         }}>
@@ -110,10 +111,10 @@ export default function ServicesSection() {
               ? "2px solid rgba(255,255,255,0.65)"
               : "2px solid rgba(255,255,255,0.45)";
             const accentBlue = "#A3BEFF";
-            const titleSize = isActive ? "clamp(24px, 3.2vw, 36px)" : "clamp(17px, 2.2vw, 24px)";
-            const bodyFont = isActive ? "13px" : "12px";
-            const priceLineSize = isActive ? "clamp(22px, 2.75vw, 28px)" : "clamp(17px, 2.2vw, 22px)";
-            const cardPad = isActive ? "clamp(20px, 4vw, 28px)" : "clamp(16px, 3.5vw, 22px)";
+            const titleSize = isActive ? "clamp(22px, 2.9vw, 33px)" : "clamp(15px, 1.98vw, 22px)";
+            const bodyFont = isActive ? "12px" : "11px";
+            const priceLineSize = isActive ? "clamp(20px, 2.48vw, 25px)" : "clamp(15px, 1.98vw, 20px)";
+            const cardPad = isActive ? "clamp(18px, 3.6vw, 25px)" : "clamp(14px, 3.15vw, 20px)";
 
             return (
               <div
@@ -121,8 +122,8 @@ export default function ServicesSection() {
                 onClick={() => { if (!dragMoved.current) setActive(i); }}
                 style={{
                   background: cardBg,
-                  borderRadius: "36px",
-                  width: "min(580px, 90vw)",
+                  borderRadius: "32px",
+                  width: "min(522px, 90vw)",
                   flexShrink: 0,
                   display: "flex",
                   flexDirection: "column",
@@ -140,13 +141,14 @@ export default function ServicesSection() {
               >
                 {/* Квадратне фото */}
                 <div style={{
-                  borderRadius: "18px",
+                  borderRadius: "16px",
                   overflow: "hidden",
                   background: "rgba(255,255,255,0.25)",
-                  aspectRatio: "1 / 1",
+                  /* трохи нижче за квадрат ≈ −10% висоти при тій самій ширині */
+                  aspectRatio: "10 / 9",
                   width: "100%",
                   flexShrink: 0,
-                  marginBottom: isActive ? "18px" : "14px",
+                  marginBottom: isActive ? "16px" : "13px",
                 }}>
                   {s.img && (
                     <img src={s.img} alt={s.title}
@@ -169,7 +171,7 @@ export default function ServicesSection() {
                     textTransform: "uppercase",
                     letterSpacing: ".03em",
                     lineHeight: 1.06,
-                    margin: "0 0 clamp(14px, 2vw, 18px) 0",
+                    margin: "0 0 clamp(13px, 1.8vw, 16px) 0",
                     textAlign: "left",
                     transition: "font-size .3s",
                   }}>
@@ -183,7 +185,7 @@ export default function ServicesSection() {
                     color: "#FFFFFF",
                     lineHeight: 1.55,
                     textAlign: "left",
-                    margin: "0 0 12px 0",
+                    margin: "0 0 11px 0",
                   }}>
                     {s.desc}
                   </p>
@@ -195,7 +197,7 @@ export default function ServicesSection() {
                       fontWeight: 400,
                       color: "#FFFFFF",
                       textAlign: "left",
-                      margin: "0 0 10px 0",
+                      margin: "0 0 9px 0",
                       lineHeight: 1.45,
                     }}>{s.extra}</p>
                   )}
@@ -208,7 +210,7 @@ export default function ServicesSection() {
                       fontStyle: "italic",
                       color: "#3d62d8",
                       textAlign: "left",
-                      margin: "0 0 12px 0",
+                      margin: "0 0 11px 0",
                     }}>{s.status}</p>
                   )}
 
@@ -217,7 +219,7 @@ export default function ServicesSection() {
                       fontFamily: "'Montserrat', sans-serif",
                       color: "#FFFFFF",
                       textAlign: "left",
-                      margin: "0 0 20px 0",
+                      margin: "0 0 18px 0",
                       lineHeight: 1.25,
                       fontSize: priceLineSize,
                       fontWeight: 800,
@@ -232,7 +234,7 @@ export default function ServicesSection() {
                       fontWeight: 800,
                       color: "#FFFFFF",
                       textAlign: "left",
-                      margin: "0 0 20px 0",
+                      margin: "0 0 18px 0",
                       lineHeight: 1.25,
                     }}>{s.price}</p>
                   ) : null}
@@ -240,12 +242,12 @@ export default function ServicesSection() {
                   {s.note && (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "12px",
+                      fontSize: "11px",
                       fontWeight: 400,
                       color: "#FFFFFF",
                       lineHeight: 1.55,
                       textAlign: "left",
-                      margin: "0 0 18px 0",
+                      margin: "0 0 16px 0",
                     }}>
                       {s.note}
                     </p>
@@ -260,24 +262,24 @@ export default function ServicesSection() {
                       border: "none",
                       borderRadius: "999px",
                       padding: isActive
-                        ? "16px 14px 16px 26px"
-                        : "14px 12px 14px 20px",
+                        ? "14px 12px 14px 23px"
+                        : "13px 11px 13px 18px",
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: isActive
-                        ? "clamp(13px, 1.4vw, 15px)"
-                        : "clamp(11px, 2.6vw, 13px)",
+                        ? "clamp(12px, 1.26vw, 14px)"
+                        : "clamp(10px, 2.34vw, 12px)",
                       fontWeight: 800,
                       color: accentBlue,
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      gap: "12px",
+                      gap: "11px",
                       textTransform: "uppercase",
                       letterSpacing: isActive ? ".08em" : ".05em",
                       width: "100%",
                       maxWidth: "100%",
-                      minHeight: isActive ? 52 : 50,
+                      minHeight: isActive ? 47 : 45,
                       marginTop: "auto",
                       textDecoration: "none",
                       boxSizing: "border-box",
@@ -307,9 +309,9 @@ export default function ServicesSection() {
                     </span>
                     <span
                       style={{
-                        width: isActive ? 42 : 38,
-                        height: isActive ? 42 : 38,
-                        minWidth: isActive ? 42 : 38,
+                        width: isActive ? 38 : 34,
+                        height: isActive ? 38 : 34,
+                        minWidth: isActive ? 38 : 34,
                         borderRadius: "50%",
                         background: "#fff",
                         boxShadow: "0 0 0 1.5px rgba(163, 190, 255, 0.5)",
@@ -320,7 +322,7 @@ export default function ServicesSection() {
                       }}
                       aria-hidden
                     >
-                      <ArrowIcon variant="blue" height={isActive ? 18 : 15} />
+                      <ArrowIcon variant="blue" height={isActive ? 16 : 14} />
                     </span>
                   </Link>
                 </div>
@@ -410,7 +412,7 @@ export default function ServicesSection() {
       <div style={{
         display: "flex", justifyContent: "center",
         alignItems: "center", gap: "10px",
-        marginTop: "36px",
+        marginTop: "32px",
       }}>
         {SERVICES.map((_, i) => (
           <button

@@ -3,9 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import BookingCalendar from "./BookingCalendar";
 import BookingForm from "./BookingForm";
-import CtaPillButton from "./CtaPillButton";
 import { CONTACTS } from "../data/siteData";
-import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 const UA_MONTHS = [
   "січня",
@@ -100,12 +98,30 @@ function SocialIcon({ src, alt }) {
   );
 }
 
+const hiddenCalendarAnchor = (
+  <div
+    id="booking-calendar"
+    style={{
+      position: "relative",
+      height: 0,
+      width: 0,
+      overflow: "hidden",
+      pointerEvents: "none",
+    }}
+    aria-hidden
+  />
+);
+
 export default function ServiceBookingSection({ service }) {
   const [confirmedSlot, setConfirmedSlot] = useState(null);
 
+  const showBookingCalendar = service.showBookingCalendar === true;
+  const onlinePayment = service.onlinePayment === true;
+
   const duration = useMemo(() => bookingDurationLabel(service), [service]);
   const price = useMemo(() => bookingPriceLabel(service), [service]);
-  const slotSummary = confirmedSlot ? formatSlotLine(confirmedSlot) : null;
+  const slotSummary =
+    showBookingCalendar && confirmedSlot ? formatSlotLine(confirmedSlot) : null;
 
   const handleFormSubmit = useCallback(
     (fields) => {
@@ -134,72 +150,7 @@ export default function ServiceBookingSection({ service }) {
       <>
         <style>{BOOKING_SECTION_STYLES}</style>
         <section id="онлайн-запис" className="service-booking-section">
-          <div style={{ width: "100%", margin: 0 }}>
-          {/* Якір для «Записатися» на сторінках без календаря */}
-          <div
-            id="booking-calendar"
-            style={{
-              position: "relative",
-              height: 0,
-              width: 0,
-              overflow: "hidden",
-              pointerEvents: "none",
-            }}
-            aria-hidden
-          />
-          <h2
-            style={{
-              ...SECTION_INTRO_TITLE,
-              textAlign: "left",
-              marginBottom: "clamp(12px, 2vw, 20px)",
-            }}
-          >
-            Зв&apos;яжіться зі мною
-          </h2>
-          <p
-            style={{
-              ...SECTION_INTRO_LEAD,
-              textAlign: "left",
-              maxWidth: "min(100%, 52ch)",
-              marginBottom: 28,
-            }}
-          >
-            Для цієї послуги онлайн-календар поки недоступний. Напишіть у зручний для вас канал — обговоримо
-            формат і наступні кроки.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(20px, 4vw, 36px)" }}>
-            {iconLinks.map(({ href, label, icon, external }) => (
-              <a
-                key={label}
-                href={href}
-                target={external === false ? undefined : "_blank"}
-                rel={external === false ? undefined : "noreferrer"}
-                aria-label={label}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textDecoration: "none",
-                  color: accent,
-                  transition: "opacity 0.2s, transform 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = "0.85";
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = "1";
-                  e.currentTarget.style.transform = "none";
-                }}
-              >
-                {icon}
-              </a>
-            ))}
-            <CtaPillButton href={CONTACTS.telegramLink} target="_blank" rel="noreferrer" variant="periwinkle">
-              Написати в телеграм
-            </CtaPillButton>
-          </div>
-          </div>
+          {hiddenCalendarAnchor}
         </section>
       </>
     );
@@ -210,12 +161,18 @@ export default function ServiceBookingSection({ service }) {
       <style>{BOOKING_SECTION_STYLES}</style>
       <section id="онлайн-запис" className="service-booking-section">
         <div style={{ width: "100%", margin: 0 }}>
-        <BookingCalendar onSelect={setConfirmedSlot} />
+        {showBookingCalendar ? (
+          <BookingCalendar onSelect={setConfirmedSlot} />
+        ) : (
+          hiddenCalendarAnchor
+        )}
 
         <BookingForm
           duration={duration}
           price={price}
           slotSummary={slotSummary}
+          requireSlot={showBookingCalendar}
+          onlinePayment={onlinePayment}
           onSubmit={handleFormSubmit}
         />
 

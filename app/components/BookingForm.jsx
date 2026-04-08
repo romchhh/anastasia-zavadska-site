@@ -1,23 +1,57 @@
 import { useState } from "react";
 
-/** Лише цифри національного номера (10 цифр, з 0), після 380/8 */
-function normalizePhoneDigits(value) {
-  let d = String(value).replace(/\D/g, "");
-  if (d.startsWith("380")) d = d.slice(3);
-  if (d.startsWith("80") && d.length >= 2) d = "0" + d.slice(2);
-  if (d.length === 9 && d[0] !== "0") d = `0${d}`;
+/**
+ * Національний номер UA: 10 цифр, формат 0XXXXXXXXX (0671234567).
+ * Ввід: 067… | 380671234567 | 80671234567 | по цифрах після 380 (3806 → 06…).
+ */
+function extractNational10Digits(raw) {
+  const all = String(raw).replace(/\D/g, "");
+  if (!all.length) return "";
+
+  if (all === "3" || all === "38" || all === "380") return "";
+
+  let d = all;
+  let stripped380 = false;
+  while (d.length > 3 && d.startsWith("380")) {
+    stripped380 = true;
+    d = d.slice(3);
+  }
+
+  if (stripped380) {
+    if (!d.length || d === "380") return "";
+    if (d[0] === "0") return d.slice(0, 10);
+    return (`0${d}`).slice(0, 10);
+  }
+
+  if (d.startsWith("80") && d.length >= 3) {
+    d = (`0${d.slice(2)}`).slice(0, 10);
+    return d;
+  }
+
+  if (d[0] === "0") {
+    return d.slice(0, 10);
+  }
+
+  if (d.length <= 9 && /^[679]/.test(d)) {
+    return (`0${d}`).slice(0, 10);
+  }
+
   return d.slice(0, 10);
 }
 
-/** Маска: +38 (067) 123-45-67 */
-function formatUaPhoneInput(value) {
-  const digits = normalizePhoneDigits(value);
-  if (!digits.length) return "";
+function normalizePhoneDigits(value) {
+  return extractNational10Digits(value);
+}
 
-  const a = digits.slice(0, 3);
-  const b = digits.slice(3, 6);
-  const c = digits.slice(6, 8);
-  const d = digits.slice(8, 10);
+/** Маска: +38 (067) 123-45-67 — лише з уже нормалізованих 10 цифр */
+function formatNationalUa(national10) {
+  const dg = national10.slice(0, 10);
+  if (!dg.length) return "";
+
+  const a = dg.slice(0, 3);
+  const b = dg.slice(3, 6);
+  const c = dg.slice(6, 8);
+  const tail = dg.slice(8, 10);
 
   let out = `+38 (${a}`;
   if (a.length === 3) {
@@ -26,13 +60,17 @@ function formatUaPhoneInput(value) {
       out += ` ${b}`;
       if (b.length === 3 && c.length) {
         out += `-${c}`;
-        if (c.length === 2 && d.length) {
-          out += `-${d}`;
+        if (c.length === 2 && tail.length) {
+          out += `-${tail}`;
         }
       }
     }
   }
   return out;
+}
+
+function formatUaPhoneInput(value) {
+  return formatNationalUa(extractNational10Digits(value));
 }
 
 function toUaE164(normalized10) {
@@ -47,12 +85,16 @@ function toUaE164(normalized10) {
  *   duration  {string}  – e.g. "50 хв"
  *   price     {string}  – e.g. "50 $"
  *   slotSummary {string} – обраний у календарі час (показується над полями)
+ *   requireSlot {bool}   – чи обов’язковий вибір слоту (календар)
+ *   onlinePayment {bool} – «Оплатити» + ціна; false — запит без оплати на сайті
  *   onSubmit  {fn}      – після валідації; інтеграція (наприклад Telegram) — ззовні
  */
 export default function BookingForm({
   duration = "50 хв",
   price = "50 $",
   slotSummary,
+  requireSlot = true,
+  onlinePayment = true,
   onSubmit,
 }) {
   const [fields, setFields] = useState({
@@ -83,13 +125,13 @@ export default function BookingForm({
 
   const phoneComplete = normalizePhoneDigits(fields.phone).length === 10;
 
-  const canPay =
-    Boolean(slotSummary?.trim()) &&
-    Boolean(fields.name.trim()) &&
-    phoneComplete;
+  const slotOk = !requireSlot || Boolean(slotSummary?.trim());
+
+  const canSubmit =
+    slotOk && Boolean(fields.name.trim()) && phoneComplete;
 
   const handleSubmit = () => {
-    if (!canPay) return;
+    if (!canSubmit) return;
     const e = validate();
     if (Object.keys(e).length) {
       setErrors(e);
@@ -109,7 +151,9 @@ export default function BookingForm({
         <div id="booking-form" className="bf-wrap">
           <div className="bf-success">
             <div className="bf-success-icon">✓</div>
-            <h2 className="bf-success-title">Дякуємо за запис!</h2>
+            <h2 className="bf-success-title">
+              {onlinePayment ? "Дякуємо за запис!" : "Дякуємо за запит!"}
+            </h2>
             <p className="bf-success-text">
               Якщо не відкрилось вікно Telegram, знайдіть чат зі мною вручну — текст запиту ви вже
               сформували.
@@ -182,19 +226,23 @@ export default function BookingForm({
                 <ClockIcon />
                 <span>Тривалість: {duration}</span>
               </div>
-              <div className="bf-badge-divider" />
-              <div className="bf-badge-item">
-                <LockIcon />
-                <span>Ціна: {price}</span>
-              </div>
+              {onlinePayment ? (
+                <>
+                  <div className="bf-badge-divider" />
+                  <div className="bf-badge-item">
+                    <LockIcon />
+                    <span>Ціна: {price}</span>
+                  </div>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
 
         {/* CTA */}
         <div className="bf-cta-wrap">
-          <button type="button" className="bf-cta" onClick={handleSubmit} disabled={!canPay}>
-            ОПЛАТИТИ
+          <button type="button" className="bf-cta" onClick={handleSubmit} disabled={!canSubmit}>
+            {onlinePayment ? "ОПЛАТИТИ" : "НАДІСЛАТИ ЗАПИТ"}
           </button>
         </div>
       </div>

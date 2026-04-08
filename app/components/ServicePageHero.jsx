@@ -8,6 +8,8 @@ const font = "'Montserrat', sans-serif";
  */
 export default function ServicePageHero({ service }) {
   const hasSplitPrice = service.priceLine && service.priceEmphasis;
+  const bookingCtaHref =
+    service.showBookingCalendar === true ? "#booking-calendar" : "#booking-form";
 
   return (
     <section
@@ -136,7 +138,7 @@ export default function ServicePageHero({ service }) {
           </p>
         )}
 
-        <CtaPillButton className="service-page-hero__cta" href="#booking-calendar">
+        <CtaPillButton className="service-page-hero__cta" href={bookingCtaHref}>
           Записатися на сесію
         </CtaPillButton>
       </div>
