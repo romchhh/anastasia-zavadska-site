@@ -356,7 +356,7 @@ export default function ServicesSection() {
         {active > 0 && (
           <button
             type="button"
-            className="services-nav-btn"
+            className="services-nav-btn services-nav-btn--overlay"
             aria-label="Попередня послуга"
             onClick={prev}
             style={{
@@ -384,7 +384,7 @@ export default function ServicesSection() {
         {active < SERVICES.length - 1 && (
           <button
             type="button"
-            className="services-nav-btn"
+            className="services-nav-btn services-nav-btn--overlay"
             aria-label="Наступна послуга"
             onClick={next}
             style={{
@@ -411,33 +411,74 @@ export default function ServicesSection() {
         )}
       </div>
 
-      {/* Dots */}
-      <div style={{
-        display: "flex", justifyContent: "center",
-        alignItems: "center", gap: "10px",
-        marginTop: "32px",
-      }}>
-        {SERVICES.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            style={{
-              width: active === i ? 28 : 10,
-              height: 10,
-              borderRadius: "5px",
-              background: active === i ? "#92B2FF" : "#c8d8f0",
-              border: "none",
-              cursor: "pointer",
-              padding: 0,
-              transition: "width .35s cubic-bezier(.4,0,.2,1), background .3s",
-            }}
-          />
-        ))}
+      {/* Крапки + стрілки на мобільних під каруселлю */}
+      <div className="services-dots-toolbar" style={{ marginTop: "32px" }}>
+        <div className="services-dots-arrow-slot services-dots-arrow-slot--left">
+          {active > 0 ? (
+            <button
+              type="button"
+              className="services-nav-mobile"
+              aria-label="Попередня послуга"
+              onClick={prev}
+            >
+              <ArrowIcon variant="blue" direction="left" height={16} />
+            </button>
+          ) : null}
+        </div>
+        <div
+          className="services-dots-inner"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          {SERVICES.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-label={`Послуга ${i + 1}`}
+              style={{
+                width: active === i ? 28 : 10,
+                height: 10,
+                borderRadius: "5px",
+                background: active === i ? "#92B2FF" : "#c8d8f0",
+                border: "none",
+                cursor: "pointer",
+                padding: 0,
+                transition: "width .35s cubic-bezier(.4,0,.2,1), background .3s",
+              }}
+            />
+          ))}
+        </div>
+        <div className="services-dots-arrow-slot services-dots-arrow-slot--right">
+          {active < SERVICES.length - 1 ? (
+            <button
+              type="button"
+              className="services-nav-mobile"
+              aria-label="Наступна послуга"
+              onClick={next}
+            >
+              <ArrowIcon variant="blue" height={16} />
+            </button>
+          ) : null}
+        </div>
       </div>
 
       <style>{`
         .services-card-cta:active {
           transform: translateY(0);
+        }
+        .services-dots-toolbar {
+          display: block;
+        }
+        .services-dots-arrow-slot {
+          display: none;
+        }
+        .services-nav-mobile {
+          display: none;
         }
         @media (max-width: 768px) {
           .services-section-lead {
@@ -445,6 +486,37 @@ export default function ServicesSection() {
           }
           .services-edge-fade {
             display: none !important;
+          }
+          .services-nav-btn--overlay {
+            display: none !important;
+          }
+          .services-dots-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+          }
+          .services-dots-arrow-slot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 48px;
+            width: 48px;
+            min-height: 48px;
+          }
+          .services-nav-mobile {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            background: #fff;
+            border: 1.5px solid #b8ccf0;
+            border-radius: 50%;
+            box-shadow: 0 2px 12px rgba(100, 140, 200, 0.12);
+            cursor: pointer;
+            color: #7a9ae0;
           }
           .services-nav-btn {
             background: #fff !important;

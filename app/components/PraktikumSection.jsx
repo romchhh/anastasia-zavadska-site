@@ -16,7 +16,7 @@ const cardStyle = {
   boxSizing: "border-box",
 };
 
-const FEATURE_ICON = 36;
+const FEATURE_ICON = 26;
 
 function FeatureCell({ active, text }) {
   return (
@@ -24,8 +24,8 @@ function FeatureCell({ active, text }) {
       style={{
         display: "flex",
         alignItems: "flex-start",
-        gap: "clamp(14px, 2vw, 18px)",
-        minHeight: "clamp(52px, 5.8vw, 64px)",
+        gap: "clamp(10px, 1.6vw, 14px)",
+        minHeight: "clamp(44px, 5vw, 56px)",
         padding: "clamp(8px, 1.1vw, 12px) 0",
         boxSizing: "border-box",
       }}
@@ -36,9 +36,9 @@ function FeatureCell({ active, text }) {
           style={{
             width: FEATURE_ICON,
             height: FEATURE_ICON,
-            marginTop: 2,
+            marginTop: 1,
             borderRadius: "50%",
-            border: `3px solid ${RING_BLUE}`,
+            border: `2px solid ${RING_BLUE}`,
             flexShrink: 0,
             boxSizing: "border-box",
             background: "transparent",
@@ -56,7 +56,7 @@ function FeatureCell({ active, text }) {
             alignItems: "center",
             justifyContent: "center",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "clamp(30px, 4.2vw, 38px)",
+            fontSize: "clamp(22px, 3.2vw, 28px)",
             fontWeight: 500,
             color: "#9ca8c4",
             lineHeight: 0.85,

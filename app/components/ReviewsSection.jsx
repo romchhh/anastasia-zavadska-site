@@ -237,6 +237,7 @@ export default function ReviewsSection() {
             type="button"
             onClick={prev}
             aria-label="Попередній відгук"
+            className="reviews-carousel-arrow reviews-carousel-arrow--prev"
             style={{
               position: "absolute",
               left: PAGE_GUTTER_X,
@@ -265,6 +266,7 @@ export default function ReviewsSection() {
             type="button"
             onClick={next}
             aria-label="Наступний відгук"
+            className="reviews-carousel-arrow reviews-carousel-arrow--next"
             style={{
               position: "absolute",
               right: PAGE_GUTTER_X,
@@ -291,34 +293,60 @@ export default function ReviewsSection() {
       </div>
 
       <div className="reviews-footer">
-        <div
-          className="reviews-dots"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "10px",
-            marginBottom: "clamp(20px, 3vw, 28px)",
-          }}
-        >
-          {REVIEWS.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setActive(i)}
-              aria-label={`Відгук ${i + 1}`}
-              style={{
-                width: active === i ? 28 : 10,
-                height: 10,
-                borderRadius: "5px",
-                background: active === i ? "#92B2FF" : "#c8d8f0",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-                transition: "width .35s cubic-bezier(.4,0,.2,1), background .3s",
-              }}
-            />
-          ))}
+        <div className="reviews-dots-toolbar">
+          <div className="reviews-dots-arrow-slot reviews-dots-arrow-slot--left">
+            {active > 0 ? (
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Попередній відгук"
+                className="reviews-nav-mobile"
+              >
+                <ArrowIcon variant="blue" direction="left" height={16} />
+              </button>
+            ) : null}
+          </div>
+          <div
+            className="reviews-dots"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "10px",
+              marginBottom: "clamp(20px, 3vw, 28px)",
+            }}
+          >
+            {REVIEWS.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-label={`Відгук ${i + 1}`}
+                style={{
+                  width: active === i ? 28 : 10,
+                  height: 10,
+                  borderRadius: "5px",
+                  background: active === i ? "#92B2FF" : "#c8d8f0",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  transition: "width .35s cubic-bezier(.4,0,.2,1), background .3s",
+                }}
+              />
+            ))}
+          </div>
+          <div className="reviews-dots-arrow-slot reviews-dots-arrow-slot--right">
+            {active < REVIEWS.length - 1 ? (
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Наступний відгук"
+                className="reviews-nav-mobile"
+              >
+                <ArrowIcon variant="blue" height={16} />
+              </button>
+            ) : null}
+          </div>
         </div>
         <div className="reviews-practicum-cta-wrap">
           <CtaPillButton
@@ -338,6 +366,15 @@ export default function ReviewsSection() {
           padding: 0;
           box-sizing: border-box;
         }
+        .reviews-dots-toolbar {
+          display: block;
+        }
+        .reviews-dots-arrow-slot {
+          display: none;
+        }
+        .reviews-nav-mobile {
+          display: none;
+        }
         .reviews-practicum-cta-wrap {
           display: flex;
           justify-content: flex-end;
@@ -345,6 +382,42 @@ export default function ReviewsSection() {
         @media (max-width: 768px) {
           .reviews-header {
             margin-bottom: 36px !important;
+          }
+          .reviews-carousel-arrow {
+            display: none !important;
+          }
+          .reviews-dots-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: clamp(20px, 3vw, 28px);
+          }
+          .reviews-dots {
+            margin-bottom: 0 !important;
+            flex: 0 1 auto;
+          }
+          .reviews-dots-arrow-slot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 48px;
+            width: 48px;
+            min-height: 48px;
+          }
+          .reviews-nav-mobile {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            background: #fff;
+            border: 1.5px solid #b8ccf0;
+            border-radius: 50%;
+            box-shadow: 0 2px 12px rgba(100, 140, 200, 0.12);
+            cursor: pointer;
+            color: #7a9ae0;
           }
         }
       `}</style>

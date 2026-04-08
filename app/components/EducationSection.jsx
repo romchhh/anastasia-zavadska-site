@@ -345,27 +345,55 @@ export default function EducationSection() {
               ))}
             </div>
           </div>
-          <div className="education-dots-mobile" role="tablist" aria-label="Слайди документів">
-            {EDUCATION_DOCUMENTS.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                role="tab"
-                aria-selected={activeIndex === i}
-                aria-label={`Слайд ${i + 1}`}
-                onClick={() => scrollToIndex(i)}
-                style={{
-                  width: activeIndex === i ? 22 : 8,
-                  height: 8,
-                  borderRadius: 4,
-                  background: activeIndex === i ? "#6b8fd4" : "rgba(107,143,212,0.35)",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                  transition: "width .25s ease, background .2s",
-                }}
-              />
-            ))}
+          <div className="education-mobile-dots-toolbar">
+            <div className="education-dots-arrow-slot education-dots-arrow-slot--left">
+              {activeIndex > 0 ? (
+                <button
+                  type="button"
+                  className="education-carousel-nav-mobile"
+                  aria-label="Попередні документи"
+                  onClick={() => scrollTrack(-1)}
+                  style={{ ...arrowBtnBase, width: 52, height: 52, display: "inline-flex" }}
+                >
+                  <ArrowIcon variant="blue" direction="left" height={18} />
+                </button>
+              ) : null}
+            </div>
+            <div className="education-dots-mobile" role="tablist" aria-label="Слайди документів">
+              {EDUCATION_DOCUMENTS.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeIndex === i}
+                  aria-label={`Слайд ${i + 1}`}
+                  onClick={() => scrollToIndex(i)}
+                  style={{
+                    width: activeIndex === i ? 22 : 8,
+                    height: 8,
+                    borderRadius: 4,
+                    background: activeIndex === i ? "#6b8fd4" : "rgba(107,143,212,0.35)",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    transition: "width .25s ease, background .2s",
+                  }}
+                />
+              ))}
+            </div>
+            <div className="education-dots-arrow-slot education-dots-arrow-slot--right">
+              {activeIndex < EDUCATION_DOCUMENTS.length - 1 ? (
+                <button
+                  type="button"
+                  className="education-carousel-nav-mobile"
+                  aria-label="Наступні документи"
+                  onClick={() => scrollTrack(1)}
+                  style={{ ...arrowBtnBase, width: 52, height: 52, display: "inline-flex" }}
+                >
+                  <ArrowIcon variant="blue" height={18} />
+                </button>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
@@ -601,7 +629,13 @@ export default function EducationSection() {
         .education-arrow-side {
           display: inline-flex;
         }
+        .education-mobile-dots-toolbar {
+          display: none;
+        }
         .education-dots-mobile {
+          display: none;
+        }
+        .education-dots-arrow-slot {
           display: none;
         }
         @media (max-width: 968px) {
@@ -624,17 +658,35 @@ export default function EducationSection() {
           .education-section-outer {
             padding: 48px clamp(20px, 5vw, 32px) 64px !important;
           }
+          .education-nav-arrows {
+            display: none !important;
+          }
           .education-arrow-side.education-arrow-inline {
             width: 48px !important;
             height: 48px !important;
+          }
+          .education-mobile-dots-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 14px;
+          }
+          .education-dots-arrow-slot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 52px;
+            width: 52px;
+            min-height: 52px;
           }
           .education-dots-mobile {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
-            margin-top: 14px;
             flex-wrap: wrap;
+            flex: 0 1 auto;
           }
         }
       `}</style>
