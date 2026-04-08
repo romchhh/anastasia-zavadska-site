@@ -260,9 +260,46 @@ export default function PraktikumSection() {
         boxSizing: "border-box",
         textAlign: "center",
         position: "relative",
-        overflow: "visible",
+        overflowX: "clip",
       }}
     >
+      {/* Світіння прив’язане до секції, не до блоку карток — щоб не обрізалось по висоті/ширині карток */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "62%",
+          transform: "translate(-50%, -50%)",
+          width: "min(1400px, 155vw)",
+          height: "min(1100px, 135vw)",
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle at center, rgba(110, 145, 230, 0.78) 0%, rgba(150, 175, 235, 0.5) 38%, rgba(210, 222, 255, 0.28) 58%, transparent 72%)",
+          filter: "blur(52px)",
+          opacity: 0.98,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "62%",
+          transform: "translate(-50%, -50%)",
+          width: "min(780px, 92vw)",
+          height: "min(780px, 92vw)",
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle at center, rgba(95, 130, 220, 0.55) 0%, rgba(160, 185, 240, 0.35) 42%, transparent 68%)",
+          filter: "blur(56px)",
+          opacity: 0.88,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
       <div className="praktikum-inner" style={{ position: "relative", zIndex: 1, maxWidth: "1120px", margin: "0 auto" }}>
         <h2
           style={{
@@ -323,77 +360,31 @@ export default function PraktikumSection() {
         </p>
 
         <div
-          className="praktikum-cards-wrap"
+          className="praktikum-cards"
           style={{
             position: "relative",
+            display: "flex",
+            gap: "clamp(20px, 3vw, 32px)",
+            justifyContent: "center",
+            alignItems: "stretch",
+            flexWrap: "wrap",
             width: "100%",
-            overflow: "hidden",
           }}
         >
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "min(1400px, 100vw)",
-              height: "min(1100px, 100vw)",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle at center, rgba(110, 145, 230, 0.78) 0%, rgba(150, 175, 235, 0.5) 38%, rgba(210, 222, 255, 0.28) 58%, transparent 72%)",
-              filter: "blur(52px)",
-              opacity: 0.98,
-              zIndex: 0,
-              pointerEvents: "none",
-            }}
+          <PrCard
+            title={"Самостійний старт\n\n"}
+            features={PRAKTIKUM_SELF_FEATURES}
+            oldPrice="4500 грн"
+            price="595 грн"
+            btnLabel="Почати самостійно"
           />
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "min(780px, 92vw)",
-              height: "min(780px, 92vw)",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle at center, rgba(95, 130, 220, 0.55) 0%, rgba(160, 185, 240, 0.35) 42%, transparent 68%)",
-              filter: "blur(56px)",
-              opacity: 0.88,
-              zIndex: 0,
-              pointerEvents: "none",
-            }}
+          <PrCard
+            title={"З підтримкою\nпсихолога"}
+            features={PRAKTIKUM_WITH_FEATURES}
+            oldPrice="10500 грн"
+            price="5400 грн"
+            btnLabel="Почати з психологом"
           />
-          <div
-            className="praktikum-cards"
-            style={{
-              position: "relative",
-              zIndex: 1,
-              display: "flex",
-              gap: "clamp(20px, 3vw, 32px)",
-              justifyContent: "center",
-              alignItems: "stretch",
-              flexWrap: "wrap",
-              width: "100%",
-            }}
-          >
-            <PrCard
-              title={"Самостійний старт\n\n"}
-              features={PRAKTIKUM_SELF_FEATURES}
-              oldPrice="4500 грн"
-              price="595 грн"
-              btnLabel="Почати самостійно"
-            />
-            <PrCard
-              title={"З підтримкою\nпсихолога"}
-              features={PRAKTIKUM_WITH_FEATURES}
-              oldPrice="10500 грн"
-              price="5400 грн"
-              btnLabel="Почати з психологом"
-            />
-          </div>
         </div>
       </div>
 
