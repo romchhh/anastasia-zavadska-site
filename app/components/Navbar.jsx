@@ -1,12 +1,36 @@
 "use client";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
-import { NAV_LINKS, navLinkHref } from "../data/siteData";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { INDIVIDUAL_BOOKING_PAGE, NAV_LINKS, navLinkHref } from "../data/siteData";
 import { DualRoundArrow, ArrowIcon } from "./ArrowIcon";
+
+function scrollToElementById(id) {
+  if (typeof document === "undefined") return false;
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    return true;
+  }
+  return false;
+}
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleNavBookingCta = () => {
+    if (pathname === INDIVIDUAL_BOOKING_PAGE || pathname.startsWith(`${INDIVIDUAL_BOOKING_PAGE}/`)) {
+      if (!scrollToElementById("booking-calendar")) {
+        if (!scrollToElementById("онлайн-запис")) {
+          window.location.hash = "booking-calendar";
+        }
+      }
+      return;
+    }
+    router.push(INDIVIDUAL_BOOKING_PAGE);
+  };
 
   return (
     <>
@@ -23,8 +47,9 @@ export default function Navbar() {
           boxSizing: "border-box",
         }}
       >
-        {/* Mobile: ім’я зліва */}
-        <div
+        {/* Mobile: ім’я зліва → головна */}
+        <Link
+          href="/"
           className="nav-mobile-brand"
           style={{
             display: "none",
@@ -37,10 +62,11 @@ export default function Navbar() {
             textTransform: "uppercase",
             lineHeight: 1.2,
             maxWidth: "55%",
+            textDecoration: "none",
           }}
         >
           Анастасія<br />Завадська
-        </div>
+        </Link>
 
         {/* Desktop nav links */}
         <ul style={{
@@ -86,6 +112,7 @@ export default function Navbar() {
           <button
             type="button"
             className="nav-cta-btn"
+            onClick={handleNavBookingCta}
             style={{
               background: "transparent",
               border: "2px solid rgba(255,255,255,0.85)",
@@ -98,13 +125,15 @@ export default function Navbar() {
               fontFamily: "'Montserrat', sans-serif",
               fontSize: "17px",
               fontWeight: 700,
+              fontStyle: "normal",
+              lineHeight: "100%",
+              letterSpacing: 0,
               color: "#fff",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               gap: "12px",
-              letterSpacing: ".04em",
               transition: "background .2s, color .2s, box-shadow .2s",
               whiteSpace: "nowrap",
             }}
@@ -189,14 +218,14 @@ export default function Navbar() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "92px 40px 48px",
+          padding: "84px 36px 40px",
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? "all" : "none",
           transition: "opacity .3s ease",
         }}
       >
         {/* Links */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
           {NAV_LINKS.map((l, i) => (
             <a
               key={l}
@@ -205,14 +234,14 @@ export default function Navbar() {
               style={{
                 color: "#fff",
                 fontFamily: "'Montserrat', sans-serif",
-                fontSize: "32px",
+                fontSize: "26px",
                 fontWeight: 800,
                 textDecoration: "none",
                 textTransform: "uppercase",
                 letterSpacing: ".02em",
                 borderBottom: "1px solid rgba(255,255,255,.25)",
-                paddingBottom: "20px",
-                paddingTop: i === 0 ? 0 : "12px",
+                paddingBottom: "16px",
+                paddingTop: i === 0 ? 0 : "10px",
                 opacity: menuOpen ? 1 : 0,
                 transform: menuOpen ? "translateY(0)" : "translateY(16px)",
                 transition: `opacity .35s ease ${i * 0.06}s, transform .35s ease ${i * 0.06}s`,
@@ -225,15 +254,19 @@ export default function Navbar() {
 
         {/* Bottom CTA */}
         <a
-          href={pathname === "/" || pathname.startsWith("/poslugy") ? "#контакти" : "/#контакти"}
+          href={
+            pathname === INDIVIDUAL_BOOKING_PAGE || pathname.startsWith(`${INDIVIDUAL_BOOKING_PAGE}/`)
+              ? "#booking-calendar"
+              : INDIVIDUAL_BOOKING_PAGE
+          }
           onClick={() => setMenuOpen(false)}
           style={{
             background: "#fff",
             border: "none",
-            borderRadius: "60px",
-            padding: "16px 16px 16px 32px",
+            borderRadius: "48px",
+            padding: "12px 12px 12px 22px",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "15px",
+            fontSize: "13px",
             fontWeight: 800,
             color: "#92B2FF",
             cursor: "pointer",
@@ -250,16 +283,16 @@ export default function Navbar() {
             boxSizing: "border-box",
           }}
         >
-          Записатися на консультацію
+          Записатися на сесію
           <span
             className="mobile-menu-cta-arrow"
             style={{
               background: "#fff",
               border: "2px solid #92B2FF",
               borderRadius: 999,
-              width: 52,
-              height: 42,
-              minWidth: 52,
+              width: 44,
+              height: 34,
+              minWidth: 44,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -267,7 +300,7 @@ export default function Navbar() {
               boxSizing: "border-box",
             }}
           >
-            <ArrowIcon variant="blue" height={16} />
+            <ArrowIcon variant="blue" height={14} />
           </span>
         </a>
       </div>
@@ -297,10 +330,10 @@ export default function Navbar() {
           .nav-cta-btn { display: none !important; }
           .burger-btn { display: flex !important; }
           .mobile-menu-cta-arrow {
-            width: 48px !important;
-            height: 38px !important;
-            min-width: 48px !important;
-            font-size: 18px !important;
+            width: 42px !important;
+            height: 32px !important;
+            min-width: 42px !important;
+            font-size: 16px !important;
           }
         }
       `}</style>

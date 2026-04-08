@@ -1,7 +1,15 @@
 "use client";
 
-import { HERO_PHOTO } from "../data/siteData";
+import { HERO_PHOTO, INDIVIDUAL_BOOKING_PAGE } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
+import { SECTION_INTRO_LEAD } from "./sectionIntroStyles";
+
+const accent = "#92B2FF";
+
+const HERO_BULLETS = [
+  "Гештальт-підхід",
+  "Індивідуальна та групова терапія онлайн",
+];
 
 export default function HeroSection() {
   return (
@@ -9,62 +17,122 @@ export default function HeroSection() {
       className="hero-section"
       style={{
         background: "#fff",
-        padding: "64px 120px 64px 120px",
+        padding: "clamp(48px, 7vw, 88px) clamp(40px, 8vw, 120px)",
         minHeight: "calc(100vh - 84px)",
         boxSizing: "border-box",
       }}
     >
-      <div className="hero-text" style={{ minWidth: 0 }}>
-        <h1 className="hero-title" style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(56px, 7.5vw, 100px)",
-          fontWeight: 900,
-          lineHeight: "0.96",
-          color: "#111",
-          textTransform: "uppercase",
-          letterSpacing: "-0.01em",
-          margin: "0 0 24px 0",
-        }}>
-          Анастасія Завадська
+      <div className="hero-column">
+        <div className="hero-text" style={{ minWidth: 0 }}>
+        <h1
+          className="hero-title"
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: "clamp(40px, 6.5vw, 96px)",
+            fontWeight: 900,
+            lineHeight: "0.94",
+            color: "#111",
+            textTransform: "uppercase",
+            letterSpacing: "-0.03em",
+            margin: "0 0 clamp(18px, 2.5vw, 28px) 0",
+          }}
+        >
+          <span className="hero-title-line">Анастасія</span>
+          <span className="hero-title-line">Завадська</span>
         </h1>
 
-        <p style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(20px, 2.5vw, 34px)",
-          fontWeight: 600,
-          color: "#111",
-          textTransform: "uppercase",
-          lineHeight: "1.15",
-          margin: "0 0 20px 0",
-          letterSpacing: "0.01em",
-        }}>
-          Психологиня<br />
-          Працюю в гештальт-підході<br />
-          Індивідуальна та групова терапія онлайн
-        </p>
+        <span
+          className="hero-badge"
+          style={{
+            display: "inline-block",
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: "clamp(17px, 2.8vw, 36px)",
+            fontWeight: 600,
+            fontStyle: "normal",
+            color: "#fff",
+            background: accent,
+            padding: "clamp(10px, 1.2vw, 14px) clamp(18px, 2.2vw, 32px)",
+            borderRadius: "999px",
+            marginBottom: "clamp(20px, 2.8vw, 32px)",
+            letterSpacing: "0",
+            lineHeight: "100%",
+          }}
+        >
+          Психологиня
+        </span>
 
-        <p style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(13px, 1.2vw, 17px)",
-          fontWeight: 600,
-          color: "#999",
-          textTransform: "uppercase",
-          lineHeight: "1",
-          letterSpacing: "0.04em",
-          margin: "0 0 48px 0",
-        }}>
-          Терапія, яка допомагає повернутися до себе
+        <ul
+          className="hero-bullet-list"
+          style={{
+            listStyle: "none",
+            margin: "0 0 clamp(18px, 2.5vw, 26px) 0",
+            padding: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: "clamp(10px, 1.4vw, 14px)",
+            width: "100%",
+            maxWidth: "min(100%, 38ch)",
+            textAlign: "left",
+          }}
+        >
+          {HERO_BULLETS.map((line) => (
+            <li
+              key={line}
+              className="hero-bullet-item"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "clamp(16px, 1.85vw, 22px)",
+                fontWeight: 600,
+                color: "#111",
+                lineHeight: 1.35,
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "12px",
+              }}
+            >
+              <span
+                aria-hidden
+                style={{
+                  color: accent,
+                  fontWeight: 800,
+                  flexShrink: 0,
+                  lineHeight: "inherit",
+                  marginTop: "0.06em",
+                }}
+              >
+                ✓
+              </span>
+              <span>{line}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p
+          className="hero-tagline"
+          style={{
+            ...SECTION_INTRO_LEAD,
+            fontSize: "clamp(17px, 2.3vw, 26px)",
+            textAlign: "left",
+            margin: "0 0 clamp(14px, 2vw, 22px) 0",
+            maxWidth: "min(100%, 44ch)",
+          }}
+        >
+          Терапія, що допомагає повернутися до себе
         </p>
+        </div>
+
+        <CtaPillButton className="hero-cta" href={INDIVIDUAL_BOOKING_PAGE}>
+          Записатися на сесію
+        </CtaPillButton>
       </div>
 
-      {/* Photo — під текстом на мобільному; кнопка нижче */}
       <div
         className="hero-photo"
         style={{
           flexShrink: 0,
-          width: "clamp(288px, 36vw, 460px)",
+          width: "clamp(280px, 34vw, 440px)",
           aspectRatio: "3/4",
-          borderRadius: "28px",
+          borderRadius: "24px",
           overflow: "hidden",
           background: "#dde4ef",
         }}
@@ -82,63 +150,75 @@ export default function HeroSection() {
         />
       </div>
 
-      <CtaPillButton className="hero-cta">Записатися на консультацію</CtaPillButton>
-
       <style>{`
+        .hero-title-line {
+          display: block;
+        }
         .hero-section {
           display: grid;
           grid-template-columns: minmax(0, 1fr) auto;
-          grid-template-rows: auto auto;
+          grid-template-rows: auto;
           align-items: center;
-          column-gap: 48px;
-          row-gap: 48px;
+          column-gap: clamp(40px, 5.5vw, 80px);
         }
-        .hero-text {
+        .hero-column {
           grid-column: 1;
           grid-row: 1;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .hero-text {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 100%;
         }
         .hero-cta {
-          grid-column: 1;
-          grid-row: 2;
-          justify-self: start;
+          flex-shrink: 0;
+          margin-top: 0;
         }
         .hero-photo {
           grid-column: 2;
-          grid-row: 1 / -1;
+          grid-row: 1;
           align-self: center;
         }
         @media (max-width: 768px) {
           .hero-title {
-            font-size: clamp(40px, 11vw, 56px) !important;
-            line-height: 0.98 !important;
+            font-size: clamp(36px, 10.5vw, 52px) !important;
+            line-height: 0.96 !important;
+            letter-spacing: -0.025em !important;
           }
           .hero-section {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto auto auto;
-            column-gap: 0;
-            row-gap: 28px;
-            padding: 40px 40px 48px !important;
-            min-height: unset !important;
+            display: flex;
+            flex-direction: column;
             align-items: stretch;
+            gap: 20px;
+            min-height: unset !important;
+          }
+          .hero-column {
+            display: contents;
           }
           .hero-text {
-            grid-column: 1;
-            grid-row: 1;
+            order: 1;
+            align-items: flex-start;
+          }
+          .hero-text .hero-bullet-list,
+          .hero-text .hero-tagline {
+            text-align: left !important;
           }
           .hero-photo {
-            grid-column: 1;
-            grid-row: 2;
+            order: 2;
             width: 100% !important;
-            max-width: 100% !important;
+            max-width: min(100%, 400px) !important;
+            margin-left: auto;
+            margin-right: auto;
             aspect-ratio: 5 / 6;
-            align-self: stretch;
-            justify-self: stretch;
-            margin-top: -14px;
           }
           .hero-cta {
-            grid-column: 1;
-            grid-row: 3;
-            justify-self: center;
+            order: 3;
+            align-self: center;
             width: fit-content !important;
             max-width: 100%;
             box-sizing: border-box;
@@ -146,7 +226,7 @@ export default function HeroSection() {
         }
         @media (max-width: 420px) {
           .hero-title {
-            font-size: clamp(34px, 12vw, 44px) !important;
+            font-size: clamp(32px, 11vw, 44px) !important;
           }
         }
       `}</style>

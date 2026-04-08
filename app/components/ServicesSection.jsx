@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { SERVICES } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
+import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 export default function ServicesSection() {
   const [active, setActive] = useState(0);
@@ -59,40 +60,23 @@ export default function ServicesSection() {
 
       {/* Header */}
       <div style={{ padding: "0 48px", marginBottom: "52px" }}>
-        <h2 style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(36px, 6vw, 72px)",
-          fontWeight: 900,
-          color: "#111",
-          textTransform: "uppercase",
-          lineHeight: 1,
-          margin: "0 0 20px 0",
-          letterSpacing: ".02em",
-        }}>
-          Мої послуги
-        </h2>
-        <p style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(16px, 1.5vw, 22px)",
-          fontWeight: 600,
-          color: "#111",
-          lineHeight: 1.45,
-          margin: "0 0 10px 0",
-        }}>
+        <h2
+          style={{
+            ...SECTION_INTRO_TITLE,
+            margin: "0 auto clamp(20px, 3vw, 28px)",
+            maxWidth: "min(100%, 920px)",
+          }}
+        >
           Як ми можемо працювати разом
-        </p>
-        <p style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(14px, 1.25vw, 18px)",
-          fontWeight: 500,
-          color: "#444",
-          lineHeight: 1.55,
-          margin: 0,
-          maxWidth: "640px",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}>
-          Усі формати — онлайн, у твоєму темпі та просторі
+        </h2>
+        <p
+          style={{
+            ...SECTION_INTRO_LEAD,
+            margin: "0 auto",
+            maxWidth: "min(100%, 920px)",
+          }}
+        >
+          Формат—онлайн
         </p>
       </div>
 
@@ -112,9 +96,9 @@ export default function ServicesSection() {
           display: "flex",
           gap: "20px",
           transition: "transform .5s cubic-bezier(.4,0,.2,1)",
-          // картка min(480px, 90vw), gap 20px → крок = min(500px, 90vw+20px)
+          // картка min(580px, 90vw), gap 20px → крок = min(600px, 90vw+20px)
           // центруємо: 50% - (active * крок) - половина_картки
-          transform: `translateX(calc(50% - ${active} * min(500px, calc(90vw + 20px)) - min(240px, 45vw)))`,
+          transform: `translateX(calc(50% - ${active} * min(600px, calc(90vw + 20px)) - min(290px, 45vw)))`,
           willChange: "transform",
           paddingLeft: "0",
         }}>
@@ -126,8 +110,9 @@ export default function ServicesSection() {
               ? "2px solid rgba(255,255,255,0.65)"
               : "2px solid rgba(255,255,255,0.45)";
             const accentBlue = "#A3BEFF";
-            const titleSize = isActive ? "clamp(20px, 2.2vw, 26px)" : "clamp(16px, 1.8vw, 20px)";
+            const titleSize = isActive ? "clamp(24px, 3.2vw, 36px)" : "clamp(17px, 2.2vw, 24px)";
             const bodyFont = isActive ? "13px" : "12px";
+            const priceLineSize = isActive ? "clamp(22px, 2.75vw, 28px)" : "clamp(17px, 2.2vw, 22px)";
             const cardPad = isActive ? "clamp(20px, 4vw, 28px)" : "clamp(16px, 3.5vw, 22px)";
 
             return (
@@ -137,7 +122,7 @@ export default function ServicesSection() {
                 style={{
                   background: cardBg,
                   borderRadius: "36px",
-                  width: "min(480px, 90vw)",
+                  width: "min(580px, 90vw)",
                   flexShrink: 0,
                   display: "flex",
                   flexDirection: "column",
@@ -153,12 +138,12 @@ export default function ServicesSection() {
                   userSelect: "none",
                 }}
               >
-                {/* Фото ~40% висоти картки: широкий кадр 2:1 */}
+                {/* Квадратне фото */}
                 <div style={{
                   borderRadius: "18px",
                   overflow: "hidden",
                   background: "rgba(255,255,255,0.25)",
-                  aspectRatio: isActive ? "2 / 1" : "2.1 / 1",
+                  aspectRatio: "1 / 1",
                   width: "100%",
                   flexShrink: 0,
                   marginBottom: isActive ? "18px" : "14px",
@@ -184,7 +169,7 @@ export default function ServicesSection() {
                     textTransform: "uppercase",
                     letterSpacing: ".03em",
                     lineHeight: 1.06,
-                    margin: "0 0 12px 0",
+                    margin: "0 0 clamp(14px, 2vw, 18px) 0",
                     textAlign: "left",
                     transition: "font-size .3s",
                   }}>
@@ -233,22 +218,22 @@ export default function ServicesSection() {
                       color: "#FFFFFF",
                       textAlign: "left",
                       margin: "0 0 20px 0",
-                      lineHeight: 1.2,
+                      lineHeight: 1.25,
+                      fontSize: priceLineSize,
+                      fontWeight: 800,
                     }}>
-                      <span style={{ fontSize: bodyFont, fontWeight: 600 }}>{s.priceLine} </span>
-                      <span style={{
-                        fontSize: isActive ? "clamp(24px, 3vw, 28px)" : "clamp(18px, 2.2vw, 22px)",
-                        fontWeight: 800,
-                      }}>{s.priceEmphasis}</span>
+                      <span>{s.priceLine} </span>
+                      <span>{s.priceEmphasis}</span>
                     </p>
                   ) : s.price ? (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: isActive ? "clamp(24px, 3vw, 28px)" : "clamp(18px, 2.2vw, 22px)",
+                      fontSize: priceLineSize,
                       fontWeight: 800,
                       color: "#FFFFFF",
                       textAlign: "left",
                       margin: "0 0 20px 0",
+                      lineHeight: 1.25,
                     }}>{s.price}</p>
                   ) : null}
 
@@ -266,99 +251,78 @@ export default function ServicesSection() {
                     </p>
                   )}
 
-                  {isActive ? (
-                    <Link
-                      href={`/poslugy/${s.slug}`}
-                      onClick={(e) => e.stopPropagation()}
+                  <Link
+                    href={`/poslugy/${s.slug}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="services-card-cta"
+                    style={{
+                      background: "#FFFFFF",
+                      border: "none",
+                      borderRadius: "999px",
+                      padding: isActive
+                        ? "16px 14px 16px 26px"
+                        : "14px 12px 14px 20px",
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: isActive
+                        ? "clamp(13px, 1.4vw, 15px)"
+                        : "clamp(11px, 2.6vw, 13px)",
+                      fontWeight: 800,
+                      color: accentBlue,
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "12px",
+                      textTransform: "uppercase",
+                      letterSpacing: isActive ? ".08em" : ".05em",
+                      width: "100%",
+                      maxWidth: "100%",
+                      minHeight: isActive ? 52 : 50,
+                      marginTop: "auto",
+                      textDecoration: "none",
+                      boxSizing: "border-box",
+                      boxShadow: "0 4px 20px rgba(255,255,255,0.35)",
+                      transition: "box-shadow .2s ease, transform .2s ease",
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.boxShadow = "0 6px 28px rgba(0,0,0,.1)";
+                      e.currentTarget.style.transform = "translateY(-1px)";
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(255,255,255,0.35)";
+                      e.currentTarget.style.transform = "none";
+                    }}
+                  >
+                    <span
                       style={{
-                        background: "#FFFFFF",
-                        border: "none",
-                        borderRadius: "999px",
-                        padding: "16px 32px",
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "clamp(13px, 1.4vw, 15px)",
-                        fontWeight: 800,
-                        color: accentBlue,
-                        cursor: "pointer",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "10px",
-                        textTransform: "uppercase",
-                        letterSpacing: ".08em",
-                        width: "100%",
-                        maxWidth: "100%",
-                        marginTop: "auto",
-                        textDecoration: "none",
-                        boxSizing: "border-box",
-                        boxShadow: "0 4px 20px rgba(255,255,255,0.35)",
-                        transition: "box-shadow .2s ease, transform .2s ease",
-                      }}
-                      onMouseEnter={e => {
-                        e.currentTarget.style.boxShadow = "0 6px 28px rgba(0,0,0,.12)";
-                        e.currentTarget.style.transform = "translateY(-1px)";
-                      }}
-                      onMouseLeave={e => {
-                        e.currentTarget.style.boxShadow = "0 4px 20px rgba(255,255,255,0.35)";
-                        e.currentTarget.style.transform = "none";
+                        flex: 1,
+                        minWidth: 0,
+                        lineHeight: 1.3,
+                        textAlign: "left",
+                        whiteSpace: isActive ? "nowrap" : "normal",
+                        hyphens: isActive ? "none" : "auto",
                       }}
                     >
-                      <span>{s.btnLabel}</span>
-                      <ArrowIcon variant="blue" height={20} />
-                    </Link>
-                  ) : (
-                    <Link
-                      href={`/poslugy/${s.slug}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="services-card-btn-inactive"
+                      {s.btnLabel}
+                    </span>
+                    <span
                       style={{
-                        background: "transparent",
-                        border: "2px solid rgba(255,255,255,0.9)",
-                        borderRadius: "50px",
-                        padding: "12px 12px 12px 18px",
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "11px",
-                        fontWeight: 800,
-                        color: "#fff",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: "10px",
-                        textTransform: "uppercase",
-                        letterSpacing: ".04em",
-                        width: "100%",
-                        textDecoration: "none",
-                        boxSizing: "border-box",
-                        minHeight: "52px",
-                      }}
-                    >
-                      <span
-                        style={{
-                          flex: 1,
-                          minWidth: 0,
-                          lineHeight: 1.3,
-                          textAlign: "left",
-                          whiteSpace: "normal",
-                          hyphens: "auto",
-                        }}
-                      >
-                        {s.btnLabel}
-                      </span>
-                      <span style={{
-                        border: "2px solid rgba(255,255,255,0.9)",
+                        width: isActive ? 42 : 38,
+                        height: isActive ? 42 : 38,
+                        minWidth: isActive ? 42 : 38,
                         borderRadius: "50%",
-                        width: 30,
-                        height: 30,
+                        background: "#fff",
+                        boxShadow: "0 0 0 1.5px rgba(163, 190, 255, 0.5)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         flexShrink: 0,
-                      }}>
-                        <ArrowIcon variant="white" height={11} />
-                      </span>
-                    </Link>
-                  )}
+                      }}
+                      aria-hidden
+                    >
+                      <ArrowIcon variant="blue" height={isActive ? 18 : 15} />
+                    </span>
+                  </Link>
                 </div>
               </div>
             );
@@ -467,8 +431,8 @@ export default function ServicesSection() {
       </div>
 
       <style>{`
-        .services-card-btn-inactive:hover {
-          background: rgba(255,255,255,0.12) !important;
+        .services-card-cta:active {
+          transform: translateY(0);
         }
         @media (max-width: 768px) {
           .services-edge-fade {

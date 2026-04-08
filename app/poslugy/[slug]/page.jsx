@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import ScrollToHash from "../../components/ScrollToHash";
 import ServicePageHero from "../../components/ServicePageHero";
-import ContactSection from "../../components/ContactSection";
+import ServiceBookingSection from "../../components/ServiceBookingSection";
 import Footer from "../../components/Footer";
 import { getServiceBySlug, getServiceSlugs } from "../../data/siteData";
 
@@ -43,7 +43,7 @@ export default async function ServicePage({ params }) {
       <ScrollToHash />
       <Navbar />
       <ServicePageHero service={service} />
-      <ContactSection />
+      <ServiceBookingSection service={service} />
       <Footer />
     </main>
   );

@@ -1,4 +1,5 @@
 import CtaPillButton from "./CtaPillButton";
+import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 const font = "'Montserrat', sans-serif";
 
@@ -14,7 +15,7 @@ export default function ServicePageHero({ service }) {
       style={{
         background: "#fff",
         padding: "64px 120px 72px 120px",
-        minHeight: "calc(100vh - 84px)",
+        minHeight: "unset",
         boxSizing: "border-box",
       }}
     >
@@ -22,29 +23,22 @@ export default function ServicePageHero({ service }) {
         <h1
           className="service-hero-title"
           style={{
-            fontFamily: font,
-            fontSize: "clamp(56px, 7.5vw, 100px)",
-            fontWeight: 900,
-            lineHeight: "0.96",
-            color: "#111",
-            textTransform: "uppercase",
-            letterSpacing: "-0.01em",
-            margin: "0 0 24px 0",
+            ...SECTION_INTRO_TITLE,
+            textAlign: "left",
+            maxWidth: "min(100%, 920px)",
           }}
         >
           {service.title}
         </h1>
 
         <p
+          className="service-hero-lead"
           style={{
-            fontFamily: font,
-            fontSize: "clamp(20px, 2.5vw, 34px)",
-            fontWeight: 600,
-            color: "#111",
-            textTransform: "uppercase",
-            lineHeight: "1.15",
-            margin: "0 0 20px 0",
-            letterSpacing: "0.01em",
+            ...SECTION_INTRO_LEAD,
+            textAlign: "left",
+            color: "#444",
+            maxWidth: "min(100%, 920px)",
+            margin: "0 0 clamp(16px, 2.5vw, 24px) 0",
           }}
         >
           {service.desc}
@@ -142,8 +136,8 @@ export default function ServicePageHero({ service }) {
           </p>
         )}
 
-        <CtaPillButton className="service-page-hero__cta" href="#контакти" fullWidth>
-          Записатися на консультацію
+        <CtaPillButton className="service-page-hero__cta" href="#booking-calendar">
+          Записатися на сесію
         </CtaPillButton>
       </div>
 
@@ -152,21 +146,21 @@ export default function ServicePageHero({ service }) {
         style={{
           flexShrink: 0,
           width: "min(420px, 38vw)",
-          aspectRatio: "1",
           borderRadius: "20px",
           overflow: "hidden",
           background: "#ccd9ff",
-          alignSelf: "center",
         }}
       >
         {service.img ? (
           <img
             src={service.img}
             alt=""
+            className="service-page-hero__img"
             style={{
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              objectPosition: "center",
               display: "block",
             }}
           />
@@ -175,49 +169,81 @@ export default function ServicePageHero({ service }) {
 
       <style>{`
         .service-page-hero {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) auto;
-          grid-template-rows: auto;
+          display: flex;
+          flex-direction: row;
           align-items: center;
-          column-gap: clamp(32px, 5vw, 64px);
+          gap: clamp(32px, 5vw, 64px);
         }
         .service-page-hero__text {
-          grid-column: 1;
+          flex: 1 1 auto;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
         }
         .service-page-hero__visual {
-          grid-column: 2;
-          grid-row: 1;
+          flex: 0 0 auto;
+          width: min(420px, 38vw);
+          aspect-ratio: 1;
+          height: auto;
+          align-self: center;
+          position: relative;
+        }
+        .service-page-hero__img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
         }
         .service-page-hero__cta {
+          flex-shrink: 0;
+          align-self: flex-start;
+          width: fit-content;
           max-width: 100%;
+          box-sizing: border-box;
         }
         @media (max-width: 768px) {
           .service-hero-title {
-            font-size: clamp(40px, 11vw, 56px) !important;
-            line-height: 0.98 !important;
+            white-space: normal !important;
+            font-size: clamp(24px, 7vw, 40px) !important;
+            line-height: 1.05 !important;
+          }
+          .service-hero-lead {
+            font-size: clamp(14px, 3.8vw, 18px) !important;
+            line-height: 1.45 !important;
           }
           .service-page-hero {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto auto;
+            flex-direction: column;
+            align-items: stretch;
             padding: 40px 40px 48px !important;
             min-height: unset !important;
-            row-gap: 32px;
+            gap: 32px;
           }
           .service-page-hero__text {
-            grid-column: 1;
-            grid-row: 1;
+            flex: none;
           }
           .service-page-hero__visual {
-            grid-column: 1;
-            grid-row: 2;
+            flex: none;
             width: 100% !important;
             max-width: min(100%, 360px);
-            justify-self: center;
+            align-self: center;
+            aspect-ratio: 1;
+            min-height: unset;
+            height: auto;
+          }
+          .service-page-hero__img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+          }
+          .service-page-hero__cta {
+            align-self: center;
+            width: fit-content !important;
           }
         }
         @media (max-width: 420px) {
           .service-hero-title {
-            font-size: clamp(34px, 12vw, 44px) !important;
+            font-size: clamp(22px, 6.5vw, 34px) !important;
           }
         }
       `}</style>

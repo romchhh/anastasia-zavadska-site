@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { REVIEWS } from "../data/siteData";
+import { REVIEWS, PRAKTIKUM_JOURNEY_URL } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
+import CtaPillButton from "./CtaPillButton";
+import { SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 const CARD_W = "min(360px, 82vw)";
 const STEP = "min(380px, calc(82vw + 20px))";
@@ -151,13 +153,7 @@ export default function ReviewsSection() {
         className="reviews-header"
       >
         <h2 style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(28px, 5vw, 56px)",
-          fontWeight: 900,
-          color: "#111",
-          textTransform: "uppercase",
-          letterSpacing: ".02em",
-          lineHeight: 1.05,
+          ...SECTION_INTRO_TITLE,
           margin: 0,
           textAlign: "left",
         }}>
@@ -288,38 +284,65 @@ export default function ReviewsSection() {
         )}
       </div>
 
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "10px",
-        marginTop: "36px",
-      }}>
-        {REVIEWS.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => setActive(i)}
-            aria-label={`Відгук ${i + 1}`}
-            style={{
-              width: active === i ? 28 : 10,
-              height: 10,
-              borderRadius: "5px",
-              background: active === i ? "#92B2FF" : "#c8d8f0",
-              border: "none",
-              cursor: "pointer",
-              padding: 0,
-              transition: "width .35s cubic-bezier(.4,0,.2,1), background .3s",
-            }}
-          />
-        ))}
+      <div className="reviews-footer">
+        <div
+          className="reviews-dots"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "10px",
+            marginBottom: "clamp(20px, 3vw, 28px)",
+          }}
+        >
+          {REVIEWS.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-label={`Відгук ${i + 1}`}
+              style={{
+                width: active === i ? 28 : 10,
+                height: 10,
+                borderRadius: "5px",
+                background: active === i ? "#92B2FF" : "#c8d8f0",
+                border: "none",
+                cursor: "pointer",
+                padding: 0,
+                transition: "width .35s cubic-bezier(.4,0,.2,1), background .3s",
+              }}
+            />
+          ))}
+        </div>
+        <div className="reviews-practicum-cta-wrap">
+          <CtaPillButton
+            href={PRAKTIKUM_JOURNEY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="compact"
+          >
+            Детальніше ознайомитися з програмою
+          </CtaPillButton>
+        </div>
       </div>
 
       <style>{`
+        .reviews-footer {
+          margin-top: 36px;
+          padding: 0 120px;
+          box-sizing: border-box;
+        }
+        .reviews-practicum-cta-wrap {
+          display: flex;
+          justify-content: flex-end;
+        }
         @media (max-width: 768px) {
           .reviews-header {
             padding: 0 40px !important;
             margin-bottom: 36px !important;
+          }
+          .reviews-footer {
+            padding: 0 40px !important;
           }
         }
       `}</style>

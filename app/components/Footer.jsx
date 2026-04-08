@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FOOTER_MENU, FOOTER_LEGAL, CONTACTS, navLinkHref } from "../data/siteData";
-import { DualRoundArrow } from "./ArrowIcon";
+import { FOOTER_MENU, FOOTER_LEGAL_LINKS, navLinkHref } from "../data/siteData";
 
 const BG = "#a1b6f9";
 const font = "'Montserrat', sans-serif";
@@ -31,7 +31,7 @@ export default function Footer() {
           gap: "clamp(32px, 5vw, 56px)",
         }}
       >
-        {/* Ліва колонка: CTA + ім’я */}
+        {/* Ліва колонка: ім’я */}
         <div
           className="footer-brand"
           style={{
@@ -42,61 +42,9 @@ export default function Footer() {
             flex: "0 1 auto",
           }}
         >
-          <a
-            href={CONTACTS.telegramLink}
-            target="_blank"
-            rel="noreferrer"
-            className="footer-cta-btn"
-            style={{
-              textDecoration: "none",
-              alignSelf: "flex-start",
-              background: "transparent",
-              border: "2px solid rgba(255,255,255,0.85)",
-              borderRadius: "50px",
-              boxSizing: "border-box",
-              height: 48,
-              padding: "0 14px 0 36px",
-              minWidth: "252px",
-              fontFamily: font,
-              fontSize: "17px",
-              fontWeight: 700,
-              color: "#fff",
-              cursor: "pointer",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: "12px",
-              letterSpacing: ".04em",
-              transition: "background .2s, color .2s, box-shadow .2s",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Приєднатися
-            <span
-              className="footer-cta-btn-arrow"
-              style={{
-                background: "#fff",
-                border: "2px solid transparent",
-                borderRadius: 999,
-                width: 38,
-                height: 28,
-                minWidth: 38,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                lineHeight: 1,
-                transition: "background .2s, border-color .2s, color .2s",
-                boxSizing: "border-box",
-              }}
-              aria-hidden
-            >
-              <DualRoundArrow height={12} />
-            </span>
-          </a>
-
           <div className="footer-brand-text">
-            <p
+            <Link
+              href="/"
               className="footer-brand-title"
               style={{
                 fontSize: "clamp(20px, 2.8vw, 32px)",
@@ -106,10 +54,12 @@ export default function Footer() {
                 letterSpacing: ".04em",
                 lineHeight: 1.12,
                 margin: "0 0 10px 0",
+                textDecoration: "none",
+                display: "inline-block",
               }}
             >
               Анастасія Завадська
-            </p>
+            </Link>
             <p
               className="footer-copyright"
               style={{
@@ -204,10 +154,10 @@ export default function Footer() {
                 gap: "clamp(10px, 1.2vw, 14px)",
               }}
             >
-              {FOOTER_LEGAL.map((item) => (
-                <li key={item}>
+              {FOOTER_LEGAL_LINKS.map((item) => (
+                <li key={item.href}>
                   <a
-                    href="#"
+                    href={item.href}
                     style={{
                       fontSize: "clamp(14px, 1.25vw, 17px)",
                       color: "#fff",
@@ -223,7 +173,7 @@ export default function Footer() {
                       e.currentTarget.style.opacity = "0.95";
                     }}
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -266,16 +216,6 @@ export default function Footer() {
       </div>
 
       <style>{`
-        .footer-cta-btn:hover {
-          background: #fff !important;
-          color: #92b2ff !important;
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-        }
-        .footer-cta-btn:hover .footer-cta-btn-arrow {
-          background: #92b2ff !important;
-          border-color: #92b2ff !important;
-          color: #fff !important;
-        }
         @media (max-width: 768px) {
           .footer-inner {
             flex-direction: column !important;
@@ -290,9 +230,6 @@ export default function Footer() {
             width: 100% !important;
             min-width: 0 !important;
             gap: 28px !important;
-          }
-          .footer-brand .footer-cta-btn {
-            align-self: center !important;
           }
           .footer-brand-text {
             text-align: center !important;
@@ -330,14 +267,6 @@ export default function Footer() {
           .footer-menu-list a,
           .footer-legal-list a {
             font-size: 18px !important;
-          }
-          .footer-cta-btn {
-            min-width: 0 !important;
-            width: 100%;
-            max-width: 340px;
-            height: 48px !important;
-            font-size: 17px !important;
-            padding: 0 14px 0 36px !important;
           }
           .footer-credit-wrap {
             padding: 20px 40px 28px !important;

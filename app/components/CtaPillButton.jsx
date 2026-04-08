@@ -10,17 +10,30 @@ export default function CtaPillButton({
   href,
   className = "",
   fullWidth = false,
+  /** Світліший перивінкль (#92B2FF) для блоку контактів; compact — менша кнопка (напр. відгуки) */
+  variant = "default",
   target,
   rel,
   ...rest
 }) {
-  const cls = ["cta-pill", fullWidth && "cta-pill--full", className].filter(Boolean).join(" ");
+  const cls = [
+    "cta-pill",
+    fullWidth && "cta-pill--full",
+    variant === "periwinkle" && "cta-pill--periwinkle",
+    variant === "compact" && "cta-pill--compact",
+    className,
+  ].filter(Boolean).join(" ");
+
+  const arrowHeight = variant === "compact" ? 16 : 22;
 
   const inner = (
     <>
       {children}
       <span className="cta-pill__arrow" aria-hidden>
-        <ArrowIcon variant="blue" height={22} />
+        <ArrowIcon
+          variant={variant === "periwinkle" ? "periwinkle" : "blue"}
+          height={arrowHeight}
+        />
       </span>
     </>
   );

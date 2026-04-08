@@ -1,5 +1,6 @@
-import { TAGS, ABOUT_PHOTO } from "../data/siteData";
+import { TAGS, ABOUT_PHOTO, INDIVIDUAL_BOOKING_PAGE } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
+import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 export default function AboutSection() {
   return (
@@ -95,13 +96,8 @@ export default function AboutSection() {
           }}
         >
           <h2 style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "clamp(32px, 6.5vw, 64px)",
-            fontWeight: 900,
-            color: "#111",
-            textTransform: "uppercase",
-            lineHeight: "100%",
-            margin: "0 0 36px 0",
+            ...SECTION_INTRO_TITLE,
+            margin: "0 0 clamp(20px, 3vw, 28px) 0",
             whiteSpace: "nowrap",
           }}>
             Привіт, я Анастасія
@@ -112,17 +108,17 @@ export default function AboutSection() {
             "У своїй роботі я не про «швидко полагодити». Я про процес — коли ти поступово повертаєшся до себе: до своїх відчуттів, бажань і внутрішньої опори. Я не даю готових відповідей і не «виправляю». Я поруч — щоб ти міг/могла краще зрозуміти себе і знайти свій шлях.",
             "До того, як стати магістром психології, я працювала в ІТ — пройшла шлях від офіс-менеджера до HRD/COO. Тому добре розумію тих, хто живе в режимі ефективності, виснаження і постійного «треба більше».",
           ].map((p, i) => (
-            <p key={i} style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(15px, 1.35vw, 18px)",
-              fontWeight: 500,
-              lineHeight: 1.85,
-              color: "#222",
-              maxWidth: "min(100%, 680px)",
-              width: "100%",
-              margin: "0 0 20px 0",
-              textAlign: "left",
-            }}>
+            <p
+              key={i}
+              style={{
+                ...SECTION_INTRO_LEAD,
+                fontWeight: i === 0 ? 400 : 500,
+                maxWidth: "min(100%, 680px)",
+                width: "100%",
+                margin: "0 0 20px 0",
+                textAlign: "center",
+              }}
+            >
               {p}
             </p>
           ))}
@@ -211,69 +207,80 @@ export default function AboutSection() {
             className="about-work-intro"
             style={{
               textAlign: "center",
-              maxWidth: "820px",
+              maxWidth: "min(100%, 1040px)",
               margin: "0 auto",
               width: "100%",
             }}
           >
             <h3
-              className="about-work-title about-work-title-services-match"
+              className="about-work-intro-heading"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: "clamp(36px, 6vw, 72px)",
-                fontWeight: 900,
-                color: "#111",
-                textTransform: "uppercase",
-                lineHeight: 1,
-                margin: "0 0 16px 0",
+                ...SECTION_INTRO_TITLE,
               }}
             >
               З чим я працюю
             </h3>
             <p
+              className="about-work-intro-lead"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: "clamp(15px, 1.35vw, 18px)",
-                fontWeight: 400,
-                lineHeight: 1.75,
-                color: "#000",
-                margin: "0 auto clamp(28px, 4vw, 40px)",
-                maxWidth: "640px",
+                ...SECTION_INTRO_LEAD,
+                margin: "0 auto clamp(32px, 4.5vw, 48px)",
+                maxWidth: "min(100%, 920px)",
+                width: "100%",
               }}
             >
               Буває, що проблему не завжди легко назвати одним словом на першому сеансі — і це нормально. Іноді ти просто відчуваєш, що щось не так. Ми починаємо з цього відчуття і поступово розбираємося, що за ним стоїть.
             </p>
 
             <div
+              className="about-work-cards"
               style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "clamp(10px, 1.5vw, 14px)",
-                margin: "0 0 clamp(36px, 5vw, 48px) 0",
-                textAlign: "left",
+                display: "grid",
+                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                gap: "clamp(16px, 2.5vw, 28px)",
+                margin: "0 0 clamp(36px, 5vw, 52px) 0",
+                width: "100%",
+                maxWidth: "1000px",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
             >
               {[
-                "важкість, тривога і ніби всередині порожньо",
-                "хвиля, яка накриває, і складно впоратися з думками або емоціями",
-                "ззовні ніби все нормально, але жити так більше не хочеться",
-              ].map((label) => (
+                {
+                  img: "/work-with/anxiety-empty.png",
+                  label: "важкість, тривога і ніби всередині порожньо",
+                },
+                {
+                  img: "/work-with/emotions-wave.png",
+                  label: "хвиля, яка накриває, і складно впоратися з думками або емоціями",
+                },
+                {
+                  img: "/work-with/facade-inner-tired.png",
+                  label: "ззовні ніби все нормально, але жити так більше не хочеться",
+                },
+              ].map(({ img, label }) => (
                 <div
                   key={label}
-                  className="about-work-pill-row"
+                  className="about-work-card"
                   style={{
                     display: "flex",
-                    alignItems: "flex-start",
-                    gap: "clamp(12px, 2vw, 16px)",
-                    background: "#E1E9FF",
-                    borderRadius: "999px",
-                    padding: "clamp(14px, 2vw, 18px) clamp(18px, 2.5vw, 24px)",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    textAlign: "center",
+                    background: "#E8EEFF",
+                    borderRadius: "clamp(20px, 3vw, 28px)",
+                    aspectRatio: "5 / 4",
+                    padding: "clamp(14px, 2.2vw, 22px) clamp(14px, 2vw, 22px)",
+                    boxSizing: "border-box",
+                    gap: "clamp(6px, 1vw, 10px)",
                   }}
                 >
-                  <span
+                  <div
                     style={{
-                      flexShrink: 0,
-                      marginTop: "1px",
+                      flex: "0 0 auto",
+                      width: "min(68%, 180px)",
+                      maxHeight: "38%",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -281,28 +288,33 @@ export default function AboutSection() {
                     aria-hidden
                   >
                     <img
-                      src="/icon.svg"
+                      src={img}
                       alt=""
-                      width={20}
-                      height={21}
                       style={{
-                        width: "clamp(17px, 2vw, 22px)",
-                        height: "auto",
+                        width: "100%",
+                        height: "100%",
+                        maxHeight: "clamp(80px, 17vw, 130px)",
+                        objectFit: "contain",
                         display: "block",
                       }}
                     />
-                  </span>
-                  <span
+                  </div>
+                  <p
                     style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "clamp(14px, 1.15vw, 16px)",
-                      fontWeight: 500,
+                      fontSize: "clamp(13px, 1.15vw, 16px)",
+                      fontWeight: 700,
                       color: "#000",
-                      lineHeight: 1.55,
+                      lineHeight: 1.5,
+                      margin: 0,
+                      marginTop: "clamp(-4px, -0.6vw, -2px)",
+                      flex: "1 1 auto",
+                      alignSelf: "stretch",
+                      textAlign: "center",
                     }}
                   >
                     {label}
-                  </span>
+                  </p>
                 </div>
               ))}
             </div>
@@ -328,7 +340,7 @@ export default function AboutSection() {
                 justifyContent: "center",
               }}
             >
-              <CtaPillButton href="#послуги">Записатися на консультацію</CtaPillButton>
+              <CtaPillButton href={INDIVIDUAL_BOOKING_PAGE}>Записатися на сесію</CtaPillButton>
             </div>
           </div>
 
@@ -344,14 +356,9 @@ export default function AboutSection() {
           >
             <div className="about-work-list-col">
               <h3
-                className="about-work-title-services-match"
+                className="about-work-states-heading"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "clamp(36px, 6vw, 72px)",
-                  fontWeight: 900,
-                  color: "#111",
-                  textTransform: "uppercase",
-                  lineHeight: 1,
+                  ...SECTION_INTRO_TITLE,
                   margin: "0 0 clamp(22px, 3vw, 32px) 0",
                   textAlign: "left",
                 }}
@@ -365,7 +372,7 @@ export default function AboutSection() {
                   padding: 0,
                   display: "flex",
                   flexDirection: "column",
-                  gap: "clamp(10px, 1.2vw, 14px)",
+                  gap: "clamp(12px, 1.5vw, 18px)",
                 }}
               >
                 {[
@@ -377,34 +384,44 @@ export default function AboutSection() {
                   "наслідки травматичного досвіду, ПТСР",
                   "нав'язливі думки і дії (ОКР)",
                   "залежності — як хімічні, так і поведінкові",
-                ].map((item, idx) => (
+                ].map((item) => (
                   <li
                     key={item}
                     style={{
                       display: "flex",
-                      alignItems: "baseline",
+                      alignItems: "center",
                       gap: "clamp(12px, 2vw, 18px)",
                     }}
                   >
                     <span
                       style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "clamp(12px, 1vw, 14px)",
-                        fontWeight: 700,
-                        color: "#B4C2E8",
-                        minWidth: "28px",
                         flexShrink: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "clamp(26px, 3vw, 32px)",
                       }}
+                      aria-hidden
                     >
-                      {String(idx + 1).padStart(2, "0")}
+                      <img
+                        src="/icon.svg"
+                        alt=""
+                        width={22}
+                        height={23}
+                        style={{
+                          width: "clamp(20px, 2.4vw, 26px)",
+                          height: "auto",
+                          display: "block",
+                        }}
+                      />
                     </span>
                     <span
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "clamp(14px, 1.15vw, 17px)",
+                        fontSize: "clamp(17px, 1.5vw, 22px)",
                         fontWeight: 500,
                         color: "#000",
-                        lineHeight: 1.5,
+                        lineHeight: 1.55,
                       }}
                     >
                       {item}
@@ -417,57 +434,92 @@ export default function AboutSection() {
             <div
               className="about-work-visual"
               style={{
-                background: "#C7D4FF",
                 borderRadius: "clamp(20px, 3vw, 32px)",
                 minHeight: "clamp(280px, 42vw, 420px)",
                 width: "100%",
+                overflow: "hidden",
+                background: "#C7D4FF",
+                position: "relative",
               }}
-              aria-hidden
-            />
+            >
+              <img
+                src="/hands.png"
+                alt=""
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  minHeight: "clamp(280px, 42vw, 420px)",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  display: "block",
+                }}
+              />
+            </div>
           </div>
 
           <div
-            className="about-thought-cloud"
+            className="about-thought-cloud-wrap"
             style={{
-              background:
-                "linear-gradient(90deg, rgba(165, 180, 252, 0.38) 0%, #fff 10%, #fff 90%, rgba(165, 180, 252, 0.38) 100%)",
-              border: "none",
-              borderRadius: "clamp(24px, 3vw, 36px)",
-              padding: "clamp(28px, 3.5vw, 44px) clamp(22px, 4vw, 48px)",
-              boxShadow:
-                "0 12px 40px rgba(0, 0, 0, 0.07), -26px 0 42px -8px rgba(153, 178, 248, 0.55), 26px 0 42px -8px rgba(153, 178, 248, 0.55)",
+              position: "relative",
+              marginTop: "clamp(8px, 2vw, 16px)",
+              width: "100%",
+              maxWidth: "980px",
+              marginLeft: "auto",
+              marginRight: "auto",
+              padding: "clamp(8px, 2vw, 20px)",
+              boxSizing: "border-box",
             }}
           >
-            <p
+            <div
+              className="about-thought-cloud"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: "clamp(15px, 1.35vw, 20px)",
-                fontWeight: 500,
-                lineHeight: 1.75,
-                color: "#000",
-                margin: 0,
-                textAlign: "center",
-                maxWidth: "920px",
-                marginInline: "auto",
+                position: "relative",
+                border: "none",
+                borderRadius: "clamp(20px, 2.8vw, 28px)",
+                padding: "clamp(32px, 4vw, 52px) clamp(28px, 4.5vw, 56px)",
+                background: "#ffffff",
+                boxShadow: `
+                  0 4px 6px rgba(200, 215, 245, 0.12),
+                  0 12px 40px rgba(120, 150, 210, 0.14),
+                  18px 0 48px -8px rgba(160, 188, 255, 0.65),
+                  -18px 0 48px -8px rgba(160, 188, 255, 0.65),
+                  0 0 56px rgba(150, 175, 235, 0.2)
+                `,
               }}
             >
-              Ми починаємо з симптому, але{" "}
-              <strong style={{ fontWeight: 800 }}>робота з психологом — про глибше:</strong>{" "}
-              зрозуміти себе і поступово змінювати те, що заважає жити так, як хочеться.
-            </p>
+              <p
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: "clamp(15px, 1.35vw, 20px)",
+                  fontWeight: 500,
+                  lineHeight: 1.75,
+                  color: "#111",
+                  margin: 0,
+                  textAlign: "center",
+                  maxWidth: "920px",
+                  marginInline: "auto",
+                }}
+              >
+                Ми починаємо з симптому, але{" "}
+                <strong style={{ fontWeight: 800 }}>робота з психологом — про глибше:</strong>{" "}
+                зрозуміти себе і поступово змінювати те, що заважає жити так, як хочеться.
+              </p>
+            </div>
           </div>
 
           <p
             className="about-work-tags-line"
             style={{
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(12px, 1.05vw, 15px)",
-              fontWeight: 500,
-              color: "#555",
+              fontSize: "clamp(15px, 1.5vw, 18px)",
+              fontWeight: 700,
+              fontStyle: "normal",
+              lineHeight: "100%",
+              letterSpacing: 0,
+              color: "#6391FF",
               textAlign: "center",
-              lineHeight: 1.6,
               margin: 0,
-              paddingTop: "clamp(4px, 1vw, 8px)",
+              paddingTop: "clamp(16px, 2.5vw, 28px)",
             }}
           >
             {TAGS.join(" · ")}
@@ -476,6 +528,13 @@ export default function AboutSection() {
       </section>
 
       <style>{`
+        .about-work-cta-link .cta-pill {
+          font-family: 'Montserrat', sans-serif !important;
+          font-size: 24px !important;
+          font-weight: 700 !important;
+          line-height: 100% !important;
+          letter-spacing: 0 !important;
+        }
         @media (max-width: 768px) {
           #про-мене {
             min-height: unset !important;
@@ -521,8 +580,54 @@ export default function AboutSection() {
           .about-work-visual {
             min-height: 220px !important;
           }
-          .about-work-pill-row {
-            border-radius: 22px !important;
+          .about-work-visual img {
+            min-height: 220px !important;
+          }
+          .about-work-intro-heading,
+          .about-work-states-heading {
+            font-size: clamp(24px, 8vw, 40px) !important;
+          }
+          .about-work-tags-line {
+            font-size: clamp(12px, 3.2vw, 16px) !important;
+          }
+          .about-work-cards {
+            grid-template-columns: 1fr !important;
+            max-width: 100% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            gap: 10px !important;
+          }
+          .about-work-card {
+            aspect-ratio: unset !important;
+            min-height: 0 !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            text-align: left !important;
+            padding: 12px 14px !important;
+            gap: 14px !important;
+            border-radius: 16px !important;
+          }
+          .about-work-card > div:first-of-type {
+            width: 56px !important;
+            min-width: 56px !important;
+            max-height: 56px !important;
+            flex-shrink: 0 !important;
+          }
+          .about-work-card > div:first-of-type img {
+            max-height: 52px !important;
+            width: auto !important;
+            max-width: 100% !important;
+            margin: 0 auto !important;
+          }
+          .about-work-card p {
+            text-align: left !important;
+            margin-top: 0 !important;
+            font-size: clamp(12px, 3.4vw, 14px) !important;
+            line-height: 1.4 !important;
+            font-weight: 600 !important;
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
           }
           .about-work-cta-link {
             width: 100% !important;
@@ -532,15 +637,34 @@ export default function AboutSection() {
             width: 100% !important;
             max-width: 100% !important;
             justify-content: space-between !important;
+            font-size: clamp(16px, 4.2vw, 22px) !important;
           }
           .about-thought-cloud {
-            border-radius: 24px !important;
-            padding: 22px 20px !important;
+            border-radius: 20px !important;
+            padding: 24px 18px !important;
+            box-shadow:
+              0 6px 24px rgba(120, 150, 210, 0.12),
+              10px 0 36px -6px rgba(160, 188, 255, 0.5),
+              -10px 0 36px -6px rgba(160, 188, 255, 0.5),
+              0 0 40px rgba(150, 175, 235, 0.16) !important;
           }
         }
         @media (max-width: 420px) {
           .about-work-section {
             padding: 44px 20px 52px !important;
+          }
+          .about-work-card {
+            padding: 10px 12px !important;
+            gap: 12px !important;
+            border-radius: 14px !important;
+          }
+          .about-work-card > div:first-of-type {
+            width: 48px !important;
+            min-width: 48px !important;
+            max-height: 48px !important;
+          }
+          .about-work-card > div:first-of-type img {
+            max-height: 44px !important;
           }
         }
       `}</style>

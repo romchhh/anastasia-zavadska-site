@@ -3,11 +3,13 @@
  */
 
 const BLUE = "/bluearrow.svg";
+const PERIWINKLE = "/periwinkle-arrow.svg";
 const WHITE = "/whirearrow.svg";
 
 /** Праворуч; `direction="left"` — дзеркально для «назад». */
 export function ArrowIcon({ variant = "blue", direction = "right", height = 18, className, style }) {
-  const src = variant === "white" ? WHITE : BLUE;
+  const src =
+    variant === "white" ? WHITE : variant === "periwinkle" ? PERIWINKLE : BLUE;
   const flip = direction === "left" ? "scaleX(-1)" : undefined;
   return (
     <img

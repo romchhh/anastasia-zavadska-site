@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { EDUCATION_DOCUMENTS } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
+import { SECTION_INTRO_LEAD } from "./sectionIntroStyles";
 
 function DiplomaSlide({ doc, onOpen }) {
   const hasImage = Boolean(doc.src);
@@ -13,12 +14,12 @@ function DiplomaSlide({ doc, onOpen }) {
       onClick={onOpen}
       style={{
         flex: "0 0 auto",
-        width: "min(200px, 42vw)",
+        width: "min(280px, 42vw)",
         aspectRatio: "3 / 4",
-        borderRadius: "16px",
+        borderRadius: "20px",
         background: "#fff",
         border: "none",
-        boxShadow: "0 4px 24px rgba(80,120,200,.12)",
+        boxShadow: "0 6px 28px rgba(80, 110, 160, 0.14)",
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",
@@ -37,7 +38,7 @@ function DiplomaSlide({ doc, onOpen }) {
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = "none";
-        e.currentTarget.style.boxShadow = "0 4px 24px rgba(80,120,200,.12)";
+        e.currentTarget.style.boxShadow = "0 6px 28px rgba(80, 110, 160, 0.14)";
       }}
     >
       {doc.src ? (
@@ -48,7 +49,7 @@ function DiplomaSlide({ doc, onOpen }) {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            borderRadius: "10px",
+            borderRadius: "20px",
           }}
         />
       ) : (
@@ -78,16 +79,16 @@ function DiplomaSlide({ doc, onOpen }) {
   );
 }
 
+const ACCENT = "#6391FF";
+
 const arrowBtnBase = {
   background: "#fff",
-  border: "1.5px solid rgba(120,160,220,0.45)",
+  border: `1.5px solid ${ACCENT}`,
   borderRadius: "50%",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: "20px",
-  color: "#6b8fd4",
   cursor: "pointer",
-  boxShadow: "0 2px 10px rgba(100,140,200,.1)",
+  boxShadow: "0 2px 12px rgba(99, 145, 255, 0.18)",
   flexShrink: 0,
 };
 
@@ -123,7 +124,7 @@ export default function EducationSection() {
     const el = trackRef.current;
     if (!el) return;
     const slide = el.querySelector("[data-edu-slide]");
-    const step = slide ? slide.offsetWidth + 16 : 220;
+    const step = slide ? slide.offsetWidth + 20 : 300;
     el.scrollBy({ left: dir * step, behavior: "smooth" });
   }, []);
 
@@ -188,82 +189,116 @@ export default function EducationSection() {
       id="освіта"
       style={{
         background: "#fff",
-        padding: "72px 120px 88px",
+        padding: "clamp(56px, 7vw, 96px) clamp(40px, 6vw, 120px) clamp(72px, 9vw, 112px)",
         boxSizing: "border-box",
       }}
       className="education-section-outer"
     >
       <div
+        className="education-panel"
         style={{
-          background: "linear-gradient(145deg, #c8daf8 0%, #d8e6fa 42%, #e6eefc 100%)",
-          borderRadius: "36px",
-          padding: "clamp(32px, 5vw, 56px) clamp(28px, 4vw, 52px)",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "clamp(28px, 4vw, 48px)",
-          alignItems: "stretch",
-          boxShadow: "0 8px 40px rgba(100,140,200,.1)",
+          background: "#D6E0FF",
+          borderRadius: "clamp(40px, 5vw, 56px)",
+          padding:
+            "clamp(44px, 5.5vw, 68px) clamp(32px, 4vw, 48px) clamp(44px, 5.5vw, 68px) clamp(48px, 6vw, 88px)",
+          display: "grid",
+          gridTemplateColumns: "minmax(260px, min(34vw, 380px)) minmax(0, 1fr)",
+          gap: "clamp(28px, 4vw, 52px)",
+          alignItems: "center",
+          boxShadow: "0 16px 48px rgba(90, 110, 180, 0.12)",
+          boxSizing: "border-box",
         }}
       >
-        {/* Ліва колонка */}
-        <div style={{
-          flex: "1 1 280px",
-          maxWidth: "420px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          gap: "32px",
-        }}>
-          <div>
-            <h2 style={{
+        {/* Ліва колонка: текст, CTA, стрілки */}
+        <div
+          className="education-panel-text"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            gap: 0,
+            minWidth: 0,
+          }}
+        >
+          <h2
+            style={{
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(24px, 3.2vw, 36px)",
+              fontSize: "clamp(28px, 3.6vw, 44px)",
               fontWeight: 900,
               color: "#111",
-              lineHeight: 1.12,
-              margin: "0 0 16px 0",
+              lineHeight: 1.1,
+              margin: "0 0 clamp(14px, 2vw, 20px) 0",
               letterSpacing: "-0.02em",
-            }}>
-              Освіта та кваліфікація
-            </h2>
-            <p style={{
+            }}
+          >
+            Освіта та кваліфікація
+          </h2>
+          <p
+            style={{
+              ...SECTION_INTRO_LEAD,
+              margin: "0 0 clamp(24px, 3vw, 32px) 0",
+              maxWidth: "min(100%, 920px)",
+              textAlign: "left",
+            }}
+          >
+            Я продовжую вчитися — щоб бути поруч ефективніше
+          </p>
+          <button
+            type="button"
+            onClick={() => openModal(0)}
+            style={{
+              background: "#fff",
+              border: "none",
+              borderRadius: "999px",
+              padding: "15px 32px",
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(14px, 1.25vw, 17px)",
-              fontWeight: 500,
-              color: "#444",
-              lineHeight: 1.65,
-              margin: "0 0 28px 0",
-            }}>
-              Я продовжую вчитися — щоб бути поруч ефективніше
-            </p>
+              fontSize: "clamp(11px, 1.05vw, 13px)",
+              fontWeight: 700,
+              color: ACCENT,
+              letterSpacing: ".1em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              boxShadow: "0 4px 24px rgba(255,255,255,.85), 0 4px 20px rgba(99,145,255,.15)",
+              transition: "transform .2s, box-shadow .2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 8px 32px rgba(255,255,255,.95), 0 6px 24px rgba(99,145,255,.22)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "none";
+              e.currentTarget.style.boxShadow = "0 4px 24px rgba(255,255,255,.85), 0 4px 20px rgba(99,145,255,.15)";
+            }}
+          >
+            Переглянути всі документи
+          </button>
+          <div
+            className="education-nav-arrows"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "12px",
+              marginTop: "clamp(24px, 3.5vw, 36px)",
+            }}
+          >
             <button
               type="button"
-              onClick={() => openModal(0)}
-              style={{
-                background: "#fff",
-                border: "none",
-                borderRadius: "999px",
-                padding: "16px 28px",
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: "clamp(11px, 1vw, 13px)",
-                fontWeight: 800,
-                color: "#5a7fd4",
-                letterSpacing: ".08em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                boxShadow: "0 4px 20px rgba(255,255,255,.6), 0 2px 12px rgba(80,120,200,.12)",
-                transition: "transform .2s, box-shadow .2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.boxShadow = "0 6px 28px rgba(255,255,255,.8), 0 4px 16px rgba(80,120,200,.16)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "none";
-                e.currentTarget.style.boxShadow = "0 4px 20px rgba(255,255,255,.6), 0 2px 12px rgba(80,120,200,.12)";
-              }}
+              className="education-arrow-side education-arrow-inline"
+              aria-label="Попередні документи"
+              onClick={() => scrollTrack(-1)}
+              style={{ ...arrowBtnBase, width: 52, height: 52 }}
             >
-              Переглянути всі документи
+              <ArrowIcon variant="blue" direction="left" height={18} />
+            </button>
+            <button
+              type="button"
+              className="education-arrow-side education-arrow-inline"
+              aria-label="Наступні документи"
+              onClick={() => scrollTrack(1)}
+              style={{ ...arrowBtnBase, width: 52, height: 52 }}
+            >
+              <ArrowIcon variant="blue" height={18} />
             </button>
           </div>
         </div>
@@ -272,51 +307,36 @@ export default function EducationSection() {
         <div
           className="education-carousel-col"
           style={{
-            flex: "1 1 320px",
             minWidth: 0,
             position: "relative",
+            alignSelf: "stretch",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
           <div className="education-carousel-frame">
-            <button
-              type="button"
-              className="education-arrow-side"
-              aria-label="Попередні документи"
-              onClick={() => scrollTrack(-1)}
-              style={{ ...arrowBtnBase, width: 48, height: 48 }}
-            >
-              <ArrowIcon variant="blue" direction="left" height={16} />
-            </button>
             <div
               ref={trackRef}
               className="education-track"
               style={{
                 display: "flex",
-                gap: "16px",
+                gap: "20px",
                 overflowX: "auto",
                 overflowY: "hidden",
                 scrollSnapType: "x mandatory",
                 WebkitOverflowScrolling: "touch",
-                paddingBottom: "8px",
-                marginRight: "-8px",
+                paddingBottom: "10px",
+                marginRight: "clamp(-12px, -1vw, 0px)",
                 scrollbarWidth: "thin",
-                flex: 1,
-                minWidth: 0,
+                width: "100%",
+                minHeight: "min(52vw, 420px)",
               }}
             >
               {EDUCATION_DOCUMENTS.map((doc, i) => (
                 <DiplomaSlide key={doc.id} doc={doc} onOpen={() => openModal(i)} />
               ))}
             </div>
-            <button
-              type="button"
-              className="education-arrow-side"
-              aria-label="Наступні документи"
-              onClick={() => scrollTrack(1)}
-              style={{ ...arrowBtnBase, width: 48, height: 48 }}
-            >
-              <ArrowIcon variant="blue" height={16} />
-            </button>
           </div>
           <div className="education-dots-mobile" role="tablist" aria-label="Слайди документів">
             {EDUCATION_DOCUMENTS.map((_, i) => (
@@ -567,9 +587,9 @@ export default function EducationSection() {
 
       <style>{`
         .education-carousel-frame {
-          display: flex;
-          align-items: center;
-          gap: 14px;
+          display: block;
+          width: 100%;
+          min-width: 0;
         }
         .education-arrow-side {
           display: inline-flex;
@@ -577,17 +597,26 @@ export default function EducationSection() {
         .education-dots-mobile {
           display: none;
         }
+        @media (max-width: 968px) {
+          .education-panel {
+            grid-template-columns: 1fr !important;
+            padding: clamp(36px, 8vw, 48px) clamp(24px, 5vw, 36px) !important;
+            gap: clamp(24px, 5vw, 36px) !important;
+          }
+          .education-panel-text {
+            max-width: 100%;
+          }
+          .education-nav-arrows {
+            margin-top: clamp(18px, 4vw, 28px) !important;
+          }
+        }
         @media (max-width: 768px) {
           .education-section-outer {
-            padding: 56px 40px 72px !important;
+            padding: 48px clamp(20px, 5vw, 32px) 64px !important;
           }
-          .education-carousel-frame {
-            gap: 10px;
-          }
-          .education-arrow-side {
-            width: 44px !important;
-            height: 44px !important;
-            font-size: 18px !important;
+          .education-arrow-side.education-arrow-inline {
+            width: 48px !important;
+            height: 48px !important;
           }
           .education-dots-mobile {
             display: flex;
