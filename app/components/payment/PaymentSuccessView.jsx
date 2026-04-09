@@ -72,7 +72,7 @@ function buildVariants(sessionTgUrl, selfHref, psychHref, journeyHref) {
   };
 }
 
-export default function PaymentSuccessView({ variantKey }) {
+export default function PaymentSuccessView({ variantKey, sessionSlotLine = "" }) {
   const sessionTg =
     process.env.NEXT_PUBLIC_PAYMENT_SUCCESS_TELEGRAM_URL || TG_DEFAULT;
   const selfHref = WORKSHOP_BOT_SELF;
@@ -163,6 +163,33 @@ export default function PaymentSuccessView({ variantKey }) {
           line-height: 1.65;
           margin: 0 0 clamp(22px, 4vw, 28px) 0;
         }
+        .pay-result-slot {
+          text-align: left;
+          background: #f4f7ff;
+          border: 1px solid rgba(99, 145, 255, 0.2);
+          border-radius: 14px;
+          padding: 14px 16px;
+          margin: 0 0 clamp(18px, 3vw, 24px) 0;
+          box-sizing: border-box;
+        }
+        .pay-result-slot > span {
+          display: block;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #6391ff;
+          margin-bottom: 8px;
+          font-family: 'Montserrat', sans-serif;
+        }
+        .pay-result-slot > p {
+          margin: 0;
+          font-weight: 700;
+          font-size: clamp(15px, 2.2vw, 17px);
+          color: #1a1f2e;
+          line-height: 1.45;
+          font-family: 'Montserrat', sans-serif;
+        }
         .pay-result-primary {
           display: block;
           width: 100%;
@@ -218,6 +245,12 @@ export default function PaymentSuccessView({ variantKey }) {
           </div>
           <h1 className="pay-result-title">{v.title}</h1>
           <p className="pay-result-lead">{v.lead}</p>
+          {variantKey === "session" && sessionSlotLine.trim() ? (
+            <div className="pay-result-slot">
+              <span>Дата та час запису</span>
+              <p>{sessionSlotLine.trim()}</p>
+            </div>
+          ) : null}
           <p className="pay-result-body">{v.body}</p>
           <a
             className="pay-result-primary"

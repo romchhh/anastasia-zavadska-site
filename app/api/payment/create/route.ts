@@ -161,6 +161,16 @@ export async function POST(request: NextRequest) {
       throw signatureError;
     }
 
+    const returnParams = new URLSearchParams({
+      orderRef: orderReference,
+      tariffType,
+    });
+    if (paymentKind === 'session' && body?.bookingNotify && typeof body.bookingNotify === 'object') {
+      const bn = body.bookingNotify as Record<string, unknown>;
+      const slRaw = bn.slotLine != null ? String(bn.slotLine).trim() : '';
+      if (slRaw) returnParams.set('slotLine', slRaw.slice(0, 400));
+    }
+
     // Параметри для WayForPay
     // merchantDomainName в формі має бути без протоколу (як і в підписі)
     // amount та productPrice мають бути з двома знаками після коми
@@ -177,7 +187,7 @@ export async function POST(request: NextRequest) {
       productCount: productCounts,
       productPrice: productPrices.map(price => price.toFixed(2)), // З двома знаками після коми
       language: 'UA',
-      returnUrl: `${siteUrl}/api/payment/return?orderRef=${encodeURIComponent(orderReference)}&tariffType=${encodeURIComponent(tariffType)}`,
+      returnUrl: `${siteUrl}/api/payment/return?${returnParams.toString()}`,
       serviceUrl: `${siteUrl}/api/payment/callback`,
     };
 

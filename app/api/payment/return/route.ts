@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url);
     const orderRef = url.searchParams.get('orderRef') || '';
     const tariffType = url.searchParams.get('tariffType') || 'self';
+    const slotLine = url.searchParams.get('slotLine') || '';
     const transactionStatus = url.searchParams.get('transactionStatus') || 
                              url.searchParams.get('status') || 
                              '';
@@ -35,9 +36,12 @@ export async function GET(request: NextRequest) {
       const successUrl = new URL(
         `/payment/success/${encodeURIComponent(tariffType)}`,
         origin
-      ).toString();
-      console.log('[PAYMENT RETURN] GET redirect to success:', successUrl);
-      return NextResponse.redirect(successUrl, 303);
+      );
+      if (tariffType === 'session' && slotLine) {
+        successUrl.searchParams.set('slotLine', slotLine);
+      }
+      console.log('[PAYMENT RETURN] GET redirect to success:', successUrl.toString());
+      return NextResponse.redirect(successUrl.toString(), 303);
     } else {
       // Неуспішна оплата або статус не вказано
       const failureUrl = new URL('/payment/failure', origin).toString();
@@ -122,7 +126,8 @@ export async function POST(request: NextRequest) {
     });
 
     const origin = process.env.NEXT_PUBLIC_SITE_URL || `https://${request.headers.get('host')}`;
-    
+    const slotLineFromQs = new URL(request.url).searchParams.get('slotLine') || '';
+
     // Перевіряємо статус транзакції
     // WayForPay: transactionStatus === 'Approved' або reasonCode === '1100' означає успішну оплату
     const isSuccess = transactionStatus === 'Approved' || 
@@ -140,9 +145,12 @@ export async function POST(request: NextRequest) {
       const successUrl = new URL(
         `/payment/success/${encodeURIComponent(tariffType)}`,
         origin
-      ).toString();
-      console.log('[PAYMENT RETURN] POST redirect to success:', successUrl);
-      return NextResponse.redirect(successUrl, 303);
+      );
+      if (tariffType === 'session' && slotLineFromQs) {
+        successUrl.searchParams.set('slotLine', slotLineFromQs);
+      }
+      console.log('[PAYMENT RETURN] POST redirect to success:', successUrl.toString());
+      return NextResponse.redirect(successUrl.toString(), 303);
     } else {
       // Неуспішна оплата або статус не вказано
       const failureUrl = new URL('/payment/failure', origin).toString();

@@ -22,14 +22,17 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function PaymentSuccessPage({ params }) {
+export default async function PaymentSuccessPage({ params, searchParams }) {
   const { tariffType } = await params;
+  const sp = await searchParams;
   const variantKey = normalizeSuccessVariant(tariffType);
+  const sessionSlotLine =
+    variantKey === "session" && sp?.slotLine ? String(sp.slotLine) : "";
 
   return (
     <main>
       <Navbar />
-      <PaymentSuccessView variantKey={variantKey} />
+      <PaymentSuccessView variantKey={variantKey} sessionSlotLine={sessionSlotLine} />
       <Footer />
     </main>
   );
