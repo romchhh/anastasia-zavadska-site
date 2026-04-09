@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import BookingCalendar from "./BookingCalendar";
 import BookingForm from "./BookingForm";
 import { CONTACTS } from "../data/siteData";
+import { submitWayForPayForm } from "@/lib/wayforpayClientSubmit";
 
 const UA_MONTHS = [
   "січня",
@@ -42,18 +43,6 @@ function bookingPriceLabel(service) {
   if (service.priceEmphasis) return service.priceEmphasis;
   if (service.price) return service.price;
   return "—";
-}
-
-function buildBookingMessage(service, fields, slotLine) {
-  const lines = [
-    `Запит з сайту — ${service.title}`,
-    slotLine ? `Обраний час: ${slotLine}` : null,
-    `Ім'я: ${fields.name.trim()}`,
-    `Телефон: ${fields.phone.trim()}`,
-    fields.social?.trim() ? `Зв'язок (соцмережі): ${fields.social.trim()}` : null,
-    fields.description?.trim() ? `Контекст / запит: ${fields.description.trim()}` : null,
-  ].filter(Boolean);
-  return lines.join("\n");
 }
 
 const ICON = 44;
@@ -112,7 +101,11 @@ const hiddenCalendarAnchor = (
   />
 );
 
-export default function ServiceBookingSection({ service }) {
+export default function ServiceBookingSection({
+  service,
+  sessionPriceUah,
+  bookingNotifyKind = "service",
+}) {
   const [confirmedSlot, setConfirmedSlot] = useState(null);
 
   const showBookingCalendar = service.showBookingCalendar === true;
@@ -123,14 +116,81 @@ export default function ServiceBookingSection({ service }) {
   const slotSummary =
     showBookingCalendar && confirmedSlot ? formatSlotLine(confirmedSlot) : null;
 
+  const bookingSuccessCopy = useMemo(() => {
+    if (bookingNotifyKind === "event") {
+      return {
+        successTitle: "Успішно зафіксовано",
+        successText:
+          "Дякуємо! Ваш запит на оновлення про бранчі та ретрити надіслано. Я зв’яжуся з вами, коли з’являться новини.",
+      };
+    }
+    if (!onlinePayment) {
+      return {
+        successTitle: "Запит надіслано",
+        successText:
+          "Ми отримали ваші дані. Я відповім найближчим часом за вказаним телефоном або в соцмережах.",
+      };
+    }
+    return {};
+  }, [bookingNotifyKind, onlinePayment]);
+
   const handleFormSubmit = useCallback(
-    (fields) => {
+    async (fields) => {
       const slotLine = confirmedSlot ? formatSlotLine(confirmedSlot) : null;
-      const text = buildBookingMessage(service, fields, slotLine);
-      const url = `https://t.me/share/url?text=${encodeURIComponent(text)}`;
-      window.open(url, "_blank", "noopener,noreferrer");
+
+      if (!onlinePayment) {
+        const notifyRes = await fetch("/api/booking/notify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            kind: bookingNotifyKind === "event" ? "event" : undefined,
+            serviceTitle: service.title,
+            slotLine,
+            name: fields.name,
+            phone: fields.phone,
+            social: fields.social,
+            description: fields.description,
+          }),
+        });
+        if (!notifyRes.ok) {
+          throw new Error("notify failed");
+        }
+        return;
+      }
+
+      const uah = typeof sessionPriceUah === "number" ? sessionPriceUah : 2100;
+      const eventTitleBase = `${service.title} (онлайн)`;
+      const eventTitle = slotLine ? `${eventTitleBase} | ${slotLine}` : eventTitleBase;
+      const payRes = await fetch("/api/payment/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paymentKind: "session",
+          price: uah,
+          eventTitle,
+          tariffType: "session",
+          clientFirstName: fields.name.trim().slice(0, 100),
+          clientLastName: " ",
+          clientPhone: String(fields.phone).replace(/\s/g, ""),
+          bookingNotify: {
+            kind: bookingNotifyKind === "event" ? "event" : undefined,
+            serviceTitle: service.title,
+            slotLine,
+            name: fields.name,
+            phone: fields.phone,
+            social: fields.social,
+            description: fields.description,
+          },
+        }),
+      });
+      const payJson = await payRes.json();
+      if (!payRes.ok || !payJson?.data) {
+        throw new Error(payJson?.error || "payment create failed");
+      }
+      submitWayForPayForm(payJson.data);
+      return false;
     },
-    [service, confirmedSlot]
+    [service, confirmedSlot, onlinePayment, sessionPriceUah, bookingNotifyKind]
   );
 
   const instagramHref = `https://www.instagram.com/${CONTACTS.instagram.replace(/^@/, "")}/`;
@@ -173,6 +233,8 @@ export default function ServiceBookingSection({ service }) {
           slotSummary={slotSummary}
           requireSlot={showBookingCalendar}
           onlinePayment={onlinePayment}
+          successTitle={bookingSuccessCopy.successTitle}
+          successText={bookingSuccessCopy.successText}
           onSubmit={handleFormSubmit}
         />
         </div>

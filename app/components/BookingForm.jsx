@@ -87,7 +87,8 @@ function toUaE164(normalized10) {
  *   slotSummary {string} – обраний у календарі час (показується над полями)
  *   requireSlot {bool}   – чи обов’язковий вибір слоту (календар)
  *   onlinePayment {bool} – «Оплатити» + ціна; false — запит без оплати на сайті
- *   onSubmit  {fn}      – після валідації; інтеграція (наприклад Telegram) — ззовні
+ *   successTitle, successText — після відправки без редіректу на оплату (опційно)
+ *   onSubmit  {fn}      – після валідації; якщо повертає false — не показувати екран «дякуємо» (наприклад редірект на оплату)
  */
 export default function BookingForm({
   duration = "50 хв",
@@ -95,6 +96,8 @@ export default function BookingForm({
   slotSummary,
   requireSlot = true,
   onlinePayment = true,
+  successTitle,
+  successText,
   onSubmit,
 }) {
   const [fields, setFields] = useState({
@@ -130,7 +133,7 @@ export default function BookingForm({
   const canSubmit =
     slotOk && Boolean(fields.name.trim()) && phoneComplete;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!canSubmit) return;
     const e = validate();
     if (Object.keys(e).length) {
@@ -140,24 +143,35 @@ export default function BookingForm({
     setErrors({});
     const phoneDigits = normalizePhoneDigits(fields.phone);
     const phone = toUaE164(phoneDigits) ?? fields.phone.trim();
-    onSubmit?.({ ...fields, phone });
-    setSubmitted(true);
+    try {
+      const result = await onSubmit?.({ ...fields, phone });
+      if (result !== false) {
+        setSubmitted(true);
+      }
+    } catch (err) {
+      console.error(err);
+      setErrors({ _form: "Не вдалося відправити. Спробуйте ще раз або напишіть у Telegram." });
+    }
   };
 
   if (submitted) {
+    const doneTitle =
+      successTitle ??
+      (onlinePayment ? "Дякуємо за запис!" : "Запит надіслано");
+    const doneText =
+      successText ??
+      (onlinePayment
+        ? "Якщо не відкрилось вікно оплати, оновіть сторінку або напишіть у Telegram."
+        : "Ми отримали ваші дані. Я відповім найближчим часом за вказаними контактами.");
+
     return (
       <>
         <style>{formStyles}</style>
         <div id="booking-form" className="bf-wrap">
           <div className="bf-success">
             <div className="bf-success-icon">✓</div>
-            <h2 className="bf-success-title">
-              {onlinePayment ? "Дякуємо за запис!" : "Дякуємо за запит!"}
-            </h2>
-            <p className="bf-success-text">
-              Якщо не відкрилось вікно Telegram, знайдіть чат зі мною вручну — текст запиту ви вже
-              сформували.
-            </p>
+            <h2 className="bf-success-title">{doneTitle}</h2>
+            <p className="bf-success-text">{doneText}</p>
           </div>
         </div>
       </>
@@ -238,6 +252,12 @@ export default function BookingForm({
             </div>
           </div>
         </div>
+
+        {errors._form ? (
+          <p className="bf-error" style={{ textAlign: 'center', marginTop: 12 }}>
+            {errors._form}
+          </p>
+        ) : null}
 
         {/* CTA */}
         <div className="bf-cta-wrap">

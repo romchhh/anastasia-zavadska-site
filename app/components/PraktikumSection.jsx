@@ -1,8 +1,11 @@
 "use client";
 
+import { useCallback, useState } from "react";
 import { PRAKTIKUM_SELF_FEATURES, PRAKTIKUM_WITH_FEATURES } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
 import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import { PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH, PRAKTIKUM_SELF_PRICE_UAH } from "@/utils/price";
+import { submitWayForPayForm } from "@/lib/wayforpayClientSubmit";
 
 const PILL_BLUE = "#B4C7F9";
 const RING_BLUE = "#92B2FF";
@@ -128,11 +131,13 @@ function PriceBlock({ oldPrice, price }) {
   );
 }
 
-function CtaButton({ btnLabel }) {
+function CtaButton({ btnLabel, onClick, disabled }) {
   return (
     <button
       type="button"
       className="praktikum-cta-btn"
+      disabled={disabled}
+      onClick={onClick}
       style={{
         background: PILL_BLUE,
         border: "none",
@@ -146,7 +151,8 @@ function CtaButton({ btnLabel }) {
         lineHeight: "100%",
         letterSpacing: 0,
         color: "#fff",
-        cursor: "pointer",
+        cursor: disabled ? "not-allowed" : "pointer",
+        opacity: disabled ? 0.82 : 1,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -157,6 +163,7 @@ function CtaButton({ btnLabel }) {
         boxSizing: "border-box",
       }}
       onMouseEnter={(e) => {
+        if (disabled) return;
         e.currentTarget.style.boxShadow = "0 10px 28px rgba(140, 170, 230, 0.55)";
         e.currentTarget.style.transform = "translateY(-2px)";
       }}
@@ -188,7 +195,7 @@ function CtaButton({ btnLabel }) {
 }
 
 /** Дві окремі картки; список на сітці рядків — однакова висота рядків у обох колонках при однаковій ширині */
-function PrCard({ title, features, oldPrice, price, btnLabel }) {
+function PrCard({ title, features, oldPrice, price, btnLabel, onPay, payDisabled }) {
   return (
     <div
       className="praktikum-card"
@@ -243,7 +250,11 @@ function PrCard({ title, features, oldPrice, price, btnLabel }) {
       <div style={{ marginTop: "auto", width: "100%" }}>
         <PriceBlock oldPrice={oldPrice} price={price} />
         <div style={{ marginTop: "clamp(18px, 2.5vw, 24px)" }}>
-          <CtaButton btnLabel={btnLabel} />
+          <CtaButton
+            btnLabel={payDisabled ? "Завантаження…" : btnLabel}
+            onClick={onPay}
+            disabled={payDisabled}
+          />
         </div>
       </div>
     </div>
@@ -251,6 +262,37 @@ function PrCard({ title, features, oldPrice, price, btnLabel }) {
 }
 
 export default function PraktikumSection() {
+  const [payLoading, setPayLoading] = useState(null);
+
+  const startPraktikumPayment = useCallback(async (tariff) => {
+    const isPsych = tariff === "psychologist";
+    setPayLoading(isPsych ? "psych" : "self");
+    try {
+      const res = await fetch("/api/payment/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paymentKind: "journey",
+          tariffType: isPsych ? "psychologist" : "self",
+          price: isPsych ? PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH : PRAKTIKUM_SELF_PRICE_UAH,
+          eventTitle: isPsych
+            ? "Практикум «Подорож до себе» — з підтримкою психолога"
+            : "Практикум «Подорож до себе» — самостійний старт",
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json?.data) {
+        throw new Error(json?.error || "payment");
+      }
+      submitWayForPayForm(json.data);
+    } catch (e) {
+      console.error(e);
+      alert("Не вдалося відкрити оплату. Спробуйте пізніше або напишіть у Telegram.");
+    } finally {
+      setPayLoading(null);
+    }
+  }, []);
+
   return (
     <section
       id="практикум"
@@ -377,6 +419,8 @@ export default function PraktikumSection() {
             oldPrice="4500 грн"
             price="595 грн"
             btnLabel="Почати самостійно"
+            onPay={() => startPraktikumPayment("self")}
+            payDisabled={payLoading === "self"}
           />
           <PrCard
             title={"З підтримкою\nпсихолога"}
@@ -384,6 +428,8 @@ export default function PraktikumSection() {
             oldPrice="10500 грн"
             price="5400 грн"
             btnLabel="Почати з психологом"
+            onPay={() => startPraktikumPayment("psychologist")}
+            payDisabled={payLoading === "psych"}
           />
         </div>
       </div>

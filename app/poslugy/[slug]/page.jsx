@@ -1,10 +1,14 @@
 import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 import Navbar from "../../components/Navbar";
 import ScrollToHash from "../../components/ScrollToHash";
 import ServicePageHero from "../../components/ServicePageHero";
 import ServiceBookingSection from "../../components/ServiceBookingSection";
 import Footer from "../../components/Footer";
-import { getServiceBySlug, getServiceSlugs } from "../../data/siteData";
+import { getServiceBySlug, getServiceSlugs, SERVICES } from "../../data/siteData";
+import { getSessionPriceUah } from "@/utils/price";
+import SessionPaymentsFeed from "../../components/SessionPaymentsFeed";
 
 export function generateStaticParams() {
   return getServiceSlugs().map((slug) => ({ slug }));
@@ -33,17 +37,28 @@ export async function generateMetadata({ params }) {
   };
 }
 
+const INDIVIDUAL_SESSION_SLUG = SERVICES[0].slug;
+
 export default async function ServicePage({ params }) {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
   if (!service) notFound();
+
+  const bookingNotifyKind = service.slug === "branchi-ta-retryty" ? "event" : "service";
+  const sessionPriceUah =
+    slug === INDIVIDUAL_SESSION_SLUG ? getSessionPriceUah() : undefined;
 
   return (
     <main>
       <ScrollToHash />
       <Navbar />
       <ServicePageHero service={service} />
-      <ServiceBookingSection service={service} />
+      <ServiceBookingSection
+        service={service}
+        sessionPriceUah={sessionPriceUah}
+        bookingNotifyKind={bookingNotifyKind}
+      />
+      {slug === INDIVIDUAL_SESSION_SLUG ? <SessionPaymentsFeed /> : null}
       <Footer />
     </main>
   );
