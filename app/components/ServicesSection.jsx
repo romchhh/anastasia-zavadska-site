@@ -1,19 +1,107 @@
 "use client";
 
-import { useState, useRef } from "react";
-import Link from "next/link";
+import { useState, useRef, useSyncExternalStore, useLayoutEffect, useCallback } from "react";
 import { SERVICES } from "../data/siteData";
+import CtaPillButton from "./CtaPillButton";
 import { ArrowIcon } from "./ArrowIcon";
-import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import {
+  PAGE_GUTTER_X,
+  SECTION_INTRO_LEAD,
+  SECTION_INTRO_TITLE,
+  SECTION_SCROLL_MARGIN_TOP,
+} from "./sectionIntroStyles";
+
+/** Повний опис на картці лише для індивідуальної сесії; група/бранчі — формат, ціна чи статус на сторінці послуги */
+function showCardDescription(service) {
+  return service.id === SERVICES[0].id;
+}
+
+/**
+ * Порядок карток у каруселі (індекси в SERVICES):
+ * зліва бранчі, по центру індивідуальна сесія, справа група —
+ * щоб на десктопі при завантаженні з обох боків були «сусідні» картки.
+ */
+const SERVICES_CAROUSEL_ORDER = [2, 0, 1];
+
+const SERVICE_CARD_W = "min(522px, 90vw)";
+/** Мобільна ширина картки — вужчі бокові поля за секційного gutter, щоб картки були ширші */
+const SERVICE_CARD_GUTTER_MOBILE = "clamp(12px, 3.2vw, 22px)";
+const SERVICE_CARD_W_MOBILE = `min(522px, calc(100vw - 2 * ${SERVICE_CARD_GUTTER_MOBILE}))`;
+const SERVICE_CARD_GAP = 18;
+
+function useServicesCarouselMobile() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia("(max-width: 768px)");
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia("(max-width: 768px)").matches,
+    () => false
+  );
+}
 
 export default function ServicesSection() {
-  const [active, setActive] = useState(0);
+  const orderedServices = SERVICES_CAROUSEL_ORDER.map((idx) => SERVICES[idx]);
+  const n = orderedServices.length;
+  /** Старт по центру = індивідуальна сесія */
+  const [active, setActive] = useState(1);
   const startX = useRef(null);
   const isDragging = useRef(false);
   const dragMoved = useRef(false);
 
-  const prev = () => setActive(i => Math.max(0, i - 1));
-  const next = () => setActive(i => Math.min(SERVICES.length - 1, i + 1));
+  const prev = () => setActive((i) => (i - 1 + n) % n);
+  const next = () => setActive((i) => (i + 1) % n);
+
+  const isMobileCarousel = useServicesCarouselMobile();
+  const serviceCardW = isMobileCarousel ? SERVICE_CARD_W_MOBILE : SERVICE_CARD_W;
+  const viewportRef = useRef(null);
+  const trackRef = useRef(null);
+  /** Піксельний translate на мобільній (calc(100vw) і scale на картках давали зсув) */
+  const [mobileTrackX, setMobileTrackX] = useState(null);
+
+  const updateMobileCarouselTransform = useCallback(() => {
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(max-width: 768px)").matches) {
+      setMobileTrackX(null);
+      return;
+    }
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (!viewport || !track) return;
+    const firstCard = track.querySelector("[data-service-card]");
+    if (!firstCard) return;
+    const vw = viewport.clientWidth;
+    /** offsetWidth — ширина в макеті; getBoundingClientRect() змінюється через scale(0.93) */
+    const cardW = firstCard.offsetWidth;
+    const gap = SERVICE_CARD_GAP;
+    const x = vw / 2 - active * (cardW + gap) - cardW / 2;
+    setMobileTrackX(Math.round(x * 100) / 100);
+  }, [active]);
+
+  useLayoutEffect(() => {
+    updateMobileCarouselTransform();
+  }, [updateMobileCarouselTransform]);
+
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport || typeof window === "undefined") return;
+    const ro = new ResizeObserver(() => {
+      requestAnimationFrame(() => updateMobileCarouselTransform());
+    });
+    ro.observe(viewport);
+    const onOrient = () => updateMobileCarouselTransform();
+    window.addEventListener("orientationchange", onOrient);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("orientationchange", onOrient);
+    };
+  }, [updateMobileCarouselTransform]);
+
+  const servicesTrackTransform =
+    isMobileCarousel && mobileTrackX !== null
+      ? `translateX(${mobileTrackX}px)`
+      : `translateX(calc(50vw - ${active} * (${serviceCardW} + ${SERVICE_CARD_GAP}px) - (${serviceCardW}) / 2))`;
 
   // Touch
   const handleTouchStart = (e) => { startX.current = e.touches[0].clientX; };
@@ -51,21 +139,21 @@ export default function ServicesSection() {
       id="послуги"
       style={{
         background: "#fff",
-        padding: "65px 0 72px",
+        padding: "44px 0 48px",
         textAlign: "center",
         overflow: "hidden",
-        scrollMarginTop: "88px",
+        scrollMarginTop: SECTION_SCROLL_MARGIN_TOP,
       }}
     >
 
       {/* Header (~10% компактніше за базову секційну типографіку) */}
-      <div style={{ padding: `0 ${PAGE_GUTTER_X}`, marginBottom: "clamp(40px, 5vw, 47px)" }}>
+      <div style={{ padding: `0 ${PAGE_GUTTER_X}`, marginBottom: "clamp(28px, 3.5vw, 36px)" }}>
         <h2
           style={{
             ...SECTION_INTRO_TITLE,
-            fontSize: "clamp(29px, 5.85vw, 58px)",
+            fontSize: "clamp(26px, 5.2vw, 52px)",
             marginTop: 0,
-            marginBottom: "clamp(18px, 2.7vw, 25px)",
+            marginBottom: "clamp(16px, 2.4vw, 22px)",
             marginLeft: "auto",
             marginRight: "auto",
           }}
@@ -76,7 +164,7 @@ export default function ServicesSection() {
           className="services-section-lead"
           style={{
             ...SECTION_INTRO_LEAD,
-            fontSize: "clamp(16px, 2.15vw, 20px)",
+            fontSize: "clamp(15px, 1.95vw, 18px)",
             margin: "0 auto",
             maxWidth: "min(100%, 920px)",
           }}
@@ -85,8 +173,10 @@ export default function ServicesSection() {
         </p>
       </div>
 
-      {/* Carousel viewport */}
+      {/* Carousel viewport — на мобільній горизонтальні поля як у відгуків для центрування активної картки */}
       <div
+        ref={viewportRef}
+        className="services-carousel-viewport"
         style={{ position: "relative", width: "100%", overflow: "hidden", cursor: "grab", userSelect: "none" }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -97,36 +187,49 @@ export default function ServicesSection() {
         onMouseLeave={handleMouseUp}
       >
         {/* Track — центруємо активну картку */}
-        <div style={{
+        <div
+          ref={trackRef}
+          className="services-carousel-track"
+          style={{
           display: "flex",
-          gap: "18px",
+          gap: `${SERVICE_CARD_GAP}px`,
           transition: "transform .5s cubic-bezier(.4,0,.2,1)",
-          // картка min(522px, 90vw), gap 18px → крок = min(540px, 90vw+18px)
-          transform: `translateX(calc(50% - ${active} * min(540px, calc(90vw + 18px)) - min(261px, 45vw)))`,
+          transform: servicesTrackTransform,
           willChange: "transform",
           paddingLeft: "0",
-        }}>
-          {SERVICES.map((s, i) => {
+        }}
+        >
+          {orderedServices.map((s, i) => {
             const isActive = i === active;
             const dist = Math.abs(i - active);
             const cardBg = isActive ? "#A3BEFF" : "#C5D6FF";
             const cardBorder = isActive
               ? "2px solid rgba(255,255,255,0.65)"
               : "2px solid rgba(255,255,255,0.45)";
-            const accentBlue = "#A3BEFF";
-            const titleSize = isActive ? "clamp(22px, 2.9vw, 33px)" : "clamp(15px, 1.98vw, 22px)";
-            const bodyFont = isActive ? "12px" : "11px";
-            const priceLineSize = isActive ? "clamp(20px, 2.48vw, 25px)" : "clamp(15px, 1.98vw, 20px)";
+            const longCopy = showCardDescription(s);
+            const titleSize = isActive ? "clamp(20px, 2.6vw, 28px)" : "clamp(15px, 1.98vw, 22px)";
+            const descFont = isActive
+              ? "clamp(14px, 1.25vw, 16px)"
+              : "clamp(13px, 1.2vw, 15px)";
+            const metaFont = longCopy
+              ? descFont
+              : isActive
+                ? "clamp(14px, 1.35vw, 17px)"
+                : "clamp(14px, 1.3vw, 17px)";
+            const priceLineSize = isActive
+              ? "clamp(20px, 2.35vw, 25px)"
+              : "clamp(17px, 2vw, 21px)";
             const cardPad = isActive ? "clamp(18px, 3.6vw, 25px)" : "clamp(14px, 3.15vw, 20px)";
 
             return (
               <div
                 key={s.id}
+                data-service-card
                 onClick={() => { if (!dragMoved.current) setActive(i); }}
                 style={{
                   background: cardBg,
                   borderRadius: "32px",
-                  width: "min(522px, 90vw)",
+                  width: serviceCardW,
                   flexShrink: 0,
                   display: "flex",
                   flexDirection: "column",
@@ -181,23 +284,25 @@ export default function ServicesSection() {
                     {s.title}
                   </h3>
 
-                  <p style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: bodyFont,
-                    fontWeight: 400,
-                    color: "#FFFFFF",
-                    lineHeight: 1.55,
-                    textAlign: "left",
-                    margin: "0 0 11px 0",
-                  }}>
-                    {s.desc}
-                  </p>
+                  {longCopy && (
+                    <p style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: descFont,
+                      fontWeight: 400,
+                      color: "#FFFFFF",
+                      lineHeight: 1.55,
+                      textAlign: "left",
+                      margin: "0 0 11px 0",
+                    }}>
+                      {s.desc}
+                    </p>
+                  )}
 
                   {s.extra && (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: bodyFont,
-                      fontWeight: 400,
+                      fontSize: metaFont,
+                      fontWeight: longCopy ? 400 : 600,
                       color: "#FFFFFF",
                       textAlign: "left",
                       margin: "0 0 9px 0",
@@ -208,8 +313,8 @@ export default function ServicesSection() {
                   {s.status && (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: bodyFont,
-                      fontWeight: 600,
+                      fontSize: metaFont,
+                      fontWeight: 700,
                       fontStyle: "italic",
                       color: "#3d62d8",
                       textAlign: "left",
@@ -242,92 +347,18 @@ export default function ServicesSection() {
                     }}>{s.price}</p>
                   ) : null}
 
-                  {s.note && (
-                    <p style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "11px",
-                      fontWeight: 400,
-                      color: "#FFFFFF",
-                      lineHeight: 1.55,
-                      textAlign: "left",
-                      margin: "0 0 16px 0",
-                    }}>
-                      {s.note}
-                    </p>
-                  )}
-
-                  <Link
+                  <CtaPillButton
+                    fullWidth
                     href={`/poslugy/${s.slug}`}
+                    className={
+                      s.slug === "branchi-ta-retryty"
+                        ? "services-carousel-cta services-carousel-cta--long-label"
+                        : "services-carousel-cta"
+                    }
                     onClick={(e) => e.stopPropagation()}
-                    className="services-card-cta"
-                    style={{
-                      background: "#FFFFFF",
-                      border: "none",
-                      borderRadius: "999px",
-                      padding: isActive
-                        ? "14px 12px 14px 23px"
-                        : "13px 11px 13px 18px",
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: isActive
-                        ? "clamp(12px, 1.26vw, 14px)"
-                        : "clamp(10px, 2.34vw, 12px)",
-                      fontWeight: 800,
-                      color: accentBlue,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: "11px",
-                      textTransform: "uppercase",
-                      letterSpacing: isActive ? ".08em" : ".05em",
-                      width: "100%",
-                      maxWidth: "100%",
-                      minHeight: isActive ? 47 : 45,
-                      marginTop: "auto",
-                      textDecoration: "none",
-                      boxSizing: "border-box",
-                      boxShadow: "0 4px 20px rgba(255,255,255,0.35)",
-                      transition: "box-shadow .2s ease, transform .2s ease",
-                    }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.boxShadow = "0 6px 28px rgba(0,0,0,.1)";
-                      e.currentTarget.style.transform = "translateY(-1px)";
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(255,255,255,0.35)";
-                      e.currentTarget.style.transform = "none";
-                    }}
                   >
-                    <span
-                      style={{
-                        flex: 1,
-                        minWidth: 0,
-                        lineHeight: 1.3,
-                        textAlign: "left",
-                        whiteSpace: isActive ? "nowrap" : "normal",
-                        hyphens: isActive ? "none" : "auto",
-                      }}
-                    >
-                      {s.btnLabel}
-                    </span>
-                    <span
-                      style={{
-                        width: isActive ? 38 : 34,
-                        height: isActive ? 38 : 34,
-                        minWidth: isActive ? 38 : 34,
-                        borderRadius: "50%",
-                        background: "#fff",
-                        boxShadow: "0 0 0 1.5px rgba(163, 190, 255, 0.5)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
-                      aria-hidden
-                    >
-                      <ArrowIcon variant="blue" height={isActive ? 16 : 14} />
-                    </span>
-                  </Link>
+                    {s.btnLabel}
+                  </CtaPillButton>
                 </div>
               </div>
             );
@@ -352,9 +383,8 @@ export default function ServicesSection() {
           }}
         />
 
-        {/* Arrow buttons */}
-        {active > 0 && (
-          <button
+        {/* Arrow buttons — циклічно (остання ↔ перша) */}
+        <button
             type="button"
             className="services-nav-btn services-nav-btn--overlay"
             aria-label="Попередня послуга"
@@ -380,9 +410,7 @@ export default function ServicesSection() {
           >
             <ArrowIcon variant="blue" direction="left" height={16} />
           </button>
-        )}
-        {active < SERVICES.length - 1 && (
-          <button
+        <button
             type="button"
             className="services-nav-btn services-nav-btn--overlay"
             aria-label="Наступна послуга"
@@ -408,22 +436,19 @@ export default function ServicesSection() {
           >
             <ArrowIcon variant="blue" height={16} />
           </button>
-        )}
       </div>
 
       {/* Крапки + стрілки на мобільних під каруселлю */}
-      <div className="services-dots-toolbar" style={{ marginTop: "32px" }}>
+      <div className="services-dots-toolbar" style={{ marginTop: "24px" }}>
         <div className="services-dots-arrow-slot services-dots-arrow-slot--left">
-          {active > 0 ? (
-            <button
-              type="button"
-              className="services-nav-mobile"
-              aria-label="Попередня послуга"
-              onClick={prev}
-            >
-              <ArrowIcon variant="blue" direction="left" height={16} />
-            </button>
-          ) : null}
+          <button
+            type="button"
+            className="services-nav-mobile"
+            aria-label="Попередня послуга"
+            onClick={prev}
+          >
+            <ArrowIcon variant="blue" direction="left" height={16} />
+          </button>
         </div>
         <div
           className="services-dots-inner"
@@ -434,12 +459,12 @@ export default function ServicesSection() {
             gap: "10px",
           }}
         >
-          {SERVICES.map((_, i) => (
+          {orderedServices.map((s, i) => (
             <button
-              key={i}
+              key={s.id}
               type="button"
               onClick={() => setActive(i)}
-              aria-label={`Послуга ${i + 1}`}
+              aria-label={s.title}
               style={{
                 width: active === i ? 28 : 10,
                 height: 10,
@@ -454,22 +479,63 @@ export default function ServicesSection() {
           ))}
         </div>
         <div className="services-dots-arrow-slot services-dots-arrow-slot--right">
-          {active < SERVICES.length - 1 ? (
-            <button
-              type="button"
-              className="services-nav-mobile"
-              aria-label="Наступна послуга"
-              onClick={next}
-            >
-              <ArrowIcon variant="blue" height={16} />
-            </button>
-          ) : null}
+          <button
+            type="button"
+            className="services-nav-mobile"
+            aria-label="Наступна послуга"
+            onClick={next}
+          >
+            <ArrowIcon variant="blue" height={16} />
+          </button>
         </div>
       </div>
 
       <style>{`
-        .services-card-cta:active {
-          transform: translateY(0);
+        .services-carousel-cta.cta-pill {
+          background: #fff !important;
+          color: #a3beff !important;
+          margin-top: auto;
+          width: 100% !important;
+          max-width: 100% !important;
+          box-shadow: 0 4px 20px rgba(255, 255, 255, 0.35);
+        }
+        .services-carousel-cta.cta-pill .cta-pill__arrow {
+          background: #fff !important;
+          box-shadow: inset 0 0 0 1.5px rgba(163, 190, 255, 0.55);
+        }
+        @media (hover: hover) {
+          .services-carousel-cta.cta-pill:hover {
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1) !important;
+            transform: translateY(-1px);
+          }
+        }
+        .services-carousel-cta--long-label.cta-pill {
+          font-size: clamp(13px, 1.05vw, 17px) !important;
+          padding: 12px 14px 12px 20px !important;
+          letter-spacing: 0.02em;
+          line-height: 1.2 !important;
+        }
+        .services-carousel-cta--long-label.cta-pill .cta-pill__arrow {
+          width: 48px !important;
+          height: 40px !important;
+          min-width: 48px !important;
+        }
+        .services-carousel-cta--long-label.cta-pill .cta-pill__arrow img {
+          height: 16px !important;
+        }
+        @media (max-width: 768px) {
+          .services-carousel-cta--long-label.cta-pill {
+            font-size: clamp(11px, 2.9vw, 15px) !important;
+            padding: 11px 12px 11px 16px !important;
+          }
+          .services-carousel-cta--long-label.cta-pill .cta-pill__arrow {
+            width: 44px !important;
+            height: 38px !important;
+            min-width: 44px !important;
+          }
+          .services-carousel-cta--long-label.cta-pill .cta-pill__arrow img {
+            height: 15px !important;
+          }
         }
         .services-dots-toolbar {
           display: block;

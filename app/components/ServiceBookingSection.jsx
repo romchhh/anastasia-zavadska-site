@@ -5,6 +5,9 @@ import BookingCalendar from "./BookingCalendar";
 import BookingForm from "./BookingForm";
 import { CONTACTS } from "../data/siteData";
 import { submitWayForPayForm } from "@/lib/wayforpayClientSubmit";
+import { PAGE_GUTTER_X, SECTION_SCROLL_MARGIN_TOP } from "./sectionIntroStyles";
+import { kyivYmdKey } from "@/lib/kyivDate";
+import { slotRangeToStartTime } from "@/lib/calendarSlots";
 
 const UA_MONTHS = [
   "січня",
@@ -52,19 +55,19 @@ const BOOKING_SECTION_STYLES = `
   .service-booking-section {
     background: #fff;
     box-sizing: border-box;
-    padding: clamp(48px, 6vw, 64px) clamp(40px, 8vw, 120px) clamp(56px, 8vw, 96px);
+    padding: clamp(44px, 5.5vw, 56px) ${PAGE_GUTTER_X} clamp(52px, 7vw, 88px);
   }
   #booking-calendar,
   #booking-form {
-    scroll-margin-top: 96px;
+    scroll-margin-top: ${SECTION_SCROLL_MARGIN_TOP};
   }
   @media (max-width: 768px) {
     .service-booking-section {
-      padding: clamp(40px, 5vw, 48px) clamp(40px, 8vw, 120px) clamp(48px, 7vw, 64px);
+      padding: clamp(36px, 5vw, 44px) ${PAGE_GUTTER_X} clamp(44px, 6.5vw, 56px);
     }
     #booking-calendar,
     #booking-form {
-      scroll-margin-top: 80px;
+      scroll-margin-top: 72px;
     }
   }
 `;
@@ -137,6 +140,33 @@ export default function ServiceBookingSection({
   const handleFormSubmit = useCallback(
     async (fields) => {
       const slotLine = confirmedSlot ? formatSlotLine(confirmedSlot) : null;
+      const calendarDate =
+        showBookingCalendar && confirmedSlot ? kyivYmdKey(confirmedSlot.date) : undefined;
+      const calendarTime =
+        showBookingCalendar && confirmedSlot
+          ? slotRangeToStartTime(confirmedSlot.slot) ?? undefined
+          : undefined;
+
+      const bookGoogleIfSlot = async () => {
+        if (!showBookingCalendar || !confirmedSlot || !calendarDate || !calendarTime) return;
+        const bookRes = await fetch("/api/calendar/book", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            date: calendarDate,
+            time: calendarTime,
+            name: fields.name.trim(),
+            phone: fields.phone,
+            consultationType: service.title,
+            social: fields.social?.trim() || undefined,
+            description: fields.description?.trim() || undefined,
+          }),
+        });
+        if (!bookRes.ok) {
+          const j = await bookRes.json().catch(() => ({}));
+          throw new Error(j?.error || "calendar book failed");
+        }
+      };
 
       if (!onlinePayment) {
         const notifyRes = await fetch("/api/booking/notify", {
@@ -155,6 +185,7 @@ export default function ServiceBookingSection({
         if (!notifyRes.ok) {
           throw new Error("notify failed");
         }
+        await bookGoogleIfSlot();
         return;
       }
 
@@ -180,6 +211,9 @@ export default function ServiceBookingSection({
             phone: fields.phone,
             social: fields.social,
             description: fields.description,
+            calendarDate,
+            calendarTime,
+            consultationType: service.title,
           },
         }),
       });
@@ -190,7 +224,14 @@ export default function ServiceBookingSection({
       submitWayForPayForm(payJson.data);
       return false;
     },
-    [service, confirmedSlot, onlinePayment, sessionPriceUah, bookingNotifyKind]
+    [
+      service,
+      confirmedSlot,
+      onlinePayment,
+      sessionPriceUah,
+      bookingNotifyKind,
+      showBookingCalendar,
+    ]
   );
 
   const instagramHref = `https://www.instagram.com/${CONTACTS.instagram.replace(/^@/, "")}/`;

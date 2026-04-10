@@ -3,11 +3,18 @@
 import { useCallback, useState } from "react";
 import { PRAKTIKUM_SELF_FEATURES, PRAKTIKUM_WITH_FEATURES } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
-import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import {
+  PAGE_GUTTER_X,
+  SECTION_INTRO_LEAD,
+  SECTION_INTRO_TITLE,
+  SECTION_TITLE_MAX_WIDTH,
+} from "./sectionIntroStyles";
 import { PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH, PRAKTIKUM_SELF_PRICE_UAH } from "@/utils/price";
 import { submitWayForPayForm } from "@/lib/wayforpayClientSubmit";
 
 const PILL_BLUE = "#B4C7F9";
+/** Кнопки оплати практикуму — темніший фон під білий текст (як CtaPillButton) */
+const PRAKTIKUM_CTA_BG = "#5f7ad4";
 const RING_BLUE = "#92B2FF";
 
 const cardStyle = {
@@ -72,11 +79,11 @@ function FeatureCell({ active, text }) {
         style={{
           fontFamily: "'Montserrat', sans-serif",
           fontSize: "clamp(16px, 1.85vw, 19px)",
-          fontWeight: active ? 700 : 600,
+          fontWeight: active ? 500 : 400,
           color: active ? "#111" : "#5c6478",
           lineHeight: 1.5,
           textAlign: "left",
-          letterSpacing: active ? "-0.01em" : 0,
+          letterSpacing: 0,
         }}
       >
         {text}
@@ -87,46 +94,10 @@ function FeatureCell({ active, text }) {
 
 function PriceBlock({ oldPrice, price }) {
   return (
-    <div
-      style={{
-        textAlign: "center",
-        paddingTop: "clamp(8px, 1.5vw, 12px)",
-      }}
-    >
-      <span
-        style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(16px, 1.55vw, 18px)",
-          fontWeight: 600,
-          color: "#333",
-        }}
-      >
-        Ціна:{" "}
-      </span>
-      <span
-        style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(14px, 1.35vw, 16px)",
-          fontWeight: 500,
-          color: "#aaa",
-          textDecoration: "line-through",
-          marginRight: "10px",
-        }}
-      >
-        {oldPrice}
-      </span>
-      <span
-        style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(26px, 2.8vw, 32px)",
-          fontWeight: 800,
-          color: "#111",
-          letterSpacing: "-0.02em",
-          marginLeft: "8px",
-        }}
-      >
-        {price}
-      </span>
+    <div className="praktikum-price-block">
+      <span className="praktikum-price-label">Ціна:</span>
+      <span className="praktikum-price-old">{oldPrice}</span>
+      <span className="praktikum-price-current">{price}</span>
     </div>
   );
 }
@@ -139,7 +110,7 @@ function CtaButton({ btnLabel, onClick, disabled }) {
       disabled={disabled}
       onClick={onClick}
       style={{
-        background: PILL_BLUE,
+        background: PRAKTIKUM_CTA_BG,
         border: "none",
         borderRadius: "999px",
         padding: "clamp(15px, 2.2vw, 22px) clamp(16px, 2.5vw, 22px) clamp(15px, 2.2vw, 22px) clamp(24px, 3vw, 32px)",
@@ -158,17 +129,17 @@ function CtaButton({ btnLabel, onClick, disabled }) {
         justifyContent: "space-between",
         textTransform: "none",
         width: "100%",
-        boxShadow: "0 6px 22px rgba(160, 185, 235, 0.45)",
+        boxShadow: "0 6px 22px rgba(55, 85, 160, 0.38)",
         transition: "box-shadow .2s, transform .15s",
         boxSizing: "border-box",
       }}
       onMouseEnter={(e) => {
         if (disabled) return;
-        e.currentTarget.style.boxShadow = "0 10px 28px rgba(140, 170, 230, 0.55)";
+        e.currentTarget.style.boxShadow = "0 10px 30px rgba(45, 70, 140, 0.48)";
         e.currentTarget.style.transform = "translateY(-2px)";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.boxShadow = "0 6px 22px rgba(160, 185, 235, 0.45)";
+        e.currentTarget.style.boxShadow = "0 6px 22px rgba(55, 85, 160, 0.38)";
         e.currentTarget.style.transform = "none";
       }}
     >
@@ -298,7 +269,7 @@ export default function PraktikumSection() {
       id="практикум"
       style={{
         background: "#fff",
-        padding: `clamp(64px, 8vw, 96px) ${PAGE_GUTTER_X} clamp(88px, 11vw, 128px)`,
+        padding: `clamp(44px, 5.5vw, 68px) ${PAGE_GUTTER_X} clamp(56px, 7vw, 88px)`,
         boxSizing: "border-box",
         textAlign: "center",
         position: "relative",
@@ -344,6 +315,7 @@ export default function PraktikumSection() {
       />
       <div className="praktikum-inner" style={{ position: "relative", zIndex: 1, maxWidth: "1120px", margin: "0 auto" }}>
         <h2
+          className="praktikum-section-heading"
           style={{
             ...SECTION_INTRO_TITLE,
             marginTop: 0,
@@ -352,7 +324,8 @@ export default function PraktikumSection() {
             marginRight: "auto",
           }}
         >
-          Практикум «Подорож до себе»
+          <span className="praktikum-title-part">Практикум</span>
+          <span className="praktikum-title-part">«Подорож до себе»</span>
         </h2>
 
         <div
@@ -393,11 +366,12 @@ export default function PraktikumSection() {
           style={{
             ...SECTION_INTRO_LEAD,
             margin: "0 auto clamp(40px, 6vw, 56px)",
-            maxWidth: "min(100%, 680px)",
+            maxWidth: SECTION_TITLE_MAX_WIDTH,
           }}
         >
           Щодня — короткі тексти, запитання й практики. 15–20 хвилин на день,
           які повертають ясність, живість і розуміння, куди рухатися далі.
+          <br />
           Не марафон. Не самооптимізація. М&apos;який вхід у контакт із собою.
         </p>
 
@@ -435,20 +409,96 @@ export default function PraktikumSection() {
       </div>
 
       <style>{`
+        @media (min-width: 769px) {
+          #практикум h2.praktikum-section-heading .praktikum-title-part:first-child::after {
+            content: " ";
+          }
+          #практикум h2.praktikum-section-heading .praktikum-title-part:last-child {
+            white-space: nowrap;
+          }
+        }
         #практикум .praktikum-cta-btn {
           leading-trim: none;
         }
+        #практикум .praktikum-price-block {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: baseline;
+          gap: 6px 12px;
+          text-align: center;
+          padding-top: clamp(8px, 1.5vw, 12px);
+          box-sizing: border-box;
+        }
+        #практикум .praktikum-price-label {
+          font-family: "Montserrat", sans-serif;
+          font-size: clamp(16px, 1.55vw, 18px);
+          font-weight: 600;
+          color: #333;
+        }
+        #практикум .praktikum-price-old {
+          font-family: "Montserrat", sans-serif;
+          font-size: clamp(14px, 1.35vw, 16px);
+          font-weight: 500;
+          color: #aaa;
+          text-decoration: line-through;
+          white-space: nowrap;
+        }
+        #практикум .praktikum-price-current {
+          font-family: "Montserrat", sans-serif;
+          font-size: clamp(26px, 2.8vw, 32px);
+          font-weight: 800;
+          color: #111;
+          letter-spacing: -0.02em;
+          white-space: nowrap;
+        }
         @media (max-width: 768px) {
+          #практикум h2.praktikum-section-heading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(4px, 1.2vw, 10px);
+          }
+          #практикум h2.praktikum-section-heading .praktikum-title-part {
+            display: block;
+            width: 100%;
+            text-align: center;
+          }
+          #практикум h2.praktikum-section-heading .praktikum-title-part:first-child::after {
+            content: none;
+          }
+          #практикум .praktikum-price-block {
+            flex-direction: row;
+            justify-content: center;
+            row-gap: 6px;
+          }
+          #практикум .praktikum-price-current {
+            flex: 0 0 100%;
+            width: 100%;
+            text-align: center;
+          }
           #практикум .praktikum-intro-lead {
             font-size: clamp(16px, 2.75vw, 22px) !important;
+            text-align: left !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
           }
           #практикум .praktikum-tagline-pill {
             padding: 14px 22px !important;
             font-size: clamp(16px, 3.9vw, 17px) !important;
           }
+          /* Ширші картки: на всю ширину екрана з вужчим gutter за секційного (як картки послуг) */
           #практикум .praktikum-cards {
             flex-direction: column !important;
             align-items: stretch !important;
+            width: 100vw !important;
+            margin-left: calc(50% - 50vw) !important;
+            margin-right: calc(50% - 50vw) !important;
+            padding-left: clamp(12px, 3.2vw, 22px) !important;
+            padding-right: clamp(12px, 3.2vw, 22px) !important;
+            box-sizing: border-box !important;
           }
           #практикум .praktikum-card {
             max-width: 100% !important;

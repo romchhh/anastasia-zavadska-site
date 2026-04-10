@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { INDIVIDUAL_BOOKING_PAGE, NAV_LINKS, navLinkHref } from "../data/siteData";
+import { PAGE_GUTTER_X } from "./sectionIntroStyles";
 import { DualRoundArrow, ArrowIcon } from "./ArrowIcon";
 
 function scrollToElementById(id) {
@@ -87,7 +88,7 @@ export default function Navbar() {
                 style={{
                   color: "#fff",
                   fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "15px",
+                  fontSize: "14px",
                   fontWeight: 700,
                   letterSpacing: ".04em",
                   textDecoration: "none",
@@ -118,12 +119,12 @@ export default function Navbar() {
               border: "2px solid rgba(255,255,255,0.85)",
               borderRadius: "50px",
               boxSizing: "border-box",
-              height: 48,
-              alignSelf: "center",
-              padding: "0 14px 0 36px",
-              minWidth: "252px",
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "17px",
+                  height: 44,
+                  alignSelf: "center",
+                  padding: "0 12px 0 32px",
+                  minWidth: "228px",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: "15px",
               fontWeight: 700,
               fontStyle: "normal",
               lineHeight: "100%",
@@ -218,7 +219,7 @@ export default function Navbar() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "84px 36px 40px",
+          padding: "76px 36px 40px",
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? "all" : "none",
           transition: "opacity .3s ease",
@@ -307,8 +308,8 @@ export default function Navbar() {
 
       <style>{`
         .main-nav {
-          height: 84px;
-          padding: 0 clamp(40px, 8vw, 120px);
+          height: 76px;
+          padding: 0 ${PAGE_GUTTER_X};
         }
         .nav-cta-btn:hover {
           background: #fff !important;
@@ -323,7 +324,7 @@ export default function Navbar() {
         @media (max-width: 768px) {
           .main-nav {
             height: 68px;
-            padding: 0 clamp(40px, 8vw, 120px);
+            padding: 0 ${PAGE_GUTTER_X};
           }
           .nav-mobile-brand { display: flex !important; }
           .nav-desktop { display: none !important; }

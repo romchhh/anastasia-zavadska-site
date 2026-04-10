@@ -135,7 +135,7 @@ a { text-decoration: none; }
 
 /* ── Section headings ── */
 .section-title {
-  font-size: clamp(26px, 4vw, 44px);
+  font-size: clamp(24px, 3.5vw, 38px);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: .02em;

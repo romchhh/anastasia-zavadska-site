@@ -9,7 +9,7 @@ function devAllowedOrigins(): string[] {
       .filter(Boolean) ?? [];
 
   let fromSite: string[] = [];
-  const site = process.env.NEXT_PUBLIC_SITE_URL;
+  const site = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (site) {
     try {
       fromSite = [new URL(site).hostname];

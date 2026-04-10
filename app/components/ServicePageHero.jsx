@@ -16,7 +16,7 @@ export default function ServicePageHero({ service }) {
       className="service-page-hero"
       style={{
         background: "#fff",
-        padding: `64px ${PAGE_GUTTER_X} 72px ${PAGE_GUTTER_X}`,
+        padding: `56px ${PAGE_GUTTER_X} 60px ${PAGE_GUTTER_X}`,
         minHeight: "unset",
         boxSizing: "border-box",
       }}
@@ -132,7 +132,7 @@ export default function ServicePageHero({ service }) {
               color: "#4b5f87",
               lineHeight: 1.65,
               margin: "0 0 28px 0",
-              maxWidth: "48ch",
+              maxWidth: "min(100%, 920px)",
             }}
           >
             {service.note}

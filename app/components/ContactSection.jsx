@@ -47,7 +47,7 @@ export default function ContactSection() {
       className="contact-section-outer"
       style={{
         background: "#fff",
-        padding: `clamp(48px, 6vw, 80px) ${PAGE_GUTTER_X} clamp(72px, 9vw, 100px)`,
+        padding: `clamp(42px, 5.5vw, 68px) ${PAGE_GUTTER_X} clamp(60px, 8vw, 88px)`,
         boxSizing: "border-box",
       }}
     >

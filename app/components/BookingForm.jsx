@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 
 /**
  * Національний номер UA: 10 цифр, формат 0XXXXXXXXX (0671234567).
@@ -219,13 +219,15 @@ export default function BookingForm({
 
             <Field
               label="Соц-мережі (для зв'язку)"
+              hint="Необов'язково до заповнення"
               placeholder="Напишіть ваші соц-мережі"
               value={fields.social}
               onChange={set("social")}
             />
 
             <Field
-              label="Опис проблеми"
+              label="Опис проблеми (пару слів)"
+              hint="Необов'язково до заповнення"
               placeholder=""
               value={fields.description}
               onChange={set("description")}
@@ -262,7 +264,14 @@ export default function BookingForm({
         {/* CTA */}
         <div className="bf-cta-wrap">
           <button type="button" className="bf-cta" onClick={handleSubmit} disabled={!canSubmit}>
-            {onlinePayment ? "ОПЛАТИТИ" : "НАДІСЛАТИ ЗАПИТ"}
+            {onlinePayment ? (
+              <>
+                <CreditCardIcon />
+                <span>Перейти до оплати</span>
+              </>
+            ) : (
+              "НАДІСЛАТИ ЗАПИТ"
+            )}
           </button>
         </div>
       </div>
@@ -274,6 +283,7 @@ export default function BookingForm({
 
 function Field({
   label,
+  hint,
   placeholder,
   value,
   onChange,
@@ -283,18 +293,32 @@ function Field({
   inputMode,
   autoComplete,
 }) {
+  const uid = useId();
+  const inputId = `${uid}-input`;
+  const hintId = `${uid}-hint`;
+
   return (
     <div className="bf-field">
-      <label className="bf-label">{label}</label>
+      <label className="bf-label" htmlFor={inputId}>
+        {label}
+      </label>
+      {hint ? (
+        <p className="bf-field-hint" id={hintId}>
+          {hint}
+        </p>
+      ) : null}
       {multiline ? (
         <textarea
+          id={inputId}
           className={`bf-input bf-textarea${error ? " bf-input-err" : ""}`}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          aria-describedby={hint ? hintId : undefined}
         />
       ) : (
         <input
+          id={inputId}
           className={`bf-input${error ? " bf-input-err" : ""}`}
           type={type}
           placeholder={placeholder}
@@ -302,6 +326,7 @@ function Field({
           onChange={onChange}
           inputMode={inputMode}
           autoComplete={autoComplete}
+          aria-describedby={hint ? hintId : undefined}
         />
       )}
       {error && <span className="bf-error">{error}</span>}
@@ -323,6 +348,27 @@ function LockIcon() {
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+}
+
+function CreditCardIcon() {
+  return (
+    <svg
+      className="bf-cta-card-icon"
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <line x1="2" y1="10" x2="22" y2="10" />
+      <line x1="6" y1="16" x2="10" y2="16" />
     </svg>
   );
 }
@@ -421,6 +467,14 @@ const formStyles = `
     letter-spacing: .01em;
   }
 
+  .bf-field-hint {
+    font-size: clamp(11px, 1.35vw, 12px);
+    font-weight: 500;
+    color: #6b7288;
+    line-height: 1.4;
+    margin: 0;
+  }
+
   .bf-input {
     background: #dce7ff;
     border: 2px solid transparent;
@@ -503,6 +557,10 @@ const formStyles = `
     padding-bottom: env(safe-area-inset-bottom, 0);
   }
   .bf-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     background: #6391FF;
     color: #fff;
     border: none;
@@ -516,6 +574,9 @@ const formStyles = `
     cursor: pointer;
     transition: background .15s, transform .13s, box-shadow .15s, opacity .15s;
     box-shadow: 0 6px 24px rgba(99,145,255,.32);
+  }
+  .bf-cta-card-icon {
+    flex-shrink: 0;
   }
   .bf-cta:hover:not(:disabled) {
     background: #4a75e8;

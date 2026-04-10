@@ -1,12 +1,12 @@
 .cta-pill {
   width: fit-content;
   max-width: 100%;
-  background: #a8bfff;
+  background: #5f7ad4;
   border: none;
-  border-radius: 60px;
-  padding: 18px 20px 18px 36px;
+  border-radius: 56px;
+  padding: 15px 18px 15px 30px;
   font-family: "Montserrat", sans-serif;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   font-style: normal;
   color: #fff;
@@ -25,7 +25,7 @@
 
 @media (hover: hover) {
   .cta-pill:hover {
-    box-shadow: 0 8px 28px rgba(146, 178, 255, 0.5);
+    box-shadow: 0 8px 28px rgba(55, 85, 160, 0.42);
     transform: translateY(-2px);
   }
 }
@@ -33,9 +33,9 @@
 .cta-pill__arrow {
   background: #fff;
   border-radius: 999px;
-  width: 58px;
-  height: 48px;
-  min-width: 58px;
+  width: 52px;
+  height: 42px;
+  min-width: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,10 +48,10 @@
   justify-content: space-between;
 }
 
-/* Блок «Зв’яжіться зі мною»: компактніша кнопка, праворуч */
+/* Блок «Зв’яжіться зі мною» — відступи й овал стрілки як у .nav-cta-btn у Navbar */
 .cta-pill--periwinkle {
-  background: #92b2ff;
-  padding: 10px 12px 10px 18px;
+  background: #4d6ec9;
+  padding: 10px 14px 10px 22px;
   font-family: "Montserrat", sans-serif;
   font-size: clamp(11px, 1.35vw, 15px);
   font-weight: 700;
@@ -59,22 +59,25 @@
   letter-spacing: 0;
   line-height: 1;
   text-transform: uppercase;
-  gap: 10px;
+  gap: 12px;
+  align-items: center;
 }
 
 .cta-pill--periwinkle .cta-pill__arrow {
   width: 38px;
-  height: 36px;
+  height: 28px;
   min-width: 38px;
+  border-radius: 999px;
 }
 
 .cta-pill--periwinkle .cta-pill__arrow img {
-  height: 15px;
+  height: 12px;
+  width: auto;
 }
 
 /* Відгуки / короткі CTA: менша капсула */
 .cta-pill--compact {
-  background: #a8bfff;
+  background: #5f7ad4;
   padding: 11px 14px 11px 20px;
   font-size: clamp(11px, 1.15vw, 14px);
   font-weight: 700;
@@ -118,18 +121,19 @@
 
 @media (max-width: 768px) {
   .cta-pill--periwinkle {
-    padding: 10px 12px 10px 18px;
+    padding: 10px 14px 10px 20px;
     font-size: clamp(11px, 3vw, 14px);
+    gap: 12px;
   }
 
   .cta-pill--periwinkle .cta-pill__arrow {
-    width: 36px;
-    height: 34px;
-    min-width: 36px;
+    width: 38px;
+    height: 28px;
+    min-width: 38px;
   }
 
   .cta-pill--periwinkle .cta-pill__arrow img {
-    height: 14px;
+    height: 12px;
   }
 }
 
@@ -142,12 +146,12 @@
   }
 
   .cta-pill:not(.cta-pill--periwinkle):not(.cta-pill--compact) .cta-pill__arrow {
-    width: 52px;
-    height: 44px;
-    min-width: 52px;
+    width: 48px;
+    height: 40px;
+    min-width: 48px;
   }
 
   .cta-pill:not(.cta-pill--periwinkle):not(.cta-pill--compact) .cta-pill__arrow img {
-    height: 18px !important;
+    height: 17px !important;
   }
 }

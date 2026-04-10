@@ -6,6 +6,11 @@ export type BookingNotifyFields = {
   phone: string;
   social?: string;
   description?: string;
+  /** YYYY-MM-DD (Kyiv) — для Google Calendar після оплати */
+  calendarDate?: string;
+  /** HH:MM — початок слота */
+  calendarTime?: string;
+  consultationType?: string;
 };
 
 /** Текст для Telegram (як у /api/booking/notify) */

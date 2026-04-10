@@ -1,6 +1,7 @@
+import { Fragment } from "react";
 import { TAGS, ABOUT_PHOTO, INDIVIDUAL_BOOKING_PAGE } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
-import { SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 export default function AboutSection() {
   return (
@@ -46,34 +47,37 @@ export default function AboutSection() {
           zIndex: 0,
         }} />
 
-        {/* Блюр — по центру зони переходу фото (58%) → сірий */}
+        {/* Блюр — ширша зона, сильніший blur для м’якого переходу фото → сірий */}
         <div
           className="about-desktop-blur"
           style={{
             position: "absolute",
             top: 0,
-            left: "calc(58% - 11%)",
+            left: "calc(58% - 15%)",
             bottom: 0,
-            width: "22%",
-            backdropFilter: "blur(18px)",
-            WebkitBackdropFilter: "blur(18px)",
-            maskImage: "linear-gradient(to right, transparent 0%, black 28%, black 72%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 28%, black 72%, transparent 100%)",
+            width: "30%",
+            backdropFilter: "blur(40px)",
+            WebkitBackdropFilter: "blur(40px)",
+            maskImage:
+              "linear-gradient(to right, transparent 0%, black 22%, black 78%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0%, black 22%, black 78%, transparent 100%)",
             zIndex: 1,
             pointerEvents: "none",
           }}
         />
 
-        {/* Плавний перехід фото → сірий (зсунуто правіше під новий блюр) */}
+        {/* Плавний перехід фото → сірий (узгоджено з блюром — довший, м’якший градієнт) */}
         <div
           className="about-desktop-fade"
           style={{
             position: "absolute",
             top: 0,
-            left: "30%",
+            left: "32%",
             bottom: 0,
-            width: "48%",
-            background: "linear-gradient(to right, transparent 0%, rgba(232,232,232,0.12) 18%, rgba(232,232,232,0.48) 42%, rgba(232,232,232,0.9) 64%, #e8e8e8 82%)",
+            width: "56%",
+            background:
+              "linear-gradient(to right, transparent 0%, rgba(232,232,232,0.05) 18%, rgba(232,232,232,0.22) 38%, rgba(232,232,232,0.5) 58%, rgba(232,232,232,0.82) 76%, #e8e8e8 90%, #e8e8e8 100%)",
             zIndex: 2,
             pointerEvents: "none",
           }}
@@ -86,21 +90,29 @@ export default function AboutSection() {
             zIndex: 2,
             marginLeft: "auto",
             width: "72%",
-            maxWidth: "900px",
+            maxWidth: "920px",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "stretch",
             justifyContent: "center",
-            padding: "88px 96px 140px clamp(44px, 5vw, 80px)",
-            textAlign: "center",
+            padding: `72px 80px 120px ${PAGE_GUTTER_X}`,
+            textAlign: "left",
+            boxSizing: "border-box",
           }}
         >
-          <h2 style={{
-            ...SECTION_INTRO_TITLE,
-            margin: "0 0 clamp(20px, 3vw, 28px) 0",
-            whiteSpace: "nowrap",
-          }}>
-            Привіт, я Анастасія
+          <h2
+            className="about-intro-heading"
+            style={{
+              ...SECTION_INTRO_TITLE,
+              textAlign: "left",
+              margin: "0 0 clamp(20px, 3vw, 28px) 0",
+            }}
+          >
+            <span className="about-intro-desktop">Привіт, я Анастасія</span>
+            <span className="about-intro-mobile">
+              <span className="about-intro-mobile-line">Привіт,</span>
+              <span className="about-intro-mobile-line">я Анастасія</span>
+            </span>
           </h2>
 
           {[
@@ -112,11 +124,11 @@ export default function AboutSection() {
               key={i}
               style={{
                 ...SECTION_INTRO_LEAD,
-                fontWeight: i === 0 ? 400 : 500,
-                maxWidth: "min(100%, 680px)",
+                fontWeight: i === 0 ? 600 : 400,
+                maxWidth: "min(100%, 920px)",
                 width: "100%",
                 margin: "0 0 20px 0",
-                textAlign: "center",
+                textAlign: "left",
               }}
             >
               {p}
@@ -135,7 +147,7 @@ export default function AboutSection() {
         >
           <svg viewBox="0 0 1440 88" xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
-            style={{ display: "block", width: "100%", height: "88px" }}>
+            style={{ display: "block", width: "100%", height: "72px" }}>
             <path d="M0,44 C180,88 360,0 540,44 C720,88 900,8 1080,44 C1200,64 1320,30 1440,44 L1440,88 L0,88 Z" fill="#fff" />
           </svg>
         </div>
@@ -188,7 +200,7 @@ export default function AboutSection() {
         className="about-work-section"
         style={{
           background: "#fff",
-          padding: "clamp(56px, 8vw, 96px) clamp(24px, 8vw, 120px) clamp(64px, 9vw, 112px)",
+          padding: `clamp(36px, 5.5vw, 64px) ${PAGE_GUTTER_X} clamp(42px, 6.5vw, 76px)`,
           boxSizing: "border-box",
         }}
       >
@@ -199,7 +211,7 @@ export default function AboutSection() {
             margin: "0 auto",
             display: "flex",
             flexDirection: "column",
-            gap: "clamp(48px, 7vw, 88px)",
+            gap: "clamp(28px, 4vw, 52px)",
           }}
         >
           {/* Верх: заголовок, текст, картки, CTA — по центру */}
@@ -224,12 +236,23 @@ export default function AboutSection() {
               className="about-work-intro-lead"
               style={{
                 ...SECTION_INTRO_LEAD,
-                margin: "0 auto clamp(32px, 4.5vw, 48px)",
+                margin: "0 auto clamp(10px, 1.5vw, 16px)",
                 maxWidth: "min(100%, 920px)",
                 width: "100%",
               }}
             >
-              Буває, що проблему не завжди легко назвати одним словом на першому сеансі — і це нормально. Іноді ти просто відчуваєш, що щось не так. Ми починаємо з цього відчуття і поступово розбираємося, що за ним стоїть.
+              Буває, що проблему не завжди легко назвати одним словом на першому сеансі — і це нормально. Іноді ти просто відчуваєш, що щось не так.
+            </p>
+            <p
+              className="about-work-intro-lead about-work-intro-lead-second"
+              style={{
+                ...SECTION_INTRO_LEAD,
+                margin: "0 auto clamp(20px, 3vw, 32px)",
+                maxWidth: "min(100%, 920px)",
+                width: "100%",
+              }}
+            >
+              Ми починаємо з цього відчуття і поступово розбираємося, що за ним стоїть.
             </p>
 
             <div
@@ -238,7 +261,7 @@ export default function AboutSection() {
                 display: "grid",
                 gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
                 gap: "clamp(16px, 2.5vw, 28px)",
-                margin: "0 0 clamp(36px, 5vw, 52px) 0",
+                margin: "0 0 clamp(22px, 3.5vw, 36px) 0",
                 width: "100%",
                 maxWidth: "1000px",
                 marginLeft: "auto",
@@ -302,8 +325,8 @@ export default function AboutSection() {
                   <p
                     style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "clamp(13px, 1.15vw, 16px)",
-                      fontWeight: 700,
+                      fontSize: "clamp(15px, 1.4vw, 19px)",
+                      fontWeight: 400,
                       color: "#000",
                       lineHeight: 1.5,
                       margin: 0,
@@ -320,16 +343,19 @@ export default function AboutSection() {
             </div>
 
             <p
+              className="about-work-intro-hint"
               style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: "clamp(14px, 1.2vw, 17px)",
                 fontWeight: 500,
                 color: "#000",
                 lineHeight: 1.5,
-                margin: "0 0 clamp(18px, 2.5vw, 24px) 0",
+                margin: "0 0 clamp(14px, 2vw, 20px) 0",
               }}
             >
-              Знайоме відчуття? Можемо розібрати це разом
+              Знайоме відчуття?
+              <br className="about-work-intro-hint__break" aria-hidden="true" />
+              Можемо розібрати це разом
             </p>
 
             <div
@@ -350,7 +376,7 @@ export default function AboutSection() {
             style={{
               display: "grid",
               gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)",
-              gap: "clamp(28px, 5vw, 56px)",
+              gap: "clamp(20px, 3.5vw, 40px)",
               alignItems: "stretch",
             }}
           >
@@ -360,7 +386,7 @@ export default function AboutSection() {
                 style={{
                   ...SECTION_INTRO_TITLE,
                   fontSize: "clamp(26px, 5.2vw, 52px)",
-                  margin: "0 0 clamp(22px, 3vw, 32px) 0",
+                  margin: "0 0 clamp(16px, 2.2vw, 24px) 0",
                   textAlign: "left",
                 }}
               >
@@ -373,7 +399,7 @@ export default function AboutSection() {
                   padding: 0,
                   display: "flex",
                   flexDirection: "column",
-                  gap: "clamp(12px, 1.5vw, 18px)",
+                  gap: "clamp(10px, 1.2vw, 15px)",
                 }}
               >
                 {[
@@ -462,12 +488,12 @@ export default function AboutSection() {
             className="about-thought-cloud-wrap"
             style={{
               position: "relative",
-              marginTop: "clamp(8px, 2vw, 16px)",
+              marginTop: 0,
               width: "100%",
               maxWidth: "980px",
               marginLeft: "auto",
               marginRight: "auto",
-              padding: "clamp(8px, 2vw, 20px)",
+              padding: "clamp(4px, 1vw, 12px)",
               boxSizing: "border-box",
             }}
           >
@@ -477,7 +503,7 @@ export default function AboutSection() {
                 position: "relative",
                 border: "none",
                 borderRadius: "clamp(20px, 2.8vw, 28px)",
-                padding: "clamp(32px, 4vw, 52px) clamp(28px, 4.5vw, 56px)",
+                padding: "clamp(24px, 3vw, 40px) clamp(24px, 4vw, 48px)",
                 background: "#ffffff",
                 boxShadow: `
                   0 4px 6px rgba(200, 215, 245, 0.12),
@@ -509,26 +535,51 @@ export default function AboutSection() {
           </div>
 
           <p
-            className="about-work-tags-line"
+            className="about-work-tags-line about-work-tags"
             style={{
               fontFamily: "'Montserrat', sans-serif",
               fontSize: "clamp(15px, 1.5vw, 18px)",
               fontWeight: 700,
               fontStyle: "normal",
-              lineHeight: "100%",
+              lineHeight: 1.35,
               letterSpacing: 0,
               color: "#6391FF",
               textAlign: "center",
               margin: 0,
-              paddingTop: "clamp(16px, 2.5vw, 28px)",
+              paddingTop: "clamp(8px, 1.5vw, 16px)",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "baseline",
+              columnGap: "0.45em",
+              rowGap: "0.55em",
             }}
           >
-            {TAGS.join(" · ")}
+            {TAGS.map((tag, i) => (
+              <Fragment key={`${tag}-${i}`}>
+                {i > 0 && (
+                  <span className="about-work-tags__sep" aria-hidden>
+                    ·
+                  </span>
+                )}
+                <span className="about-work-tags__item">{tag}</span>
+              </Fragment>
+            ))}
           </p>
         </div>
       </section>
 
       <style>{`
+        .about-intro-desktop {
+          display: block;
+          white-space: nowrap;
+        }
+        .about-intro-mobile {
+          display: none;
+        }
+        .about-work-intro-hint__break {
+          display: none;
+        }
         .about-work-cta-link .cta-pill {
           font-family: 'Montserrat', sans-serif !important;
           font-size: 24px !important;
@@ -548,13 +599,33 @@ export default function AboutSection() {
           #про-мене .about-content {
             width: 100% !important;
             margin-left: 0 !important;
-            padding: 132px 28px 80px !important;
-            justify-content: center !important;
-            align-items: center !important;
+            /* Висота липкого навбару 68px — без додаткового «повітря», заголовок майже впритул під меню */
+            padding: 68px 28px 64px !important;
+            justify-content: flex-start !important;
+            align-items: stretch !important;
+            text-align: left !important;
           }
-          #про-мене .about-content h2 {
-            white-space: normal !important;
+          #про-мене .about-content h2.about-intro-heading {
             font-size: clamp(24px, 8vw, 40px) !important;
+            text-align: left !important;
+          }
+          #про-мене .about-content h2.about-intro-heading .about-intro-desktop {
+            display: none !important;
+          }
+          #про-мене .about-content h2.about-intro-heading .about-intro-mobile {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 0.1em !important;
+            text-transform: none !important;
+            letter-spacing: -0.02em !important;
+            line-height: 1.08 !important;
+          }
+          #про-мене .about-content h2.about-intro-heading .about-intro-mobile-line {
+            display: block !important;
+          }
+          #про-мене .about-content p {
+            text-align: left !important;
           }
           .about-mobile-photo {
             display: block !important;
@@ -566,17 +637,17 @@ export default function AboutSection() {
         }
         @media (max-width: 768px) {
           .about-work-section {
-            padding: 56px 28px 64px !important;
+            padding: 44px 28px 52px !important;
             margin-top: -24px;
             position: relative;
             z-index: 3;
           }
           .about-work-stack {
-            gap: 40px !important;
+            gap: 28px !important;
           }
           .about-work-split {
             grid-template-columns: 1fr !important;
-            gap: 32px !important;
+            gap: 24px !important;
           }
           .about-work-visual {
             min-height: 220px !important;
@@ -584,14 +655,63 @@ export default function AboutSection() {
           .about-work-visual img {
             min-height: 220px !important;
           }
+          .about-work-intro {
+            text-align: left !important;
+          }
+          .about-work-intro .about-work-intro-heading {
+            text-align: left !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          .about-work-intro .about-work-intro-lead {
+            text-align: left !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
+          }
+          .about-work-intro .about-work-intro-hint {
+            text-align: center !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            max-width: 100% !important;
+            width: 100% !important;
+          }
+          .about-work-intro-hint__break {
+            display: block !important;
+          }
           .about-work-intro-heading {
             font-size: clamp(24px, 8vw, 40px) !important;
           }
           .about-work-states-heading {
             font-size: clamp(22px, 7vw, 36px) !important;
           }
-          .about-work-tags-line {
+          .about-work-tags-line.about-work-tags {
             font-size: clamp(12px, 3.2vw, 16px) !important;
+            line-height: 1.42 !important;
+            padding-top: 6px !important;
+            margin-top: -8px !important;
+            padding-bottom: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            justify-content: center !important;
+            column-gap: 0.4em !important;
+            row-gap: 0.48em !important;
+            max-width: 100% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            box-sizing: border-box !important;
+          }
+          .about-work-tags-line .about-work-tags__sep {
+            padding: 0 !important;
+            flex-shrink: 0 !important;
+            opacity: 0.88 !important;
+          }
+          .about-work-tags-line .about-work-tags__item {
+            text-align: center !important;
+            max-width: 100% !important;
           }
           .about-work-cards {
             grid-template-columns: 1fr !important;
@@ -606,7 +726,7 @@ export default function AboutSection() {
             flex-direction: row !important;
             align-items: center !important;
             justify-content: flex-start !important;
-            text-align: left !important;
+            text-align: center !important;
             padding: 12px 14px !important;
             gap: 14px !important;
             border-radius: 16px !important;
@@ -624,11 +744,11 @@ export default function AboutSection() {
             margin: 0 auto !important;
           }
           .about-work-card p {
-            text-align: left !important;
+            text-align: center !important;
             margin-top: 0 !important;
-            font-size: clamp(12px, 3.4vw, 14px) !important;
-            line-height: 1.4 !important;
-            font-weight: 600 !important;
+            font-size: clamp(13px, 3.6vw, 16px) !important;
+            line-height: 1.45 !important;
+            font-weight: 400 !important;
             flex: 1 1 auto !important;
             min-width: 0 !important;
           }

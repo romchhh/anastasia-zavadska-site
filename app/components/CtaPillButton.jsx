@@ -2,7 +2,7 @@ import "./CtaPillButton.css";
 import { ArrowIcon } from "./ArrowIcon";
 
 /**
- * Кнопка-капсула як у Hero: #A8BFFF, білий овал зі стрілкою #92B2FF.
+ * Кнопка-капсула як у Hero: насичений блакитний фон, білий текст, овал зі стрілкою.
  * З `href` рендериться як `<a>`, інакше — `<button type="button">`.
  */
 export default function CtaPillButton({
@@ -10,7 +10,7 @@ export default function CtaPillButton({
   href,
   className = "",
   fullWidth = false,
-  /** Світліший перивінкль (#92B2FF) для блоку контактів; compact — менша кнопка (напр. відгуки) */
+  /** Трохи інший відтінок для блоку контактів; compact — менша кнопка (напр. відгуки) */
   variant = "default",
   target,
   rel,
@@ -24,16 +24,14 @@ export default function CtaPillButton({
     className,
   ].filter(Boolean).join(" ");
 
-  const arrowHeight = variant === "compact" ? 16 : 22;
+  const arrowHeight =
+    variant === "compact" ? 16 : variant === "periwinkle" ? 12 : 20;
 
   const inner = (
     <>
       {children}
       <span className="cta-pill__arrow" aria-hidden>
-        <ArrowIcon
-          variant={variant === "periwinkle" ? "periwinkle" : "blue"}
-          height={arrowHeight}
-        />
+        <ArrowIcon variant="blue" height={arrowHeight} />
       </span>
     </>
   );

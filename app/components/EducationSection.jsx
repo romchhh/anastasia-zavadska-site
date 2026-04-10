@@ -189,7 +189,7 @@ export default function EducationSection() {
       id="освіта"
       style={{
         background: "#fff",
-        padding: `clamp(56px, 7vw, 96px) ${PAGE_GUTTER_X} clamp(72px, 9vw, 112px)`,
+        padding: `clamp(40px, 5vw, 68px) ${PAGE_GUTTER_X} clamp(48px, 6.5vw, 80px)`,
         boxSizing: "border-box",
       }}
       className="education-section-outer"
@@ -200,7 +200,7 @@ export default function EducationSection() {
           background: "#D6E0FF",
           borderRadius: "clamp(40px, 5vw, 56px)",
           padding:
-            "clamp(44px, 5.5vw, 68px) clamp(32px, 4vw, 48px) clamp(44px, 5.5vw, 68px) clamp(48px, 6vw, 88px)",
+            "clamp(38px, 5vw, 58px) clamp(28px, 3.5vw, 44px) clamp(38px, 5vw, 58px) clamp(40px, 5.5vw, 76px)",
           display: "grid",
           gridTemplateColumns: "minmax(260px, min(34vw, 380px)) minmax(0, 1fr)",
           gap: "clamp(28px, 4vw, 52px)",
@@ -223,7 +223,7 @@ export default function EducationSection() {
           <h2
             style={{
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(28px, 3.6vw, 44px)",
+              fontSize: "clamp(26px, 3.2vw, 38px)",
               fontWeight: 900,
               color: "#111",
               lineHeight: 1.1,
@@ -641,8 +641,8 @@ export default function EducationSection() {
         @media (max-width: 968px) {
           .education-panel {
             grid-template-columns: 1fr !important;
-            padding: clamp(36px, 8vw, 48px) clamp(24px, 5vw, 36px) !important;
-            gap: clamp(24px, 5vw, 36px) !important;
+            padding: clamp(28px, 6.5vw, 40px) clamp(24px, 5vw, 36px) !important;
+            gap: clamp(20px, 4vw, 28px) !important;
           }
           .education-panel-text {
             max-width: 100%;
@@ -656,7 +656,7 @@ export default function EducationSection() {
             font-size: clamp(16px, 2.75vw, 22px) !important;
           }
           .education-section-outer {
-            padding: 48px clamp(20px, 5vw, 32px) 64px !important;
+            padding: 36px clamp(20px, 5vw, 32px) 48px !important;
           }
           .education-nav-arrows {
             display: none !important;

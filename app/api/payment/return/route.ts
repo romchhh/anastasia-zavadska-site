@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getPaymentReturnHint } from '@/lib/paymentReturnHints';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -10,7 +11,8 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url);
     const orderRef = url.searchParams.get('orderRef') || '';
     const tariffType = url.searchParams.get('tariffType') || 'self';
-    const slotLine = url.searchParams.get('slotLine') || '';
+    const hint = orderRef ? await getPaymentReturnHint(orderRef) : null;
+    const slotLine = hint?.slotLine || url.searchParams.get('slotLine') || '';
     const transactionStatus = url.searchParams.get('transactionStatus') || 
                              url.searchParams.get('status') || 
                              '';
@@ -126,7 +128,14 @@ export async function POST(request: NextRequest) {
     });
 
     const origin = process.env.NEXT_PUBLIC_SITE_URL || `https://${request.headers.get('host')}`;
-    const slotLineFromQs = new URL(request.url).searchParams.get('slotLine') || '';
+    const urlObj = new URL(request.url);
+    const refForHint = String(
+      orderRef || urlObj.searchParams.get('orderRef') || urlObj.searchParams.get('orderReference') || ''
+    );
+    const hint =
+      refForHint.length > 0 ? await getPaymentReturnHint(refForHint) : null;
+    const slotLineFromQs =
+      hint?.slotLine || new URL(request.url).searchParams.get('slotLine') || '';
 
     // Перевіряємо статус транзакції
     // WayForPay: transactionStatus === 'Approved' або reasonCode === '1100' означає успішну оплату

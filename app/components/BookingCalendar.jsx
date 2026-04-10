@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { kyivYmdKey } from "@/lib/kyivDate";
+import { SLOT_LABELS } from "@/lib/calendarSlots";
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
@@ -39,11 +41,6 @@ function kyivYmd(date) {
   const m = Number(parts.find((p) => p.type === "month")?.value);
   const d = Number(parts.find((p) => p.type === "day")?.value);
   return { y, m, d };
-}
-
-function kyivYmdKey(date) {
-  const { y, m, d } = kyivYmd(date);
-  return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 }
 
 function ymdEqual(a, b) {
@@ -90,6 +87,16 @@ function dateKey(date, slot) {
   return `${date.toDateString()}__${slot}`;
 }
 
+/** Унікальні YYYY-MM (Kyiv) для семи днів тижня (1–2 місяці на переході) */
+function monthsCoveringWeek(weekStart) {
+  const set = new Set();
+  for (let d = 0; d < 7; d++) {
+    const day = addDays(weekStart, d);
+    set.add(kyivYmdKey(day).slice(0, 7));
+  }
+  return [...set].sort();
+}
+
 /** Парсить "9:00–10:00" (en dash або hyphen) */
 function parseSlotRange(slot) {
   const m = String(slot).match(/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
@@ -112,28 +119,6 @@ function hasSlotWindowEnded(date, slot) {
   return kyivMinutesSinceMidnight(now) >= endM;
 }
 
-// ─── default time slots ───────────────────────────────────────────────────────
-
-const DEFAULT_SLOTS = [
-  "9:00–10:00",
-  "11:00–12:00",
-  "13:00–14:00",
-  "16:00–17:00",
-  "19:00–20:00",
-];
-
-// Pre-seed some "unavailable" slots so the demo looks realistic
-function buildDefaultUnavailable(monday) {
-  const unavailable = new Set();
-  const mark = (dayOffset, slotIdx) => {
-    const d = addDays(monday, dayOffset);
-    unavailable.add(dateKey(d, DEFAULT_SLOTS[slotIdx]));
-  };
-  mark(0, 3); mark(1, 1); mark(2, 0); mark(2, 4);
-  mark(3, 0); mark(4, 2); mark(5, 1); mark(6, 3);
-  return unavailable;
-}
-
 // ─── component ────────────────────────────────────────────────────────────────
 
 const MOBILE_MAX_PX = 680;
@@ -141,11 +126,23 @@ const MOBILE_MAX_PX = 680;
 export default function BookingCalendar({ onSelect }) {
   const today = new Date();
   const [weekStart, setWeekStart] = useState(getMondayOf(today));
-  const [unavailable, setUnavailable] = useState(() => buildDefaultUnavailable(getMondayOf(today)));
+  const [unavailable, setUnavailable] = useState(() => new Set());
+  const [slotsByDay, setSlotsByDay] = useState(() => ({}));
+  const loadedMonthsRef = useRef(new Set());
+  const [slotsLoading, setSlotsLoading] = useState(true);
+  const [slotsError, setSlotsError] = useState(null);
+  const isMountedRef = useRef(true);
   const [animDir, setAnimDir] = useState(null); // "left" | "right"
   const [isMobileLayout, setIsMobileLayout] = useState(false);
   /** Перемальовує календар, щоб сьогоднішні слоти ставали недоступні після закінчення вікна */
   const [, setTimeTick] = useState(0);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -160,6 +157,73 @@ export default function BookingCalendar({ onSelect }) {
     const id = setInterval(() => setTimeTick((n) => n + 1), 60_000);
     return () => clearInterval(id);
   }, []);
+
+  useEffect(() => {
+    const needed = monthsCoveringWeek(weekStart);
+    const toFetch = needed.filter((m) => !loadedMonthsRef.current.has(m));
+
+    if (toFetch.length === 0) {
+      setSlotsLoading(false);
+      setSlotsError(null);
+      return;
+    }
+
+    (async () => {
+      setSlotsLoading(true);
+      setSlotsError(null);
+      try {
+        const results = await Promise.all(
+          toFetch.map((month) =>
+            fetch(`/api/calendar/slots?month=${encodeURIComponent(month)}`).then(
+              async (res) => {
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                  throw new Error(data?.error || "Не вдалося завантажити розклад");
+                }
+                if (!data.slots || typeof data.slots !== "object") {
+                  throw new Error("Некоректна відповідь сервера");
+                }
+                return data.slots;
+              }
+            )
+          )
+        );
+        setSlotsByDay((prev) => {
+          const merged = { ...prev };
+          for (let i = 0; i < toFetch.length; i++) {
+            Object.assign(merged, results[i]);
+            loadedMonthsRef.current.add(toFetch[i]);
+          }
+          return merged;
+        });
+        if (isMountedRef.current) setSlotsLoading(false);
+      } catch (e) {
+        console.error(e);
+        if (isMountedRef.current) {
+          setSlotsError(e instanceof Error ? e.message : "Помилка завантаження");
+          setSlotsLoading(false);
+        }
+      }
+    })();
+  }, [weekStart]);
+
+  useEffect(() => {
+    const next = new Set();
+    for (let d = 0; d < 7; d++) {
+      const day = addDays(weekStart, d);
+      const key = kyivYmdKey(day);
+      const daySlots = slotsByDay[key];
+      if (!Array.isArray(daySlots)) continue;
+      daySlots.forEach((item, idx) => {
+        const label = SLOT_LABELS[idx];
+        if (!label) return;
+        if (item && item.available === false) {
+          next.add(dateKey(day, label));
+        }
+      });
+    }
+    setUnavailable(next);
+  }, [weekStart, slotsByDay]);
 
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const visibleDays = isMobileLayout ? days.filter((d) => !isPastDay(d)) : days;
@@ -181,6 +245,7 @@ export default function BookingCalendar({ onSelect }) {
   };
 
   const selectSlot = (date, slot) => {
+    if (slotsLoading || slotsError) return;
     if (isPastDay(date)) return;
     if (hasSlotWindowEnded(date, slot)) return;
     const key = dateKey(date, slot);
@@ -199,6 +264,7 @@ export default function BookingCalendar({ onSelect }) {
   };
 
   const slotState = (date, slot) => {
+    if (slotsLoading || slotsError) return "unavailable";
     if (isPastDay(date)) return "unavailable";
     if (hasSlotWindowEnded(date, slot)) return "unavailable";
     if (unavailable.has(dateKey(date, slot))) return "unavailable";
@@ -300,6 +366,14 @@ export default function BookingCalendar({ onSelect }) {
           text-align: center;
           margin-top: 4px;
           margin-bottom: 20px;
+        }
+        .bcal-slots-hint {
+          font-size: 13px;
+          font-weight: 500;
+          color: #c45c5c;
+          text-align: center;
+          margin: -12px 0 16px;
+          line-height: 1.35;
         }
 
         /* ── grid ── */
@@ -570,6 +644,16 @@ export default function BookingCalendar({ onSelect }) {
         </div>
 
         <div className="bcal-range">{rangeLabel}</div>
+        {slotsError ? (
+          <div className="bcal-slots-hint" role="alert">
+            {slotsError}. Оновіть сторінку або спробуйте пізніше.
+          </div>
+        ) : null}
+        {slotsLoading ? (
+          <div className="bcal-slots-hint" style={{ color: "#8fa3d0" }}>
+            Завантаження розкладу…
+          </div>
+        ) : null}
 
         {/* Calendar grid */}
         <div className="bcal-grid-wrap">
@@ -587,7 +671,7 @@ export default function BookingCalendar({ onSelect }) {
                   </div>
 
                   <div className="bcal-slots">
-                    {DEFAULT_SLOTS.map((slot) => {
+                    {SLOT_LABELS.map((slot) => {
                       const state = slotState(date, slot);
                       return (
                         <button

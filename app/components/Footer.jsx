@@ -48,7 +48,7 @@ export default function Footer() {
               href="/"
               className="footer-brand-title"
               style={{
-                fontSize: "clamp(20px, 2.8vw, 32px)",
+                fontSize: "clamp(18px, 2.5vw, 28px)",
                 fontWeight: 900,
                 color: "#fff",
                 textTransform: "uppercase",
@@ -81,7 +81,7 @@ export default function Footer() {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: "clamp(40px, 8vw, 100px)",
+            gap: "clamp(32px, 6.5vw, 80px)",
             alignItems: "flex-start",
             flex: "1 1 auto",
             justifyContent: "flex-end",

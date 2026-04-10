@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { formatBookingNotifyTelegramText } from '@/lib/bookingNotifyFormat';
 import { takePendingSessionBooking } from '@/lib/pendingSessionBookings';
 import { appendSessionPayment } from '@/lib/sessionPayments';
+import { insertConsultationEvent, isGoogleCalendarConfigured } from '@/lib/googleCalendarServer';
 import { sendTelegramGroupMessage } from '@/utils/telegram';
 
 export const runtime = 'nodejs';
@@ -179,6 +180,25 @@ export async function POST(request: NextRequest) {
       if (isSession) {
         const pending = await takePendingSessionBooking(ref);
         if (pending) {
+          if (
+            isGoogleCalendarConfigured() &&
+            pending.calendarDate &&
+            pending.calendarTime
+          ) {
+            try {
+              await insertConsultationEvent({
+                date: pending.calendarDate,
+                time: pending.calendarTime,
+                name: pending.name,
+                phone: pending.phone,
+                consultationType: pending.consultationType ?? pending.serviceTitle,
+                social: pending.social?.trim() || undefined,
+                description: pending.description?.trim() || undefined,
+              });
+            } catch (calErr) {
+              console.error('[PAYMENT CALLBACK] Google Calendar booking failed:', calErr);
+            }
+          }
           const bookingText = formatBookingNotifyTelegramText(pending);
           const tail = paymentTailLines(ref, amount, currency, {
             phone: phoneStr,

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { savePendingSessionBooking } from '@/lib/pendingSessionBookings';
+import { savePaymentReturnHint } from '@/lib/paymentReturnHints';
 import type { BookingNotifyFields } from '@/lib/bookingNotifyFormat';
 import { getCurrentPrice, getSessionPriceUah } from '@/utils/price';
 
@@ -16,7 +17,7 @@ export async function POST(request: NextRequest) {
     // WayForPay credentials
     const merchantAccount = process.env.MERCHANT_ACCOUNT;
     const merchantSecretKey = process.env.MERCHANT_SECRET;
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://journey.anastasiiazavadska.com';
+    const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://journey.anastasiiazavadska.com').trim();
     // WayForPay потребує домен без протоколу для підпису, але з протоколом для URL
     const merchantDomainName = siteUrl.replace(/^https?:\/\//, ''); // Видаляємо http:// або https://
 
@@ -86,8 +87,22 @@ export async function POST(request: NextRequest) {
           phone,
           social: typeof bn.social === 'string' ? bn.social : undefined,
           description: typeof bn.description === 'string' ? bn.description : undefined,
+          calendarDate:
+            typeof bn.calendarDate === 'string' && bn.calendarDate.trim() !== ''
+              ? bn.calendarDate.trim()
+              : undefined,
+          calendarTime:
+            typeof bn.calendarTime === 'string' && bn.calendarTime.trim() !== ''
+              ? bn.calendarTime.trim()
+              : undefined,
+          consultationType:
+            typeof bn.consultationType === 'string' ? bn.consultationType : undefined,
         };
         await savePendingSessionBooking(orderReference, fields);
+        const slHint = fields.slotLine != null && fields.slotLine !== '' ? String(fields.slotLine) : null;
+        if (slHint) {
+          await savePaymentReturnHint(orderReference, { slotLine: slHint });
+        }
       }
     }
 
@@ -161,14 +176,16 @@ export async function POST(request: NextRequest) {
       throw signatureError;
     }
 
+    // WayForPay: return_url ≤ 255 символів — без slotLine (зберігається в paymentReturnHints)
     const returnParams = new URLSearchParams({
       orderRef: orderReference,
       tariffType,
     });
-    if (paymentKind === 'session' && body?.bookingNotify && typeof body.bookingNotify === 'object') {
-      const bn = body.bookingNotify as Record<string, unknown>;
-      const slRaw = bn.slotLine != null ? String(bn.slotLine).trim() : '';
-      if (slRaw) returnParams.set('slotLine', slRaw.slice(0, 400));
+
+    const siteBase = siteUrl.replace(/\/+$/, '');
+    const returnUrl = `${siteBase}/api/payment/return?${returnParams.toString()}`;
+    if (returnUrl.length > 255) {
+      console.error('[PAYMENT CREATE] returnUrl length exceeds WayForPay limit 255:', returnUrl.length);
     }
 
     // Параметри для WayForPay
@@ -187,8 +204,8 @@ export async function POST(request: NextRequest) {
       productCount: productCounts,
       productPrice: productPrices.map(price => price.toFixed(2)), // З двома знаками після коми
       language: 'UA',
-      returnUrl: `${siteUrl}/api/payment/return?${returnParams.toString()}`,
-      serviceUrl: `${siteUrl}/api/payment/callback`,
+      returnUrl,
+      serviceUrl: `${siteBase}/api/payment/callback`,
     };
 
     const cfn = typeof body?.clientFirstName === 'string' ? body.clientFirstName.trim() : '';

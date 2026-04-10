@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { INDIVIDUAL_BOOKING_PAGE } from "../../data/siteData";
 
 const TG_DEFAULT = "https://t.me/anastasia_zavadska";
 
@@ -28,10 +27,7 @@ function buildVariants(sessionTgUrl, selfHref, psychHref, journeyHref) {
       body: "Найближчим часом я зв’яжуся з вами, щоб підтвердити час. Якщо хочете написати раніше — залишайте повідомлення в Telegram.",
       primaryLabel: "Написати в Telegram",
       primaryHref: sessionTgUrl,
-      links: [
-        { href: INDIVIDUAL_BOOKING_PAGE, label: "Сторінка запису на сесію" },
-        { href: "/", label: "На головну" },
-      ],
+      links: [{ href: "/", label: "На головну" }],
     },
     self: {
       badge: "Практикум — самостійний старт",

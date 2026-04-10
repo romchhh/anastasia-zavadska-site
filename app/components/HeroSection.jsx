@@ -2,7 +2,7 @@
 
 import { HERO_PHOTO, INDIVIDUAL_BOOKING_PAGE } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
-import { SECTION_INTRO_LEAD } from "./sectionIntroStyles";
+import { NAV_HEIGHT_DESKTOP, PAGE_GUTTER_X, SECTION_INTRO_LEAD } from "./sectionIntroStyles";
 
 const accent = "#92B2FF";
 
@@ -17,8 +17,8 @@ export default function HeroSection() {
       className="hero-section"
       style={{
         background: "#fff",
-        padding: "clamp(48px, 7vw, 88px) clamp(40px, 8vw, 120px)",
-        minHeight: "calc(100vh - 84px)",
+        padding: `clamp(40px, 6vw, 72px) ${PAGE_GUTTER_X}`,
+        minHeight: `calc(100vh - ${NAV_HEIGHT_DESKTOP}px)`,
         boxSizing: "border-box",
       }}
     >
@@ -28,7 +28,7 @@ export default function HeroSection() {
           className="hero-title"
           style={{
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "clamp(40px, 6.5vw, 96px)",
+            fontSize: "clamp(34px, 5.5vw, 80px)",
             fontWeight: 900,
             lineHeight: "0.94",
             color: "#111",
@@ -49,7 +49,7 @@ export default function HeroSection() {
           style={{
             display: "inline-block",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "clamp(17px, 2.8vw, 36px)",
+            fontSize: "clamp(15px, 2.35vw, 30px)",
             fontWeight: 600,
             fontStyle: "normal",
             color: "#fff",
@@ -84,7 +84,7 @@ export default function HeroSection() {
               className="hero-bullet-item"
               style={{
                 fontFamily: "'Montserrat', sans-serif",
-                fontSize: "clamp(16px, 1.85vw, 22px)",
+                fontSize: "clamp(15px, 1.65vw, 19px)",
                 fontWeight: 600,
                 color: "#111",
                 lineHeight: 1.35,
@@ -114,7 +114,8 @@ export default function HeroSection() {
           className="hero-tagline"
           style={{
             ...SECTION_INTRO_LEAD,
-            fontSize: "clamp(19px, 2.5vw, 26px)",
+            fontSize: "clamp(17px, 2.1vw, 22px)",
+            fontWeight: 600,
             textAlign: "left",
             margin: "0 0 clamp(14px, 2vw, 22px) 0",
             maxWidth: "min(100%, 44ch)",
@@ -133,7 +134,7 @@ export default function HeroSection() {
         className="hero-photo"
         style={{
           flexShrink: 0,
-          width: "clamp(280px, 34vw, 440px)",
+          width: "clamp(260px, 30vw, 400px)",
           aspectRatio: "3/4",
           borderRadius: "24px",
           overflow: "hidden",
@@ -162,7 +163,7 @@ export default function HeroSection() {
           grid-template-columns: minmax(0, 1fr) auto;
           grid-template-rows: auto;
           align-items: center;
-          column-gap: clamp(40px, 5.5vw, 80px);
+          column-gap: clamp(32px, 4.5vw, 64px);
         }
         .hero-column {
           grid-column: 1;
@@ -212,7 +213,7 @@ export default function HeroSection() {
             text-align: left !important;
           }
           .hero-text .hero-tagline {
-            font-size: clamp(19px, 4.2vw, 26px) !important;
+            font-size: clamp(17px, 4.2vw, 22px) !important;
           }
           .hero-photo {
             order: 2;
