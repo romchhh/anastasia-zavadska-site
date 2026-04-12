@@ -580,6 +580,21 @@ export default function AboutSection() {
         .about-work-intro-hint__break {
           display: none;
         }
+        /* Стик із #про-мене: при субпіксельному рендері видна щілина — просвічує фото зліва; біла смуга перекриває */
+        .about-work-section {
+          position: relative;
+          z-index: 2;
+        }
+        .about-work-section::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: -14px;
+          height: 14px;
+          background: #fff;
+          pointer-events: none;
+        }
         .about-work-cta-link .cta-pill {
           font-family: 'Montserrat', sans-serif !important;
           font-size: 24px !important;

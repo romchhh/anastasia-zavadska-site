@@ -8,7 +8,6 @@ import ServiceBookingSection from "../../components/ServiceBookingSection";
 import Footer from "../../components/Footer";
 import { getServiceBySlug, getServiceSlugs, SERVICES } from "../../data/siteData";
 import { getSessionPriceUah } from "@/utils/price";
-import SessionPaymentsFeed from "../../components/SessionPaymentsFeed";
 
 export function generateStaticParams() {
   return getServiceSlugs().map((slug) => ({ slug }));
@@ -58,7 +57,6 @@ export default async function ServicePage({ params }) {
         sessionPriceUah={sessionPriceUah}
         bookingNotifyKind={bookingNotifyKind}
       />
-      {slug === INDIVIDUAL_SESSION_SLUG ? <SessionPaymentsFeed /> : null}
       <Footer />
     </main>
   );
