@@ -51,7 +51,7 @@ export default function Footer() {
                 fontSize: "clamp(18px, 2.5vw, 28px)",
                 fontWeight: 900,
                 color: "#fff",
-                textTransform: "uppercase",
+                textTransform: "none",
                 letterSpacing: ".04em",
                 lineHeight: 1.12,
                 margin: "0 0 10px 0",
@@ -59,7 +59,7 @@ export default function Footer() {
                 display: "inline-block",
               }}
             >
-              Анастасія Завадська
+              ANASTASIIA ZAVADSKA
             </Link>
             <p
               className="footer-copyright"
@@ -70,7 +70,7 @@ export default function Footer() {
                 margin: 0,
               }}
             >
-              © <span suppressHydrationWarning>{year}</span> Анастасія Завадська
+              © <span suppressHydrationWarning>{year}</span> Anastasiia Zavadska
             </p>
           </div>
         </div>

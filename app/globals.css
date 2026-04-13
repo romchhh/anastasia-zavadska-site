@@ -56,11 +56,19 @@ a { text-decoration: none; }
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  transition: background var(--transition), transform var(--transition);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 6px 20px rgba(100, 140, 200, 0.28),
+    0 2px 8px rgba(0, 0, 0, 0.06);
 }
 .btn-primary:hover {
   background: var(--blue-dark);
   transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    0 10px 28px rgba(100, 140, 200, 0.34),
+    0 3px 10px rgba(0, 0, 0, 0.08);
 }
 .btn-primary .arrow-circle {
   background: #fff;
@@ -85,12 +93,19 @@ a { text-decoration: none; }
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  transition: background var(--transition), color var(--transition), transform var(--transition);
+  transition: background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 4px 16px rgba(100, 140, 200, 0.12);
 }
 .btn-outline:hover {
   background: var(--blue);
   color: #fff;
   transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 8px 24px rgba(100, 140, 200, 0.28),
+    0 2px 8px rgba(0, 0, 0, 0.06);
 }
 .btn-outline .arrow-circle {
   background: var(--blue);
@@ -159,4 +174,25 @@ a { text-decoration: none; }
 .nav-cta-btn:hover .dual-round-arrow--white,
 .footer-cta-btn:hover .dual-round-arrow--white {
   display: block !important;
+}
+
+/* Плаваюча кнопка «Приєднатися» → онлайн-запис */
+.sticky-join-cta:hover {
+  transform: translateY(-2px);
+  background: #f7f9ff !important;
+  border-color: #4a63ad !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(95, 122, 212, 0.1),
+    0 16px 44px rgba(75, 105, 190, 0.3),
+    0 5px 16px rgba(0, 0, 0, 0.1) !important;
+}
+.sticky-join-cta:focus-visible {
+  outline: 3px solid #5f7ad4;
+  outline-offset: 3px;
+}
+@media print {
+  .sticky-join-cta {
+    display: none !important;
+  }
 }

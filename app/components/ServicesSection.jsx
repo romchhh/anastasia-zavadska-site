@@ -24,11 +24,15 @@ function showCardDescription(service) {
  */
 const SERVICES_CAROUSEL_ORDER = [2, 0, 1];
 
-const SERVICE_CARD_W = "min(522px, 90vw)";
+/** Мобільна ширина: ~−15% до базового min(522px, …) */
+const SERVICE_CARD_MOBILE_SCALE = 0.85;
+/** Десктоп: трохи ширше за попередній 0.765, досі вужче за повний 0.85 */
+const SERVICE_CARD_DESKTOP_SCALE = 0.81;
+const SERVICE_CARD_W = `min(calc(522px * ${SERVICE_CARD_DESKTOP_SCALE}), calc(90vw * ${SERVICE_CARD_DESKTOP_SCALE}))`;
 /** Мобільна ширина картки — вужчі бокові поля за секційного gutter, щоб картки були ширші */
 const SERVICE_CARD_GUTTER_MOBILE = "clamp(12px, 3.2vw, 22px)";
 /** Запас під стрілки каруселі зліва/справа, щоб не перекривали текст картки */
-const SERVICE_CARD_W_MOBILE = `min(522px, calc(100vw - 2 * ${SERVICE_CARD_GUTTER_MOBILE} - 96px))`;
+const SERVICE_CARD_W_MOBILE = `min(calc(522px * ${SERVICE_CARD_MOBILE_SCALE}), calc((100vw - 2 * ${SERVICE_CARD_GUTTER_MOBILE} - 96px) * ${SERVICE_CARD_MOBILE_SCALE}))`;
 const SERVICE_CARD_GAP = 18;
 
 function useServicesCarouselMobile() {
@@ -204,24 +208,65 @@ export default function ServicesSection() {
           {orderedServices.map((s, i) => {
             const isActive = i === active;
             const dist = Math.abs(i - active);
+            const desktop = !isMobileCarousel;
             const cardBg = isActive ? "#A3BEFF" : "#C5D6FF";
             const cardBorder = isActive
               ? "2px solid rgba(255,255,255,0.65)"
               : "2px solid rgba(255,255,255,0.45)";
             const longCopy = showCardDescription(s);
-            const titleSize = isActive ? "clamp(20px, 2.6vw, 28px)" : "clamp(15px, 1.98vw, 22px)";
-            const descFont = isActive
-              ? "clamp(14px, 1.25vw, 16px)"
-              : "clamp(13px, 1.2vw, 15px)";
+            const titleSize = desktop
+              ? isActive
+                ? "clamp(18px, 2.35vw, 26px)"
+                : "clamp(14px, 1.75vw, 20px)"
+              : isActive
+                ? "clamp(20px, 2.6vw, 28px)"
+                : "clamp(15px, 1.98vw, 22px)";
+            const descFont = desktop
+              ? isActive
+                ? "clamp(13px, 1.12vw, 15px)"
+                : "clamp(12px, 1.08vw, 14px)"
+              : isActive
+                ? "clamp(14px, 1.25vw, 16px)"
+                : "clamp(13px, 1.2vw, 15px)";
             const metaFont = longCopy
               ? descFont
               : isActive
-                ? "clamp(14px, 1.35vw, 17px)"
-                : "clamp(14px, 1.3vw, 17px)";
-            const priceLineSize = isActive
-              ? "clamp(20px, 2.35vw, 25px)"
-              : "clamp(17px, 2vw, 21px)";
-            const cardPad = isActive ? "clamp(18px, 3.6vw, 25px)" : "clamp(14px, 3.15vw, 20px)";
+                ? desktop
+                  ? "clamp(13px, 1.2vw, 16px)"
+                  : "clamp(14px, 1.35vw, 17px)"
+                : desktop
+                  ? "clamp(13px, 1.15vw, 16px)"
+                  : "clamp(14px, 1.3vw, 17px)";
+            const priceLineSize = desktop
+              ? isActive
+                ? "clamp(18px, 2.05vw, 23px)"
+                : "clamp(15px, 1.75vw, 19px)"
+              : isActive
+                ? "clamp(20px, 2.35vw, 25px)"
+                : "clamp(17px, 2vw, 21px)";
+            const cardPad = desktop
+              ? isActive
+                ? "clamp(14px, 2.4vw, 20px)"
+                : "clamp(12px, 2.2vw, 17px)"
+              : isActive
+                ? "clamp(18px, 3.6vw, 25px)"
+                : "clamp(14px, 3.15vw, 20px)";
+            const imageAspect = desktop ? "16 / 10" : "10 / 9";
+            const imageMb = desktop
+              ? isActive
+                ? "12px"
+                : "10px"
+              : isActive
+                ? "16px"
+                : "13px";
+            const headingMb = desktop
+              ? "clamp(8px, 1.1vw, 12px)"
+              : "clamp(13px, 1.8vw, 16px)";
+            const descMarginB = desktop ? "8px" : "11px";
+            const metaMarginB = desktop ? "7px" : "9px";
+            const statusMarginB = desktop ? "8px" : "11px";
+            const priceMarginB = desktop ? "14px" : "18px";
+            const descLineHeight = desktop ? 1.45 : 1.55;
 
             return (
               <div
@@ -230,7 +275,7 @@ export default function ServicesSection() {
                 onClick={() => { if (!dragMoved.current) setActive(i); }}
                 style={{
                   background: cardBg,
-                  borderRadius: "32px",
+                  borderRadius: desktop ? "28px" : "32px",
                   width: serviceCardW,
                   flexShrink: 0,
                   display: "flex",
@@ -239,24 +284,24 @@ export default function ServicesSection() {
                   border: cardBorder,
                   boxSizing: "border-box",
                   padding: cardPad,
-                  boxShadow: isActive ? "0 12px 40px rgba(100, 130, 210, 0.28)" : "none",
+                  boxShadow: "none",
                   opacity: dist === 0 ? 1 : dist === 1 ? 0.88 : 0.5,
                   transform: isActive ? "scale(1)" : "scale(0.93)",
-                  transition: "opacity .4s, transform .4s, border-color .3s, background .3s, box-shadow .3s",
+                  transition: "opacity .4s, transform .4s, border-color .3s, background .3s",
                   cursor: isActive ? "default" : "pointer",
                   userSelect: "none",
                 }}
               >
                 {/* Квадратне фото */}
                 <div style={{
-                  borderRadius: "16px",
+                  borderRadius: desktop ? "14px" : "16px",
                   overflow: "hidden",
                   background: "rgba(255,255,255,0.25)",
-                  /* трохи нижче за квадрат ≈ −10% висоти при тій самій ширині */
-                  aspectRatio: "10 / 9",
+                  /* десктоп: нижчий блок фото (16:10); мобільна: як раніше */
+                  aspectRatio: imageAspect,
                   width: "100%",
                   flexShrink: 0,
-                  marginBottom: isActive ? "16px" : "13px",
+                  marginBottom: imageMb,
                 }}>
                   {s.img && (
                     <img src={s.img} alt={s.title}
@@ -279,7 +324,7 @@ export default function ServicesSection() {
                     textTransform: "uppercase",
                     letterSpacing: ".03em",
                     lineHeight: 1.06,
-                    margin: "0 0 clamp(13px, 1.8vw, 16px) 0",
+                    margin: `0 0 ${headingMb} 0`,
                     textAlign: "left",
                     transition: "font-size .3s",
                   }}>
@@ -292,9 +337,9 @@ export default function ServicesSection() {
                       fontSize: descFont,
                       fontWeight: 400,
                       color: "#FFFFFF",
-                      lineHeight: 1.55,
+                      lineHeight: descLineHeight,
                       textAlign: "left",
-                      margin: "0 0 11px 0",
+                      margin: `0 0 ${descMarginB} 0`,
                     }}>
                       {s.desc}
                     </p>
@@ -307,7 +352,7 @@ export default function ServicesSection() {
                       fontWeight: longCopy ? 400 : 600,
                       color: "#FFFFFF",
                       textAlign: "left",
-                      margin: "0 0 9px 0",
+                      margin: `0 0 ${metaMarginB} 0`,
                       lineHeight: 1.45,
                     }}>{s.extra}</p>
                   )}
@@ -320,7 +365,7 @@ export default function ServicesSection() {
                       fontStyle: "italic",
                       color: "#3d62d8",
                       textAlign: "left",
-                      margin: "0 0 11px 0",
+                      margin: `0 0 ${statusMarginB} 0`,
                     }}>{s.status}</p>
                   )}
 
@@ -329,7 +374,7 @@ export default function ServicesSection() {
                       fontFamily: "'Montserrat', sans-serif",
                       color: "#FFFFFF",
                       textAlign: "left",
-                      margin: "0 0 18px 0",
+                      margin: `0 0 ${priceMarginB} 0`,
                       lineHeight: 1.25,
                       fontSize: priceLineSize,
                       fontWeight: 800,
@@ -344,7 +389,7 @@ export default function ServicesSection() {
                       fontWeight: 800,
                       color: "#FFFFFF",
                       textAlign: "left",
-                      margin: "0 0 18px 0",
+                      margin: `0 0 ${priceMarginB} 0`,
                       lineHeight: 1.25,
                     }}>{s.price}</p>
                   ) : null}
@@ -494,20 +539,33 @@ export default function ServicesSection() {
 
       <style>{`
         .services-carousel-cta.cta-pill {
-          background: #fff !important;
+          background: linear-gradient(180deg, #ffffff 0%, #f5f7ff 100%) !important;
           color: #a3beff !important;
           margin-top: auto;
           width: 100% !important;
           max-width: 100% !important;
-          box-shadow: 0 4px 20px rgba(255, 255, 255, 0.35);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.95),
+            inset 0 -1px 0 rgba(163, 190, 255, 0.35),
+            0 4px 18px rgba(255, 255, 255, 0.45),
+            0 8px 28px rgba(100, 130, 200, 0.2),
+            0 2px 8px rgba(0, 0, 0, 0.06) !important;
         }
         .services-carousel-cta.cta-pill .cta-pill__arrow {
-          background: #fff !important;
-          box-shadow: inset 0 0 0 1.5px rgba(163, 190, 255, 0.55);
+          background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%) !important;
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.95),
+            inset 0 0 0 1.5px rgba(163, 190, 255, 0.45),
+            inset 0 -1px 2px rgba(120, 140, 200, 0.1),
+            0 2px 10px rgba(100, 130, 200, 0.12) !important;
         }
         @media (hover: hover) {
           .services-carousel-cta.cta-pill:hover {
-            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1) !important;
+            box-shadow:
+              inset 0 1px 0 rgba(255, 255, 255, 1),
+              inset 0 -1px 0 rgba(163, 190, 255, 0.28),
+              0 8px 32px rgba(100, 130, 200, 0.22),
+              0 4px 14px rgba(0, 0, 0, 0.08) !important;
             transform: translateY(-1px);
           }
         }

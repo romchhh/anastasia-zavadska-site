@@ -578,8 +578,12 @@ const formStyles = `
     font-weight: 700;
     letter-spacing: .06em;
     cursor: pointer;
-    transition: background .15s, transform .13s, box-shadow .15s, opacity .15s;
-    box-shadow: 0 6px 24px rgba(99,145,255,.32);
+    transition: background .15s, transform .13s, box-shadow .15s, opacity .15s, filter .15s;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+      0 8px 28px rgba(99, 145, 255, 0.38),
+      0 2px 10px rgba(0, 0, 0, 0.08);
   }
   .bf-cta-card-icon {
     flex-shrink: 0;
@@ -587,7 +591,12 @@ const formStyles = `
   .bf-cta:hover:not(:disabled) {
     background: #4a75e8;
     transform: translateY(-2px);
-    box-shadow: 0 10px 32px rgba(99,145,255,.42);
+    filter: brightness(1.03);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+      0 14px 40px rgba(80, 120, 230, 0.45),
+      0 4px 14px rgba(0, 0, 0, 0.1);
   }
   .bf-cta:active:not(:disabled) {
     transform: translateY(0);

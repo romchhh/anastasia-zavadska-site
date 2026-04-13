@@ -48,7 +48,7 @@ export default function Navbar() {
           boxSizing: "border-box",
         }}
       >
-        {/* Mobile: ім’я зліва → головна */}
+        {/* Логотип-текст на мобільній приховано (див. .nav-mobile-brand у стилях) */}
         <Link
           href="/"
           className="nav-mobile-brand"
@@ -135,15 +135,17 @@ export default function Navbar() {
               alignItems: "center",
               justifyContent: "space-between",
               gap: "12px",
-              transition: "background .2s, color .2s, box-shadow .2s",
+              transition: "background .2s, color .2s, box-shadow .2s, transform .2s",
               whiteSpace: "nowrap",
+              boxShadow:
+                "inset 0 1px 0 rgba(255,255,255,0.2), 0 6px 22px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08)",
             }}
           >
             Записатися
             <span
               className="nav-cta-btn-arrow"
               style={{
-                background: "#fff",
+                background: "linear-gradient(180deg, #fff 0%, #f3f5fc 100%)",
                 border: "2px solid transparent",
                 borderRadius: 999,
                 width: 38,
@@ -154,8 +156,10 @@ export default function Navbar() {
                 justifyContent: "center",
                 flexShrink: 0,
                 lineHeight: 1,
-                transition: "background .2s, border-color .2s, color .2s",
+                transition: "background .2s, border-color .2s, color .2s, box-shadow .2s",
                 boxSizing: "border-box",
+                boxShadow:
+                  "inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 2px rgba(80,100,160,0.06), 0 2px 8px rgba(0,0,0,0.1)",
               }}
             >
               <DualRoundArrow height={12} />
@@ -279,16 +283,18 @@ export default function Navbar() {
             width: "100%",
             opacity: menuOpen ? 1 : 0,
             transform: menuOpen ? "translateY(0)" : "translateY(16px)",
-            transition: "opacity .35s ease .36s, transform .35s ease .36s",
+            transition: "opacity .35s ease .36s, transform .35s ease .36s, box-shadow .2s",
             textDecoration: "none",
             boxSizing: "border-box",
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.95), 0 8px 28px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)",
           }}
         >
           Записатися на сесію
           <span
             className="mobile-menu-cta-arrow"
             style={{
-              background: "#fff",
+              background: "linear-gradient(180deg, #fff 0%, #f3f5fc 100%)",
               border: "2px solid #92B2FF",
               borderRadius: 999,
               width: 44,
@@ -299,6 +305,8 @@ export default function Navbar() {
               justifyContent: "center",
               flexShrink: 0,
               boxSizing: "border-box",
+              boxShadow:
+                "inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(100,130,200,0.15)",
             }}
           >
             <ArrowIcon variant="blue" height={14} />
@@ -314,19 +322,27 @@ export default function Navbar() {
         .nav-cta-btn:hover {
           background: #fff !important;
           color: #92B2FF !important;
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.95),
+            0 12px 32px rgba(0, 0, 0, 0.12),
+            0 4px 12px rgba(0, 0, 0, 0.08) !important;
+          transform: translateY(-1px);
         }
         .nav-cta-btn:hover .nav-cta-btn-arrow {
-          background: #92B2FF !important;
+          background: linear-gradient(180deg, #9eb8ff 0%, #92b2ff 100%) !important;
           border-color: #92B2FF !important;
           color: #fff !important;
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.25),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+            0 2px 8px rgba(0, 0, 0, 0.12) !important;
         }
         @media (max-width: 768px) {
           .main-nav {
             height: 68px;
             padding: 0 ${PAGE_GUTTER_X};
           }
-          .nav-mobile-brand { display: flex !important; }
+          .nav-mobile-brand { display: none !important; }
           .nav-desktop { display: none !important; }
           .nav-cta-btn { display: none !important; }
           .burger-btn { display: flex !important; }

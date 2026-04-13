@@ -20,14 +20,14 @@ const RING_BLUE = "#92B2FF";
 
 const cardStyle = {
   background: "#fff",
-  borderRadius: "28px",
+  borderRadius: "25px",
   border: "1px solid rgba(225, 232, 250, 0.95)",
   boxShadow:
-    "0 20px 56px rgba(110, 140, 200, 0.12), 0 6px 20px rgba(130, 160, 220, 0.08)",
+    "0 18px 50px rgba(110, 140, 200, 0.12), 0 5px 18px rgba(130, 160, 220, 0.08)",
   boxSizing: "border-box",
 };
 
-const FEATURE_ICON = 26;
+const FEATURE_ICON = 23;
 
 function FeatureCell({ active, text }) {
   return (
@@ -35,9 +35,9 @@ function FeatureCell({ active, text }) {
       style={{
         display: "flex",
         alignItems: "flex-start",
-        gap: "clamp(10px, 1.6vw, 14px)",
-        minHeight: "clamp(44px, 5vw, 56px)",
-        padding: "clamp(8px, 1.1vw, 12px) 0",
+        gap: "clamp(9px, 1.44vw, 13px)",
+        minHeight: "clamp(40px, 4.5vw, 50px)",
+        padding: "clamp(7px, 1vw, 11px) 0",
         boxSizing: "border-box",
       }}
     >
@@ -67,7 +67,7 @@ function FeatureCell({ active, text }) {
             alignItems: "center",
             justifyContent: "center",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "clamp(22px, 3.2vw, 28px)",
+            fontSize: "clamp(20px, 2.88vw, 25px)",
             fontWeight: 500,
             color: "#9ca8c4",
             lineHeight: 0.85,
@@ -79,7 +79,7 @@ function FeatureCell({ active, text }) {
       <span
         style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(16px, 1.85vw, 19px)",
+          fontSize: "clamp(14px, 1.67vw, 17px)",
           fontWeight: active ? 500 : 400,
           color: active ? "#111" : "#5c6478",
           lineHeight: 1.5,
@@ -114,12 +114,12 @@ function CtaButton({ btnLabel, onClick, disabled }) {
         background: PRAKTIKUM_CTA_BG,
         border: "none",
         borderRadius: "999px",
-        padding: "clamp(15px, 2.2vw, 22px) clamp(16px, 2.5vw, 22px) clamp(15px, 2.2vw, 22px) clamp(24px, 3vw, 32px)",
-        minHeight: "clamp(52px, 7vw, 64px)",
+        padding: "clamp(14px, 1.98vw, 20px) clamp(14px, 2.25vw, 20px) clamp(14px, 1.98vw, 20px) clamp(22px, 2.7vw, 29px)",
+        minHeight: "clamp(47px, 6.3vw, 58px)",
         fontFamily: "'Montserrat', sans-serif",
         fontWeight: 600,
         fontStyle: "normal",
-        fontSize: "clamp(17px, 2.85vw, 22px)",
+        fontSize: "clamp(15px, 2.57vw, 20px)",
         lineHeight: "100%",
         letterSpacing: 0,
         color: "#fff",
@@ -130,69 +130,78 @@ function CtaButton({ btnLabel, onClick, disabled }) {
         justifyContent: "space-between",
         textTransform: "none",
         width: "100%",
-        boxShadow: "0 6px 22px rgba(55, 85, 160, 0.38)",
-        transition: "box-shadow .2s, transform .15s",
+        boxShadow:
+          "inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.14), 0 8px 26px rgba(55,85,160,0.36), 0 2px 8px rgba(0,0,0,0.08)",
+        transition: "box-shadow .2s, transform .15s, filter .15s",
         boxSizing: "border-box",
       }}
       onMouseEnter={(e) => {
         if (disabled) return;
-        e.currentTarget.style.boxShadow = "0 10px 30px rgba(45, 70, 140, 0.48)";
+        e.currentTarget.style.boxShadow =
+          "inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.1), 0 14px 38px rgba(45,70,140,0.45), 0 4px 12px rgba(0,0,0,0.1)";
         e.currentTarget.style.transform = "translateY(-2px)";
+        e.currentTarget.style.filter = "brightness(1.03)";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.boxShadow = "0 6px 22px rgba(55, 85, 160, 0.38)";
+        e.currentTarget.style.boxShadow =
+          "inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.14), 0 8px 26px rgba(55,85,160,0.36), 0 2px 8px rgba(0,0,0,0.08)";
         e.currentTarget.style.transform = "none";
+        e.currentTarget.style.filter = "";
       }}
     >
-      <span style={{ textAlign: "left", flex: "1 1 auto", paddingRight: 12, minWidth: 0 }}>{btnLabel}</span>
+      <span style={{ textAlign: "left", flex: "1 1 auto", paddingRight: 11, minWidth: 0 }}>{btnLabel}</span>
       <span
         className="praktikum-cta-btn__arrow-ring"
         style={{
-          background: "transparent",
+          background: "rgba(255,255,255,0.08)",
           border: "2px solid #fff",
           borderRadius: "50%",
-          width: 48,
-          height: 48,
+          width: 43,
+          height: 43,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           flexShrink: 0,
           boxSizing: "border-box",
+          boxShadow:
+            "inset 0 1px 0 rgba(255,255,255,0.35), 0 2px 8px rgba(0,0,0,0.12)",
         }}
       >
-        <ArrowIcon variant="white" height={20} />
+        <ArrowIcon variant="white" height={18} />
       </span>
     </button>
   );
 }
 
 /** Дві окремі картки; список на сітці рядків — однакова висота рядків у обох колонках при однаковій ширині */
-function PrCard({ title, features, oldPrice, price, btnLabel, onPay, payDisabled }) {
+function PrCard({ title, features, oldPrice, price, btnLabel, onPay, payDisabled, highlighted }) {
   return (
     <div
-      className="praktikum-card"
+      className={
+        highlighted ? "praktikum-card praktikum-card--highlighted" : "praktikum-card"
+      }
       style={{
         ...cardStyle,
         flex: "1 1 0",
-        minWidth: "min(100%, 280px)",
-        maxWidth: "520px",
+        minWidth: "min(100%, 252px)",
+        maxWidth: "468px",
         display: "flex",
         flexDirection: "column",
         alignItems: "stretch",
-        padding: "clamp(40px, 4.5vw, 52px) clamp(28px, 3.5vw, 40px) clamp(36px, 4vw, 44px)",
+        padding: "clamp(36px, 4.05vw, 47px) clamp(25px, 3.15vw, 36px) clamp(32px, 3.6vw, 40px)",
         textAlign: "left",
       }}
     >
       <h3
         style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: "clamp(24px, 2.85vw, 32px)",
+          fontSize: "clamp(22px, 2.57vw, 29px)",
           fontWeight: 900,
           color: "#111",
           textTransform: "uppercase",
           letterSpacing: "0.04em",
           lineHeight: 1.2,
-          margin: "0 0 clamp(28px, 3.5vw, 36px) 0",
+          margin: "0 0 clamp(25px, 3.15vw, 32px) 0",
           whiteSpace: "pre-line",
           textAlign: "center",
         }}
@@ -203,7 +212,7 @@ function PrCard({ title, features, oldPrice, price, btnLabel, onPay, payDisabled
       <ul
         style={{
           listStyle: "none",
-          margin: "0 0 clamp(24px, 3vw, 32px) 0",
+          margin: "0 0 clamp(22px, 2.7vw, 29px) 0",
           padding: 0,
           flex: "1 1 auto",
           display: "grid",
@@ -221,7 +230,7 @@ function PrCard({ title, features, oldPrice, price, btnLabel, onPay, payDisabled
 
       <div style={{ marginTop: "auto", width: "100%" }}>
         <PriceBlock oldPrice={oldPrice} price={price} />
-        <div style={{ marginTop: "clamp(18px, 2.5vw, 24px)" }}>
+        <div style={{ marginTop: "clamp(16px, 2.25vw, 22px)" }}>
           <CtaButton
             btnLabel={payDisabled ? "Завантаження…" : btnLabel}
             onClick={onPay}
@@ -384,7 +393,7 @@ export default function PraktikumSection() {
           style={{
             position: "relative",
             display: "flex",
-            gap: "clamp(20px, 3vw, 32px)",
+            gap: "clamp(18px, 2.7vw, 29px)",
             justifyContent: "center",
             alignItems: "stretch",
             flexWrap: "wrap",
@@ -408,11 +417,25 @@ export default function PraktikumSection() {
             btnLabel="Почати з психологом"
             onPay={() => startPraktikumPayment("psychologist")}
             payDisabled={payLoading === "psych"}
+            highlighted
           />
         </div>
       </div>
 
       <style>{`
+        #практикум .praktikum-card--highlighted {
+          background: linear-gradient(
+            168deg,
+            #eef3ff 0%,
+            #e2ebff 42%,
+            #d6e2ff 100%
+          ) !important;
+          border: 3px solid #3d5696 !important;
+          box-shadow:
+            0 13px 40px rgba(95, 125, 200, 0.22),
+            0 5px 16px rgba(120, 150, 210, 0.14),
+            inset 0 1px 0 rgba(255, 255, 255, 0.75) !important;
+        }
         @media (min-width: 769px) {
           #практикум h2.praktikum-section-heading .praktikum-title-part:first-child::after {
             content: " ";
@@ -429,20 +452,20 @@ export default function PraktikumSection() {
           flex-wrap: wrap;
           justify-content: center;
           align-items: baseline;
-          gap: 6px 12px;
+          gap: 5px 11px;
           text-align: center;
-          padding-top: clamp(8px, 1.5vw, 12px);
+          padding-top: clamp(7px, 1.35vw, 11px);
           box-sizing: border-box;
         }
         #практикум .praktikum-price-label {
           font-family: "Montserrat", sans-serif;
-          font-size: clamp(16px, 1.55vw, 18px);
+          font-size: clamp(14px, 1.4vw, 16px);
           font-weight: 600;
           color: #333;
         }
         #практикум .praktikum-price-old {
           font-family: "Montserrat", sans-serif;
-          font-size: clamp(14px, 1.35vw, 16px);
+          font-size: clamp(13px, 1.22vw, 14px);
           font-weight: 500;
           color: #aaa;
           text-decoration: line-through;
@@ -450,7 +473,7 @@ export default function PraktikumSection() {
         }
         #практикум .praktikum-price-current {
           font-family: "Montserrat", sans-serif;
-          font-size: clamp(26px, 2.8vw, 32px);
+          font-size: clamp(23px, 2.52vw, 29px);
           font-weight: 800;
           color: #111;
           letter-spacing: -0.02em;
@@ -474,7 +497,7 @@ export default function PraktikumSection() {
           #практикум .praktikum-price-block {
             flex-direction: row;
             justify-content: center;
-            row-gap: 6px;
+            row-gap: 5px;
           }
           #практикум .praktikum-price-current {
             flex: 0 0 100%;

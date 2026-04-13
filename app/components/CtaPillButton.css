@@ -1,7 +1,7 @@
 .cta-pill {
   width: fit-content;
   max-width: 100%;
-  background: #5f7ad4;
+  background: linear-gradient(180deg, #6b84dc 0%, #5a72c8 55%, #536bc0 100%);
   border: none;
   border-radius: 56px;
   padding: 15px 18px 15px 30px;
@@ -17,21 +17,46 @@
   text-transform: uppercase;
   letter-spacing: 0;
   line-height: 1;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, filter 0.2s ease;
   white-space: nowrap;
   box-sizing: border-box;
   text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 10px 28px rgba(55, 85, 160, 0.32),
+    0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 @media (hover: hover) {
   .cta-pill:hover {
-    box-shadow: 0 8px 28px rgba(55, 85, 160, 0.42);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.32),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+      0 14px 36px rgba(45, 72, 150, 0.38),
+      0 6px 14px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
+    filter: brightness(1.03);
   }
 }
 
+.cta-pill:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 4px 14px rgba(55, 85, 160, 0.22);
+}
+
+.cta-pill:focus-visible {
+  outline: 2px solid rgba(143, 168, 255, 0.95);
+  outline-offset: 3px;
+}
+
 .cta-pill__arrow {
-  background: #fff;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f5fc 100%);
   border-radius: 999px;
   width: 52px;
   height: 42px;
@@ -41,6 +66,11 @@
   justify-content: center;
   flex-shrink: 0;
   box-sizing: border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 2px rgba(80, 100, 160, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .cta-pill--full {
@@ -50,7 +80,7 @@
 
 /* Блок «Зв’яжіться зі мною» — відступи й овал стрілки як у .nav-cta-btn у Navbar */
 .cta-pill--periwinkle {
-  background: #4d6ec9;
+  background: linear-gradient(180deg, #5878d0 0%, #4a65bd 55%, #435dad 100%);
   padding: 10px 14px 10px 22px;
   font-family: "Montserrat", sans-serif;
   font-size: clamp(11px, 1.35vw, 15px);
@@ -61,6 +91,11 @@
   text-transform: uppercase;
   gap: 12px;
   align-items: center;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+    0 8px 22px rgba(40, 60, 130, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .cta-pill--periwinkle .cta-pill__arrow {
@@ -77,7 +112,7 @@
 
 /* Відгуки / короткі CTA: менша капсула */
 .cta-pill--compact {
-  background: #5f7ad4;
+  background: linear-gradient(180deg, #6b84dc 0%, #5a72c8 55%, #536bc0 100%);
   padding: 11px 14px 11px 20px;
   font-size: clamp(11px, 1.15vw, 14px);
   font-weight: 700;

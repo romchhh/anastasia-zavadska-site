@@ -1,5 +1,4 @@
-import { Fragment } from "react";
-import { TAGS, ABOUT_PHOTO, INDIVIDUAL_BOOKING_PAGE } from "../data/siteData";
+import { ABOUT_PHOTO, INDIVIDUAL_BOOKING_PAGE, TAGS } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
 import {
   PAGE_GUTTER_X,
@@ -304,7 +303,7 @@ export default function AboutSection() {
                 width: "100%",
               }}
             >
-              Буває, що проблему не завжди легко назвати одним словом на першому сеансі — і це нормально. Іноді ти просто відчуваєш, що щось не так.
+              Буває, що проблему не завжди легко назвати одним словом на першому сеансі. Іноді ти просто відчуваєш, що щось не так.
             </p>
             <p
               className="about-work-intro-lead about-work-intro-lead-second"
@@ -417,7 +416,7 @@ export default function AboutSection() {
                 margin: "0 0 clamp(14px, 2vw, 20px) 0",
               }}
             >
-              Знайоме відчуття?
+              Знайоме відчуття?{" "}
               <br className="about-work-intro-hint__break" aria-hidden="true" />
               Можемо розібрати це разом
             </p>
@@ -567,7 +566,7 @@ export default function AboutSection() {
               position: "relative",
               marginTop: 0,
               width: "100%",
-              maxWidth: "min(100%, 760px)",
+              maxWidth: "min(100%, 960px)",
               marginLeft: "auto",
               marginRight: "auto",
               padding: "clamp(4px, 1vw, 12px)",
@@ -578,16 +577,18 @@ export default function AboutSection() {
               className="about-thought-cloud"
               style={{
                 position: "relative",
-                border: "none",
+                border: "1px solid rgba(200, 215, 245, 0.45)",
                 borderRadius: "clamp(20px, 2.8vw, 28px)",
                 padding: "clamp(24px, 3vw, 40px) clamp(24px, 4vw, 48px)",
-                background: "#ffffff",
+                background:
+                  "linear-gradient(168deg, #ffffff 0%, #fafcff 32%, #f3f6fd 68%, #ecf1fb 100%)",
                 boxShadow: `
-                  0 4px 6px rgba(200, 215, 245, 0.12),
-                  0 12px 40px rgba(120, 150, 210, 0.14),
-                  18px 0 48px -8px rgba(160, 188, 255, 0.65),
-                  -18px 0 48px -8px rgba(160, 188, 255, 0.65),
-                  0 0 56px rgba(150, 175, 235, 0.2)
+                  inset 0 1px 0 rgba(255, 255, 255, 0.75),
+                  0 2px 10px rgba(200, 215, 245, 0.14),
+                  0 12px 36px rgba(120, 150, 210, 0.1),
+                  14px 0 40px -12px rgba(160, 188, 255, 0.32),
+                  -14px 0 40px -12px rgba(160, 188, 255, 0.32),
+                  0 0 48px rgba(150, 175, 235, 0.12)
                 `,
               }}
             >
@@ -600,53 +601,79 @@ export default function AboutSection() {
                   color: "#111",
                   margin: 0,
                   textAlign: "center",
-                  maxWidth: SECTION_TITLE_MAX_WIDTH,
+                  maxWidth: "min(100%, 900px)",
+                  width: "100%",
                   marginInline: "auto",
                 }}
               >
-                Ми починаємо з симптому, але{" "}
-                <strong style={{ fontWeight: 800 }}>робота з психологом — про глибше:</strong>{" "}
-                зрозуміти себе і поступово змінювати те, що заважає жити так, як хочеться.
+                <span
+                  className="about-thought-cloud-line1"
+                  style={{ display: "block", marginBottom: "0.4em" }}
+                >
+                  Ми починаємо з симптому, але{" "}
+                  <strong style={{ fontWeight: 800 }}>робота з психологом — про глибше:</strong>
+                </span>
+                <span className="about-thought-cloud-line2" style={{ display: "block" }}>
+                  зрозуміти себе і поступово змінювати те, що заважає жити так, як хочеться.
+                </span>
               </p>
             </div>
           </div>
 
-          <p
-            className="about-work-tags-line about-work-tags"
+          {/* Плашки тегів — на всю ширину about-work-stack (не всередині about-work-intro 960px) */}
+          <div
+            className="about-work-topic-pills"
+            aria-label="Напрями роботи"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(15px, 1.5vw, 18px)",
-              fontWeight: 700,
-              fontStyle: "normal",
-              lineHeight: 1.35,
-              letterSpacing: 0,
-              color: "#6391FF",
-              textAlign: "center",
-              margin: 0,
-              paddingTop: "clamp(8px, 1.5vw, 16px)",
               width: "100%",
               maxWidth: "100%",
+              margin: "clamp(18px, 2.8vw, 32px) 0 0",
+              paddingTop: "clamp(4px, 1vw, 12px)",
               boxSizing: "border-box",
-              display: "flex",
-              flexWrap: "wrap",
-              /* center збирав пункти в «ком» — вільна ширина лишалась по боках; space-evenly розподіляє по рядку */
-              justifyContent: "space-evenly",
-              alignItems: "baseline",
-              columnGap: "clamp(10px, 1.8vw, 28px)",
-              rowGap: "0.7em",
             }}
           >
-            {TAGS.map((tag, i) => (
-              <Fragment key={`${tag}-${i}`}>
-                {i > 0 && (
-                  <span className="about-work-tags__sep" aria-hidden>
-                    ·
-                  </span>
-                )}
-                <span className="about-work-tags__item">{tag}</span>
-              </Fragment>
-            ))}
-          </p>
+            <div
+              className="about-work-topic-pills__inner"
+              style={{
+                maxWidth: "100%",
+                margin: "0 auto",
+                width: "100%",
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "clamp(10px, 2vw, 16px)",
+              }}
+            >
+              {TAGS.map((tag) => (
+                <span
+                  key={tag}
+                  className="about-work-topic-pills__pill"
+                  style={{
+                    display: "inline-block",
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: "clamp(12px, 1.85vw, 15px)",
+                    fontWeight: 700,
+                    letterSpacing: "0.06em",
+                    lineHeight: 1.25,
+                    textTransform: "uppercase",
+                    color: "#3d5696",
+                    background: "rgba(255, 255, 255, 0.92)",
+                    border: "1px solid rgba(99, 145, 255, 0.38)",
+                    borderRadius: "999px",
+                    padding: "clamp(11px, 1.4vw, 14px) clamp(16px, 2.2vw, 22px)",
+                    boxShadow:
+                      "inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 2px 8px rgba(100, 130, 200, 0.12)",
+                    boxSizing: "border-box",
+                    textAlign: "center",
+                    maxWidth: "100%",
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -659,15 +686,16 @@ export default function AboutSection() {
           display: none;
         }
         @media (min-width: 769px) {
+          /* Як у заголовка: лівий край, без «розтягування» рядків і без авто-переносів по складах */
           #про-мене .about-intro-copy p.about-intro-body {
-            text-align: justify;
-            text-justify: inter-word;
-            hyphens: auto;
-            -webkit-hyphens: auto;
+            text-align: left !important;
+            text-justify: auto;
+            hyphens: none;
+            -webkit-hyphens: none;
             text-wrap: pretty;
-            text-align-last: left;
             line-height: 1.52;
             overflow-wrap: break-word;
+            word-break: normal;
           }
         }
         .about-work-intro-hint__break {
@@ -696,26 +724,50 @@ export default function AboutSection() {
           letter-spacing: 0 !important;
         }
         @media (min-width: 769px) {
+          .about-work-cards {
+            align-items: stretch !important;
+          }
           .about-work-card {
             justify-content: flex-start !important;
             align-items: center !important;
+            height: 100% !important;
+            /* Фіксований aspect-ratio стискав текст — висота рядка від найвищої картки */
+            aspect-ratio: unset !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
           }
           .about-work-card-thumb {
             width: min(100%, 180px) !important;
             max-width: 180px !important;
             margin-left: auto !important;
             margin-right: auto !important;
-            min-height: clamp(108px, 12.5vw, 140px) !important;
-            max-height: none !important;
+            height: clamp(118px, 13.5vw, 152px) !important;
+            min-height: clamp(118px, 13.5vw, 152px) !important;
+            max-height: clamp(118px, 13.5vw, 152px) !important;
             flex-shrink: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
           }
           .about-work-card-thumb img {
-            max-height: clamp(92px, 10.5vw, 122px) !important;
+            max-height: clamp(96px, 11vw, 128px) !important;
+            width: auto !important;
+            max-width: 100% !important;
+            object-fit: contain !important;
           }
           .about-work-card-text {
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             text-align: center !important;
             margin-top: 0 !important;
+            flex: 1 1 auto !important;
+            overflow-wrap: break-word !important;
+            word-break: normal !important;
+            hyphens: auto !important;
+            -webkit-hyphens: auto !important;
+            font-size: clamp(13px, 1.22vw, 17px) !important;
+            line-height: 1.45 !important;
           }
         }
         @media (max-width: 768px) {
@@ -760,6 +812,10 @@ export default function AboutSection() {
             text-align: left !important;
             font-size: clamp(16px, 4.2vw, 19px) !important;
             line-height: 1.42 !important;
+            hyphens: none !important;
+            -webkit-hyphens: none !important;
+            text-wrap: pretty;
+            overflow-wrap: break-word;
           }
           .about-mobile-photo {
             display: block !important;
@@ -830,33 +886,6 @@ export default function AboutSection() {
           .about-work-states-heading {
             font-size: clamp(22px, 7vw, 36px) !important;
           }
-          .about-work-tags-line.about-work-tags {
-            font-size: clamp(15px, 4.4vw, 19px) !important;
-            line-height: 1.48 !important;
-            padding-top: clamp(8px, 2vw, 14px) !important;
-            margin-top: -4px !important;
-            padding-bottom: 2px !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            width: 100% !important;
-            justify-content: center !important;
-            column-gap: clamp(12px, 3.2vw, 22px) !important;
-            row-gap: 0.72em !important;
-            max-width: 100% !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
-            box-sizing: border-box !important;
-          }
-          .about-work-tags-line .about-work-tags__sep {
-            padding: 0 0.04em !important;
-            flex-shrink: 0 !important;
-            opacity: 0.88 !important;
-            font-size: 1.05em !important;
-          }
-          .about-work-tags-line .about-work-tags__item {
-            text-align: center !important;
-            max-width: 100% !important;
-          }
           .about-work-cards {
             grid-template-columns: 1fr !important;
             max-width: 100% !important;
@@ -868,7 +897,8 @@ export default function AboutSection() {
             aspect-ratio: unset !important;
             min-height: 0 !important;
             flex-direction: row !important;
-            align-items: flex-start !important;
+            /* Рядок на всю висоту тексту — текст по вертикалі по центру поруч з іконкою */
+            align-items: stretch !important;
             justify-content: flex-start !important;
             text-align: left !important;
             padding: 13px 16px !important;
@@ -879,13 +909,14 @@ export default function AboutSection() {
           .about-work-card-thumb {
             width: 56px !important;
             min-width: 56px !important;
-            height: 56px !important;
-            max-height: 56px !important;
+            height: auto !important;
+            min-height: 56px !important;
+            max-height: none !important;
             flex-shrink: 0 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            align-self: flex-start !important;
+            align-self: stretch !important;
           }
           .about-work-card > div:first-of-type img,
           .about-work-card-thumb img {
@@ -899,13 +930,16 @@ export default function AboutSection() {
           .about-work-card-text {
             text-align: left !important;
             margin-top: 0 !important;
-            padding-top: 2px !important;
+            padding-top: 0 !important;
             font-size: clamp(13px, 3.6vw, 16px) !important;
             line-height: 1.48 !important;
             font-weight: 400 !important;
             flex: 1 1 auto !important;
             min-width: 0 !important;
             align-self: stretch !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
           }
           .about-work-cta-link {
             width: 100% !important;
@@ -917,14 +951,34 @@ export default function AboutSection() {
             justify-content: space-between !important;
             font-size: clamp(16px, 4.2vw, 22px) !important;
           }
+          .about-thought-cloud-wrap {
+            max-width: 100% !important;
+          }
           .about-thought-cloud {
             border-radius: 20px !important;
             padding: 24px 18px !important;
+            border: 1px solid rgba(200, 215, 245, 0.38) !important;
+            background: linear-gradient(
+              168deg,
+              #ffffff 0%,
+              #fafcff 38%,
+              #f2f5fc 100%
+            ) !important;
             box-shadow:
-              0 6px 24px rgba(120, 150, 210, 0.12),
-              10px 0 36px -6px rgba(160, 188, 255, 0.5),
-              -10px 0 36px -6px rgba(160, 188, 255, 0.5),
-              0 0 40px rgba(150, 175, 235, 0.16) !important;
+              inset 0 1px 0 rgba(255, 255, 255, 0.7),
+              0 4px 18px rgba(120, 150, 210, 0.1),
+              8px 0 28px -8px rgba(160, 188, 255, 0.28),
+              -8px 0 28px -8px rgba(160, 188, 255, 0.28),
+              0 0 32px rgba(150, 175, 235, 0.1) !important;
+          }
+          .about-work-topic-pills__inner {
+            gap: 10px !important;
+            row-gap: 12px !important;
+          }
+          .about-work-topic-pills__pill {
+            font-size: clamp(10px, 3.1vw, 13px) !important;
+            padding: 10px 14px !important;
+            letter-spacing: 0.055em !important;
           }
         }
         @media (max-width: 420px) {
@@ -940,8 +994,9 @@ export default function AboutSection() {
           .about-work-card-thumb {
             width: 48px !important;
             min-width: 48px !important;
-            height: 48px !important;
-            max-height: 48px !important;
+            height: auto !important;
+            min-height: 48px !important;
+            max-height: none !important;
           }
           .about-work-card > div:first-of-type img,
           .about-work-card-thumb img {

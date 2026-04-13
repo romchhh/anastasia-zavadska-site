@@ -225,13 +225,18 @@ export default function HeroSection() {
         }
         @media (min-width: 769px) {
           .hero-section {
-            padding-top: clamp(36px, 4.6vw, 64px) !important;
+            /* вище блок ім’я + бейдж */
+            padding-top: clamp(20px, 2.8vw, 44px) !important;
             padding-bottom: clamp(48px, 6.2vw, 88px) !important;
             column-gap: clamp(40px, 5vw, 76px) !important;
           }
+          .hero-title {
+            margin-bottom: clamp(12px, 1.75vw, 22px) !important;
+          }
           .hero-badge {
-            font-size: clamp(15px, 2.2vw, 28px) !important;
-            padding: clamp(10px, 1.15vw, 14px) clamp(16px, 2.1vw, 30px) !important;
+            /* ≈ на 15% менше за попередній десктопний бейдж; кнопка hero-cta лишається як була */
+            font-size: clamp(13px, 1.87vw, 24px) !important;
+            padding: clamp(8px, 0.98vw, 12px) clamp(14px, 1.78vw, 26px) !important;
             margin-bottom: clamp(20px, 2.6vw, 32px) !important;
           }
           .hero-bullet-list {
@@ -247,6 +252,9 @@ export default function HeroSection() {
           .hero-bullet-item > span[aria-hidden] {
             font-size: 1.12em !important;
             margin-top: 0.04em !important;
+          }
+          .hero-cta {
+            margin-top: clamp(28px, 4.2vw, 56px) !important;
           }
           .hero-cta.cta-pill {
             font-size: 19px !important;
@@ -275,6 +283,11 @@ export default function HeroSection() {
             font-size: clamp(30px, 9.2vw, 46px) !important;
             line-height: 0.96 !important;
             letter-spacing: -0.025em !important;
+            margin-bottom: clamp(12px, 2.2vw, 20px) !important;
+          }
+          .hero-badge {
+            font-size: clamp(11px, 1.7vw, 22px) !important;
+            padding: clamp(7px, 0.9vw, 10px) clamp(12px, 1.6vw, 24px) !important;
           }
           .hero-section {
             display: flex;
@@ -282,6 +295,7 @@ export default function HeroSection() {
             align-items: stretch;
             gap: 20px;
             min-height: unset !important;
+            padding-top: clamp(28px, 6vw, 48px) !important;
           }
           .hero-column {
             display: contents;
@@ -319,6 +333,7 @@ export default function HeroSection() {
             width: fit-content !important;
             max-width: min(100%, 820px);
             box-sizing: border-box;
+            margin-top: clamp(20px, 5vw, 36px) !important;
           }
         }
         @media (max-width: 420px) {
