@@ -27,7 +27,8 @@ const SERVICES_CAROUSEL_ORDER = [2, 0, 1];
 const SERVICE_CARD_W = "min(522px, 90vw)";
 /** Мобільна ширина картки — вужчі бокові поля за секційного gutter, щоб картки були ширші */
 const SERVICE_CARD_GUTTER_MOBILE = "clamp(12px, 3.2vw, 22px)";
-const SERVICE_CARD_W_MOBILE = `min(522px, calc(100vw - 2 * ${SERVICE_CARD_GUTTER_MOBILE}))`;
+/** Запас під стрілки каруселі зліва/справа, щоб не перекривали текст картки */
+const SERVICE_CARD_W_MOBILE = `min(522px, calc(100vw - 2 * ${SERVICE_CARD_GUTTER_MOBILE} - 96px))`;
 const SERVICE_CARD_GAP = 18;
 
 function useServicesCarouselMobile() {
@@ -568,10 +569,10 @@ export default function ServicesSection() {
             transform: translateY(-50%) !important;
           }
           .services-carousel-viewport .services-carousel-arrow--prev {
-            left: clamp(6px, 2vw, 14px) !important;
+            left: max(0px, env(safe-area-inset-left, 0px)) !important;
           }
           .services-carousel-viewport .services-carousel-arrow--next {
-            right: clamp(6px, 2vw, 14px) !important;
+            right: max(0px, env(safe-area-inset-right, 0px)) !important;
           }
           .services-dots-toolbar {
             display: flex;

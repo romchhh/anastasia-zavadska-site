@@ -8,7 +8,8 @@ import { PAGE_GUTTER_X, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 /** Як у каруселі послуг: той самий крок і візуальна ієрархія карток */
 const CARD_W = "min(360px, 82vw)";
-const CARD_W_MOBILE = `min(360px, calc(100vw - 2 * ${PAGE_GUTTER_X}))`;
+/** На мобільній ширина картки з запасом під стрілки (~48px + відступ з кожного боку), щоб не налазили на текст */
+const CARD_W_MOBILE = `min(360px, calc(100vw - 2 * ${PAGE_GUTTER_X} - 96px))`;
 const CARD_GAP = 18;
 
 function useReviewsCarouselMobile() {
@@ -531,10 +532,10 @@ export default function ReviewsSection() {
             transform: translateY(-50%) !important;
           }
           .reviews-carousel-viewport .reviews-carousel-arrow--prev {
-            left: clamp(6px, 2vw, 14px) !important;
+            left: max(0px, env(safe-area-inset-left, 0px)) !important;
           }
           .reviews-carousel-viewport .reviews-carousel-arrow--next {
-            right: clamp(6px, 2vw, 14px) !important;
+            right: max(0px, env(safe-area-inset-right, 0px)) !important;
           }
           .reviews-dots-toolbar {
             display: flex;

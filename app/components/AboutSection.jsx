@@ -228,16 +228,25 @@ export default function AboutSection() {
           }} />
 
           {/* bottom wave over the photo */}
-          <div style={{
-            position: "absolute",
-            bottom: 0, left: 0, right: 0,
-            lineHeight: 0,
-            zIndex: 2,
-            pointerEvents: "none",
-          }}>
-            <svg viewBox="0 0 768 88" xmlns="http://www.w3.org/2000/svg"
+          <div
+            className="about-mobile-photo-wave"
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              lineHeight: 0,
+              zIndex: 2,
+              pointerEvents: "none",
+            }}
+          >
+            <svg
+              viewBox="0 0 768 88"
+              xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
-              style={{ display: "block", width: "100%", height: "72px" }}>
+              className="about-mobile-photo-wave-svg"
+              style={{ display: "block", width: "100%", height: "72px" }}
+            >
               <path d="M0,44 C120,88 240,0 384,44 C528,88 648,8 768,44 L768,88 L0,88 Z" fill="#fff" />
             </svg>
           </div>
@@ -343,17 +352,18 @@ export default function AboutSection() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     textAlign: "center",
                     background: "#E8EEFF",
                     borderRadius: "clamp(20px, 3vw, 28px)",
                     aspectRatio: "5 / 4",
                     padding: "clamp(14px, 2.2vw, 22px) clamp(14px, 2vw, 22px)",
                     boxSizing: "border-box",
-                    gap: "clamp(6px, 1vw, 10px)",
+                    gap: "clamp(10px, 1.4vw, 14px)",
                   }}
                 >
                   <div
+                    className="about-work-card-thumb"
                     style={{
                       flex: "0 0 auto",
                       width: "min(68%, 180px)",
@@ -377,15 +387,15 @@ export default function AboutSection() {
                     />
                   </div>
                   <p
+                    className="about-work-card-text"
                     style={{
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: "clamp(15px, 1.4vw, 19px)",
                       fontWeight: 400,
                       color: "#000",
-                      lineHeight: 1.5,
+                      lineHeight: 1.52,
                       margin: 0,
-                      marginTop: "clamp(-4px, -0.6vw, -2px)",
-                      flex: "0 1 auto",
+                      flex: "1 1 auto",
                       alignSelf: "stretch",
                       textAlign: "center",
                     }}
@@ -685,6 +695,29 @@ export default function AboutSection() {
           line-height: 100% !important;
           letter-spacing: 0 !important;
         }
+        @media (min-width: 769px) {
+          .about-work-card {
+            justify-content: flex-start !important;
+            align-items: center !important;
+          }
+          .about-work-card-thumb {
+            width: min(100%, 180px) !important;
+            max-width: 180px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            min-height: clamp(108px, 12.5vw, 140px) !important;
+            max-height: none !important;
+            flex-shrink: 0 !important;
+          }
+          .about-work-card-thumb img {
+            max-height: clamp(92px, 10.5vw, 122px) !important;
+          }
+          .about-work-card-text {
+            width: 100% !important;
+            text-align: center !important;
+            margin-top: 0 !important;
+          }
+        }
         @media (max-width: 768px) {
           #про-мене {
             min-height: unset !important;
@@ -735,13 +768,21 @@ export default function AboutSection() {
           .about-mobile-photo img {
             margin-top: 0 !important;
           }
+          /* Хвиля вища + менше наїзду білої секції — інакше вигин ховається й видно «лінію» */
+          .about-mobile-photo-wave svg {
+            height: clamp(84px, 22vw, 108px) !important;
+            min-height: 80px !important;
+          }
         }
         @media (max-width: 768px) {
           .about-work-section {
             padding: 44px ${PAGE_GUTTER_X} 52px !important;
-            margin-top: -24px;
+            margin-top: -10px;
             position: relative;
             z-index: 3;
+          }
+          .about-work-section::before {
+            display: none !important;
           }
           .about-work-stack {
             gap: 28px !important;
@@ -827,34 +868,44 @@ export default function AboutSection() {
             aspect-ratio: unset !important;
             min-height: 0 !important;
             flex-direction: row !important;
-            align-items: center !important;
+            align-items: flex-start !important;
             justify-content: flex-start !important;
             text-align: left !important;
-            padding: 12px 14px !important;
+            padding: 13px 16px !important;
             gap: 14px !important;
             border-radius: 16px !important;
           }
-          .about-work-card > div:first-of-type {
+          .about-work-card > div:first-of-type,
+          .about-work-card-thumb {
             width: 56px !important;
             min-width: 56px !important;
+            height: 56px !important;
             max-height: 56px !important;
             flex-shrink: 0 !important;
-            justify-content: flex-start !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            align-self: flex-start !important;
           }
-          .about-work-card > div:first-of-type img {
+          .about-work-card > div:first-of-type img,
+          .about-work-card-thumb img {
             max-height: 52px !important;
             width: auto !important;
             max-width: 100% !important;
             margin: 0 !important;
+            object-fit: contain !important;
           }
-          .about-work-card p {
+          .about-work-card p,
+          .about-work-card-text {
             text-align: left !important;
             margin-top: 0 !important;
+            padding-top: 2px !important;
             font-size: clamp(13px, 3.6vw, 16px) !important;
-            line-height: 1.45 !important;
+            line-height: 1.48 !important;
             font-weight: 400 !important;
             flex: 1 1 auto !important;
             min-width: 0 !important;
+            align-self: stretch !important;
           }
           .about-work-cta-link {
             width: 100% !important;
@@ -881,16 +932,19 @@ export default function AboutSection() {
             padding: 44px ${PAGE_GUTTER_X} 52px !important;
           }
           .about-work-card {
-            padding: 10px 12px !important;
+            padding: 11px 14px !important;
             gap: 12px !important;
             border-radius: 14px !important;
           }
-          .about-work-card > div:first-of-type {
+          .about-work-card > div:first-of-type,
+          .about-work-card-thumb {
             width: 48px !important;
             min-width: 48px !important;
+            height: 48px !important;
             max-height: 48px !important;
           }
-          .about-work-card > div:first-of-type img {
+          .about-work-card > div:first-of-type img,
+          .about-work-card-thumb img {
             max-height: 44px !important;
           }
         }
