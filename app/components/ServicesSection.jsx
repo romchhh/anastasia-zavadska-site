@@ -32,7 +32,8 @@ const SERVICE_CARD_GAP = 18;
  * Мобільна: одна картка у в’юпорті — ширина ≈ viewport мінус відстань між слайдами,
  * щоб сусідні картки ховалися за overflow (центр лише активна).
  */
-const SERVICE_CARD_W_MOBILE = `min(522px, calc(100vw - ${2 * SERVICE_CARD_GAP}px))`;
+/** Трохи ширша картка на мобільному — менший «відступ» від країв вікна */
+const SERVICE_CARD_W_MOBILE = "min(522px, calc(100vw - 28px))";
 
 function useServicesCarouselMobile() {
   return useSyncExternalStore(
@@ -631,7 +632,7 @@ export default function ServicesSection() {
             display: flex !important;
             top: calc(
               clamp(18px, 3.6vw, 25px) +
-              (min(522px, calc(100vw - 36px)) - 2 * clamp(18px, 3.6vw, 25px)) * 9 / 10
+              (min(522px, calc(100vw - 28px)) - 2 * clamp(18px, 3.6vw, 25px)) * 9 / 10
             ) !important;
             transform: translateY(-50%) !important;
           }

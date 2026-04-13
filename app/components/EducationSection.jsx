@@ -660,7 +660,7 @@ export default function EducationSection() {
             font-size: clamp(16px, 2.75vw, 22px) !important;
           }
           .education-section-outer {
-            padding: 36px clamp(20px, 5vw, 32px) 48px !important;
+            padding: 28px clamp(14px, 4vw, 24px) 40px !important;
           }
           .education-nav-arrows {
             display: none !important;

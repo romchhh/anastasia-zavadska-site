@@ -335,10 +335,11 @@ export default function PraktikumSection() {
         </h2>
 
         <div
+          className="praktikum-tagline-outer"
           style={{
             display: "flex",
             justifyContent: "center",
-            margin: "0 0 clamp(20px, 3vw, 28px) 0",
+            margin: "0 0 clamp(16px, 2.5vw, 24px) 0",
             padding: "0 8px",
             boxSizing: "border-box",
           }}
@@ -525,6 +526,19 @@ export default function PraktikumSection() {
           white-space: nowrap;
         }
         @media (max-width: 768px) {
+          #практикум {
+            padding-top: clamp(28px, 4.5vw, 48px) !important;
+            padding-bottom: clamp(40px, 5.5vw, 64px) !important;
+          }
+          #практикум .praktikum-tagline-outer {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-bottom: clamp(12px, 2vw, 20px) !important;
+          }
+          #практикум .praktikum-tagline-pill {
+            max-width: 100% !important;
+            width: 100%;
+          }
           #практикум h2.praktikum-section-heading {
             display: flex;
             flex-direction: column;
@@ -558,16 +572,20 @@ export default function PraktikumSection() {
             margin-right: 0 !important;
           }
           #практикум .praktikum-tagline-pill {
-            padding: 14px 22px !important;
+            padding: 12px 16px !important;
             font-size: clamp(16px, 3.9vw, 17px) !important;
+            text-align: left !important;
           }
+          /* Іконка навпроти першого рядка тексту (не по центру всього блоку при переносі) */
           #практикум .praktikum-tagline-line {
-            align-items: center !important;
-            justify-content: center !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
             gap: 10px !important;
           }
           #практикум .praktikum-tagline-icon-wrap {
-            align-self: center !important;
+            align-self: flex-start !important;
+            margin-top: 0.12em;
+            flex-shrink: 0 !important;
           }
           #практикум .praktikum-tagline-icon {
             width: 1.2em !important;
@@ -576,6 +594,7 @@ export default function PraktikumSection() {
             min-height: 1.2em !important;
           }
           #практикум .praktikum-tagline-text {
+            text-align: left !important;
             line-height: 1.38 !important;
             display: block;
           }
@@ -586,9 +605,10 @@ export default function PraktikumSection() {
             width: 100vw !important;
             margin-left: calc(50% - 50vw) !important;
             margin-right: calc(50% - 50vw) !important;
-            padding-left: clamp(12px, 3.2vw, 22px) !important;
-            padding-right: clamp(12px, 3.2vw, 22px) !important;
+            padding-left: clamp(10px, 2.8vw, 18px) !important;
+            padding-right: clamp(10px, 2.8vw, 18px) !important;
             box-sizing: border-box !important;
+            gap: clamp(14px, 3vw, 22px) !important;
           }
           #практикум .praktikum-card {
             max-width: 100% !important;

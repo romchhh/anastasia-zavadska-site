@@ -307,9 +307,9 @@ export default function HeroSection() {
             display: flex;
             flex-direction: column;
             align-items: stretch;
-            gap: 20px;
+            gap: 16px;
             min-height: unset !important;
-            padding-top: clamp(28px, 6vw, 48px) !important;
+            padding-top: clamp(22px, 5vw, 40px) !important;
           }
           .hero-column {
             display: contents;
@@ -336,7 +336,7 @@ export default function HeroSection() {
           .hero-photo {
             order: 2;
             width: 100% !important;
-            max-width: min(100%, 400px) !important;
+            max-width: 100% !important;
             margin-left: auto;
             margin-right: auto;
             aspect-ratio: 5 / 6;

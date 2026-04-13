@@ -1,8 +1,8 @@
 /**
  * Горизонтальні поля контенту — як у hero (`HeroSection`) та `.main-nav`.
- * Більші поля на широких екранах — стрічка контенту вужча від країв вікна.
+ * На вузьких екранах нижній мінімум (14px), ніж колись 44px — більше ширини тексту; на широких — як раніше через vw.
  */
-export const PAGE_GUTTER_X = "clamp(44px, 8.6vw, 132px)";
+export const PAGE_GUTTER_X = "clamp(14px, 8.6vw, 132px)";
 
 /** Висота липкого навбару (десктоп) — узгоджено з `.main-nav` у Navbar.jsx */
 export const NAV_HEIGHT_DESKTOP = 76;

@@ -63,7 +63,7 @@ const BOOKING_SECTION_STYLES = `
   }
   @media (max-width: 768px) {
     .service-booking-section {
-      padding: clamp(36px, 5vw, 44px) ${PAGE_GUTTER_X} clamp(44px, 6.5vw, 56px);
+      padding: clamp(28px, 4vw, 40px) ${PAGE_GUTTER_X} clamp(36px, 5vw, 48px);
     }
     #booking-calendar,
     #booking-form {

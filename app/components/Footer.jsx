@@ -232,14 +232,14 @@ export default function Footer() {
             align-items: center !important;
             justify-content: center !important;
             text-align: center !important;
-            gap: 44px !important;
-            padding: 48px ${PAGE_GUTTER_X} 40px !important;
+            gap: 32px !important;
+            padding: 36px ${PAGE_GUTTER_X} 32px !important;
           }
           .footer-brand {
             align-items: center !important;
             width: 100% !important;
             min-width: 0 !important;
-            gap: 28px !important;
+            gap: 22px !important;
           }
           .footer-brand-text {
             text-align: center !important;
@@ -256,12 +256,12 @@ export default function Footer() {
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 36px !important;
+            gap: 28px !important;
           }
           .footer-menu-block,
           .footer-legal-col {
             width: 100% !important;
-            max-width: 360px !important;
+            max-width: 100% !important;
             text-align: center !important;
             padding-top: 0 !important;
           }
@@ -279,7 +279,7 @@ export default function Footer() {
             font-size: 18px !important;
           }
           .footer-credit-wrap {
-            padding: 20px ${PAGE_GUTTER_X} 28px !important;
+            padding: 16px ${PAGE_GUTTER_X} 22px !important;
           }
           .footer-credit-link {
             font-size: 14px !important;

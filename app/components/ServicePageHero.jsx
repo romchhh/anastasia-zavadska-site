@@ -238,9 +238,9 @@ export default function ServicePageHero({ service }) {
           .service-page-hero {
             flex-direction: column;
             align-items: stretch;
-            padding: 40px ${PAGE_GUTTER_X} 48px !important;
+            padding: 28px ${PAGE_GUTTER_X} 36px !important;
             min-height: unset !important;
-            gap: 32px;
+            gap: 22px;
           }
           .service-page-hero__text {
             flex: none;
@@ -248,7 +248,7 @@ export default function ServicePageHero({ service }) {
           .service-page-hero__visual {
             flex: none;
             width: 100% !important;
-            max-width: min(100%, 360px);
+            max-width: 100%;
             align-self: center;
             aspect-ratio: 1;
             min-height: unset;

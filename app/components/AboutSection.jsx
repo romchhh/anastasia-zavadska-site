@@ -784,7 +784,7 @@ export default function AboutSection() {
             width: 100% !important;
             margin-left: 0 !important;
             /* Висота липкого навбару 68px — без додаткового «повітря», заголовок майже впритул під меню */
-            padding: 68px ${PAGE_GUTTER_X} 64px !important;
+            padding: 56px ${PAGE_GUTTER_X} 52px !important;
             justify-content: flex-start !important;
             align-items: stretch !important;
             text-align: left !important;
@@ -833,7 +833,7 @@ export default function AboutSection() {
         }
         @media (max-width: 768px) {
           .about-work-section {
-            padding: 44px ${PAGE_GUTTER_X} 52px !important;
+            padding: 32px ${PAGE_GUTTER_X} 40px !important;
             margin-top: -10px;
             position: relative;
             z-index: 3;
@@ -988,7 +988,7 @@ export default function AboutSection() {
         }
         @media (max-width: 420px) {
           .about-work-section {
-            padding: 44px ${PAGE_GUTTER_X} 52px !important;
+            padding: 28px ${PAGE_GUTTER_X} 36px !important;
           }
           .about-work-card {
             padding: 11px 14px !important;

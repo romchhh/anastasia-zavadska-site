@@ -196,7 +196,7 @@ export default function ContactSection() {
         }
         @media (max-width: 768px) {
           .contact-section-outer {
-            padding: 44px ${PAGE_GUTTER_X} 64px !important;
+            padding: 32px ${PAGE_GUTTER_X} 48px !important;
           }
           .contact-bottom-row {
             flex-direction: column;
@@ -221,13 +221,13 @@ export default function ContactSection() {
             text-align: left !important;
           }
           .contact-hero-sub {
-            max-width: min(100%, 48ch) !important;
+            max-width: 100% !important;
             font-size: clamp(16px, 2.8vw, 22px) !important;
           }
         }
         @media (max-width: 420px) {
           .contact-section-outer {
-            padding: 36px ${PAGE_GUTTER_X} 52px !important;
+            padding: 28px ${PAGE_GUTTER_X} 40px !important;
           }
           .contact-social-icon {
             width: 36px !important;
