@@ -484,14 +484,23 @@ export default function ReviewsSection() {
             opacity: 0 !important;
             pointer-events: none !important;
           }
-          .reviews-nav-btn--overlay {
-            display: none !important;
+          /* Стрілки по боках карток, по вертикалі по центру в’юпорту */
+          .reviews-carousel-viewport .reviews-nav-btn--overlay {
+            display: flex !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+          }
+          .reviews-carousel-viewport .reviews-carousel-arrow--prev {
+            left: clamp(6px, 2vw, 14px) !important;
+          }
+          .reviews-carousel-viewport .reviews-carousel-arrow--next {
+            right: clamp(6px, 2vw, 14px) !important;
           }
           .reviews-dots-toolbar {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 0;
             margin-top: 18px !important;
             margin-bottom: 14px !important;
           }
@@ -500,26 +509,10 @@ export default function ReviewsSection() {
             flex: 0 1 auto;
           }
           .reviews-dots-arrow-slot {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 48px;
-            width: 48px;
-            min-height: 48px;
+            display: none !important;
           }
           .reviews-nav-mobile {
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            padding: 0;
-            background: #fff;
-            border: 1.5px solid #b8ccf0;
-            border-radius: 50%;
-            box-shadow: 0 2px 12px rgba(100, 140, 200, 0.12);
-            cursor: pointer;
-            color: #7a9ae0;
+            display: none !important;
           }
           .reviews-nav-btn {
             background: #fff !important;

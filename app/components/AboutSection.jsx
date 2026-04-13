@@ -1,7 +1,12 @@
 import { Fragment } from "react";
 import { TAGS, ABOUT_PHOTO, INDIVIDUAL_BOOKING_PAGE } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
-import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import {
+  PAGE_GUTTER_X,
+  SECTION_INTRO_LEAD,
+  SECTION_INTRO_TITLE,
+  SECTION_TITLE_MAX_WIDTH,
+} from "./sectionIntroStyles";
 
 export default function AboutSection() {
   return (
@@ -100,40 +105,58 @@ export default function AboutSection() {
             boxSizing: "border-box",
           }}
         >
-          <h2
-            className="about-intro-heading"
+          <div
+            className="about-intro-copy"
             style={{
-              ...SECTION_INTRO_TITLE,
-              textAlign: "left",
-              margin: "0 0 clamp(20px, 3vw, 28px) 0",
+              width: "100%",
+              maxWidth: SECTION_TITLE_MAX_WIDTH,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "stretch",
+              boxSizing: "border-box",
             }}
           >
-            <span className="about-intro-desktop">Привіт, я Анастасія</span>
-            <span className="about-intro-mobile">
-              <span className="about-intro-mobile-line">Привіт,</span>
-              <span className="about-intro-mobile-line">я Анастасія</span>
-            </span>
-          </h2>
-
-          {[
-            "Я психологиня, працюю в гештальт-підході. Проводжу індивідуальну та групову терапію онлайн.",
-            "У своїй роботі я не про «швидко полагодити». Я про процес — коли ти поступово повертаєшся до себе: до своїх відчуттів, бажань і внутрішньої опори. Я не даю готових відповідей і не «виправляю». Я поруч — щоб ти міг/могла краще зрозуміти себе і знайти свій шлях.",
-            "До того, як стати магістром психології, я працювала в ІТ — пройшла шлях від офіс-менеджера до HRD/COO. Тому добре розумію тих, хто живе в режимі ефективності, виснаження і постійного «треба більше».",
-          ].map((p, i) => (
-            <p
-              key={i}
+            <h2
+              className="about-intro-heading"
               style={{
-                ...SECTION_INTRO_LEAD,
-                fontWeight: i === 0 ? 600 : 400,
-                maxWidth: "min(100%, 920px)",
+                ...SECTION_INTRO_TITLE,
+                fontSize: "clamp(30px, 6.3vw, 62px)",
+                lineHeight: "1.04",
+                maxWidth: "100%",
                 width: "100%",
-                margin: "0 0 20px 0",
+                marginLeft: 0,
+                marginRight: 0,
                 textAlign: "left",
+                margin: "0 0 clamp(20px, 3vw, 28px) 0",
               }}
             >
-              {p}
-            </p>
-          ))}
+              <span className="about-intro-desktop">Привіт, я Анастасія</span>
+              <span className="about-intro-mobile">
+                <span className="about-intro-mobile-line">Привіт,</span>
+                <span className="about-intro-mobile-line">я Анастасія</span>
+              </span>
+            </h2>
+
+            {[
+              "Я психологиня, працюю в гештальт-підході. Проводжу індивідуальну та групову терапію онлайн.",
+              "У своїй роботі я не про «швидко полагодити». Я про процес — коли ти поступово повертаєшся до себе: до своїх відчуттів, бажань і внутрішньої опори. Я не даю готових відповідей і не «виправляю». Я поруч — щоб ти міг/могла краще зрозуміти себе і знайти свій шлях.",
+              "До того, як стати магістром психології, я працювала в ІТ — пройшла шлях від офіс-менеджера до HRD/COO. Тому добре розумію тих, хто живе в режимі ефективності, виснаження і постійного «треба більше».",
+            ].map((p, i) => (
+              <p
+                key={i}
+                style={{
+                  ...SECTION_INTRO_LEAD,
+                  fontWeight: i === 0 ? 600 : 400,
+                  maxWidth: "100%",
+                  width: "100%",
+                  margin: "0 0 20px 0",
+                  textAlign: "left",
+                }}
+              >
+                {p}
+              </p>
+            ))}
+          </div>
         </div>
 
         {/* Desktop wave */}
@@ -289,7 +312,7 @@ export default function AboutSection() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "flex-start",
+                    justifyContent: "center",
                     textAlign: "center",
                     background: "#E8EEFF",
                     borderRadius: "clamp(20px, 3vw, 28px)",
@@ -331,7 +354,7 @@ export default function AboutSection() {
                       lineHeight: 1.5,
                       margin: 0,
                       marginTop: "clamp(-4px, -0.6vw, -2px)",
-                      flex: "1 1 auto",
+                      flex: "0 1 auto",
                       alignSelf: "stretch",
                       textAlign: "center",
                     }}
@@ -547,12 +570,16 @@ export default function AboutSection() {
               textAlign: "center",
               margin: 0,
               paddingTop: "clamp(8px, 1.5vw, 16px)",
+              width: "100%",
+              maxWidth: "100%",
+              boxSizing: "border-box",
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "center",
+              /* center збирав пункти в «ком» — вільна ширина лишалась по боках; space-evenly розподіляє по рядку */
+              justifyContent: "space-evenly",
               alignItems: "baseline",
-              columnGap: "0.45em",
-              rowGap: "0.55em",
+              columnGap: "clamp(10px, 1.8vw, 28px)",
+              rowGap: "0.7em",
             }}
           >
             {TAGS.map((tag, i) => (
@@ -621,7 +648,8 @@ export default function AboutSection() {
             text-align: left !important;
           }
           #про-мене .about-content h2.about-intro-heading {
-            font-size: clamp(24px, 8vw, 40px) !important;
+            font-size: clamp(28px, 9.2vw, 44px) !important;
+            line-height: 1.05 !important;
             text-align: left !important;
           }
           #про-мене .about-content h2.about-intro-heading .about-intro-desktop {
@@ -711,9 +739,10 @@ export default function AboutSection() {
             padding-bottom: 0 !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
-            justify-content: center !important;
-            column-gap: 0.4em !important;
-            row-gap: 0.48em !important;
+            width: 100% !important;
+            justify-content: space-evenly !important;
+            column-gap: clamp(8px, 2.2vw, 18px) !important;
+            row-gap: 0.55em !important;
             max-width: 100% !important;
             margin-left: auto !important;
             margin-right: auto !important;
