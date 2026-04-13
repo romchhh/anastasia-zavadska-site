@@ -24,16 +24,15 @@ function showCardDescription(service) {
  */
 const SERVICES_CAROUSEL_ORDER = [2, 0, 1];
 
-/** Мобільна ширина: ~−15% до базового min(522px, …) */
-const SERVICE_CARD_MOBILE_SCALE = 0.85;
 /** Десктоп: трохи ширше за попередній 0.765, досі вужче за повний 0.85 */
 const SERVICE_CARD_DESKTOP_SCALE = 0.81;
 const SERVICE_CARD_W = `min(calc(522px * ${SERVICE_CARD_DESKTOP_SCALE}), calc(90vw * ${SERVICE_CARD_DESKTOP_SCALE}))`;
-/** Мобільна ширина картки — вужчі бокові поля за секційного gutter, щоб картки були ширші */
-const SERVICE_CARD_GUTTER_MOBILE = "clamp(12px, 3.2vw, 22px)";
-/** Запас під стрілки каруселі зліва/справа, щоб не перекривали текст картки */
-const SERVICE_CARD_W_MOBILE = `min(calc(522px * ${SERVICE_CARD_MOBILE_SCALE}), calc((100vw - 2 * ${SERVICE_CARD_GUTTER_MOBILE} - 96px) * ${SERVICE_CARD_MOBILE_SCALE}))`;
 const SERVICE_CARD_GAP = 18;
+/**
+ * Мобільна: одна картка у в’юпорті — ширина ≈ viewport мінус відстань між слайдами,
+ * щоб сусідні картки ховалися за overflow (центр лише активна).
+ */
+const SERVICE_CARD_W_MOBILE = `min(522px, calc(100vw - ${2 * SERVICE_CARD_GAP}px))`;
 
 function useServicesCarouselMobile() {
   return useSyncExternalStore(
@@ -607,11 +606,17 @@ export default function ServicesSection() {
           display: none;
         }
         @media (min-width: 769px) {
+          /* Стрілки на лінії нижнього краю фото (16:10), як на мобільній */
           .services-carousel-viewport .services-nav-btn--overlay {
             background: #fff !important;
             border: 1.5px solid #b8ccf0 !important;
             color: #7a9ae0 !important;
             box-shadow: 0 2px 12px rgba(100, 140, 200, 0.12) !important;
+            top: calc(
+              clamp(14px, 2.4vw, 20px) +
+              (min(calc(522px * 0.81), calc(90vw * 0.81)) - 2 * clamp(14px, 2.4vw, 20px)) * 10 / 16
+            ) !important;
+            transform: translateY(-50%) !important;
           }
         }
         @media (max-width: 768px) {
@@ -621,9 +626,13 @@ export default function ServicesSection() {
           .services-edge-fade {
             display: none !important;
           }
+          /* Нижній край фото (10:9): padding зверху + висота зображення */
           .services-carousel-viewport .services-nav-btn--overlay {
             display: flex !important;
-            top: 50% !important;
+            top: calc(
+              clamp(18px, 3.6vw, 25px) +
+              (min(522px, calc(100vw - 36px)) - 2 * clamp(18px, 3.6vw, 25px)) * 9 / 10
+            ) !important;
             transform: translateY(-50%) !important;
           }
           .services-carousel-viewport .services-carousel-arrow--prev {

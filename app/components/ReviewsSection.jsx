@@ -8,8 +8,8 @@ import { PAGE_GUTTER_X, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
 
 /** Як у каруселі послуг: той самий крок і візуальна ієрархія карток */
 const CARD_W = "min(360px, 82vw)";
-/** На мобільній ширина картки з запасом під стрілки (~48px + відступ з кожного боку), щоб не налазили на текст */
-const CARD_W_MOBILE = `min(360px, calc(100vw - 2 * ${PAGE_GUTTER_X} - 96px))`;
+/** Мобільна: майже на всю ширину вікна (секція без бокового padding — див. CSS), мінус стрілки та невеликий відступ */
+const CARD_W_MOBILE = "min(520px, calc(100vw - 96px - 20px))";
 const CARD_GAP = 18;
 
 function useReviewsCarouselMobile() {
@@ -506,15 +506,23 @@ export default function ReviewsSection() {
           #відгуки {
             padding-top: clamp(36px, 6.5vw, 52px) !important;
             padding-bottom: 36px !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
           }
           .reviews-header {
             margin-bottom: 18px !important;
-          }
-          .reviews-carousel-viewport {
-            min-height: 240px !important;
+            padding-left: clamp(44px, 8.6vw, 132px) !important;
+            padding-right: clamp(44px, 8.6vw, 132px) !important;
+            box-sizing: border-box;
           }
           .reviews-footer {
             margin-top: 20px !important;
+            padding-left: clamp(44px, 8.6vw, 132px) !important;
+            padding-right: clamp(44px, 8.6vw, 132px) !important;
+            box-sizing: border-box;
+          }
+          .reviews-carousel-viewport {
+            min-height: 240px !important;
           }
           .reviews-carousel-viewport .reviews-edge-fade-left,
           .reviews-carousel-viewport .reviews-edge-fade-right {
