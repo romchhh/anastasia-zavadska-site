@@ -363,22 +363,24 @@ export default function PraktikumSection() {
             }}
           >
             <span className="praktikum-tagline-line">
-              <CalendarDays
-                className="praktikum-tagline-icon"
-                aria-hidden
-                strokeWidth={2}
-                color="#fff"
-              />
-              <span>7-денна психологічна програма</span>
+              <span className="praktikum-tagline-icon-wrap" aria-hidden>
+                <CalendarDays
+                  className="praktikum-tagline-icon"
+                  strokeWidth={2}
+                  color="#fff"
+                />
+              </span>
+              <span className="praktikum-tagline-text">7-денна психологічна програма</span>
             </span>
             <span className="praktikum-tagline-line praktikum-tagline-line--sub">
-              <Infinity
-                className="praktikum-tagline-icon"
-                aria-hidden
-                strokeWidth={2}
-                color="#fff"
-              />
-              <span>Почати можна будь-коли</span>
+              <span className="praktikum-tagline-icon-wrap" aria-hidden>
+                <Infinity
+                  className="praktikum-tagline-icon"
+                  strokeWidth={2}
+                  color="#fff"
+                />
+              </span>
+              <span className="praktikum-tagline-text">Почати можна будь-коли</span>
             </span>
           </p>
         </div>
@@ -458,18 +460,37 @@ export default function PraktikumSection() {
         }
         #практикум .praktikum-tagline-line {
           display: flex;
+          flex-direction: row;
           align-items: center;
           justify-content: center;
           gap: 10px;
+          width: 100%;
         }
         #практикум .praktikum-tagline-line--sub {
           margin-top: 8px;
           opacity: 0.98;
         }
+        #практикум .praktikum-tagline-icon-wrap {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          line-height: 0;
+        }
         #практикум .praktikum-tagline-icon {
           flex-shrink: 0;
           width: clamp(20px, 2.2vw, 24px);
           height: clamp(20px, 2.2vw, 24px);
+          display: block;
+        }
+        #практикум .praktikum-tagline-icon svg {
+          display: block;
+        }
+        #практикум .praktikum-tagline-text {
+          flex: 1 1 auto;
+          min-width: 0;
+          text-align: center;
+          line-height: 1.35;
         }
         #практикум .praktikum-price-block {
           display: flex;
@@ -540,9 +561,23 @@ export default function PraktikumSection() {
             padding: 14px 22px !important;
             font-size: clamp(16px, 3.9vw, 17px) !important;
           }
+          #практикум .praktikum-tagline-line {
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+          }
+          #практикум .praktikum-tagline-icon-wrap {
+            align-self: center !important;
+          }
           #практикум .praktikum-tagline-icon {
-            width: clamp(18px, 4.2vw, 24px) !important;
-            height: clamp(18px, 4.2vw, 24px) !important;
+            width: 1.2em !important;
+            height: 1.2em !important;
+            min-width: 1.2em !important;
+            min-height: 1.2em !important;
+          }
+          #практикум .praktikum-tagline-text {
+            line-height: 1.38 !important;
+            display: block;
           }
           /* Ширші картки: на всю ширину екрана з вужчим gutter за секційного (як картки послуг) */
           #практикум .praktikum-cards {
