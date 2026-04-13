@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useSyncExternalStore, useLayoutEffect, useCallback } from "react";
+import { useState, useRef, useMemo, useSyncExternalStore, useLayoutEffect, useCallback } from "react";
 import { REVIEWS, PRAKTIKUM_JOURNEY_URL } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
 import CtaPillButton from "./CtaPillButton";
@@ -48,12 +48,10 @@ function ReviewCard({ label, text, isActive, dist, onSelect, cardWidth = CARD_W,
         gap: "20px",
         minHeight: "260px",
         boxSizing: "border-box",
-        boxShadow: isActive
-          ? "0 12px 40px rgba(100, 130, 210, 0.28)"
-          : "none",
+        boxShadow: "none",
         opacity: dist === 0 ? 1 : dist === 1 ? 0.88 : 0.5,
         transform: isActive ? "scale(1)" : "scale(0.93)",
-        transition: "opacity .4s, transform .4s, border-color .3s, background .3s, box-shadow .3s",
+        transition: "opacity .4s, transform .4s, border-color .3s, background .3s",
         cursor: isActive ? "default" : "pointer",
         userSelect: "none",
       }}
@@ -125,14 +123,43 @@ function ReviewCard({ label, text, isActive, dist, onSelect, cardWidth = CARD_W,
 
 export default function ReviewsSection() {
   const n = REVIEWS.length;
-  /** Старт із центрального відгуку — з обох боків видно сусідні картки (як у послугах) */
-  const [active, setActive] = useState(() => Math.floor((n - 1) / 2));
+  /** Три копії для безшовного кола: індекси n .. 2n-1 — «середня» третина */
+  const loopReviews = useMemo(() => [...REVIEWS, ...REVIEWS, ...REVIEWS], []);
+  const initialSlide = n + Math.floor((n - 1) / 2);
+  const [slideIndex, setSlideIndex] = useState(initialSlide);
+  const [noTrackTransition, setNoTrackTransition] = useState(false);
+  const slideIndexRef = useRef(initialSlide);
+  slideIndexRef.current = slideIndex;
+
   const startX = useRef(null);
   const isDragging = useRef(false);
   const dragMoved = useRef(false);
 
-  const prev = () => setActive((i) => (i - 1 + n) % n);
-  const next = () => setActive((i) => (i + 1) % n);
+  const activeMod = ((slideIndex % n) + n) % n;
+
+  const prev = () => setSlideIndex((i) => i - 1);
+  const next = () => setSlideIndex((i) => i + 1);
+
+  const handleTrackTransitionEnd = useCallback(
+    (e) => {
+      if (e.propertyName !== "transform") return;
+      const s = slideIndexRef.current;
+      if (s >= 2 * n) {
+        setNoTrackTransition(true);
+        setSlideIndex(s - n);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => setNoTrackTransition(false));
+        });
+      } else if (s < n) {
+        setNoTrackTransition(true);
+        setSlideIndex(s + n);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => setNoTrackTransition(false));
+        });
+      }
+    },
+    [n]
+  );
 
   const handleTouchStart = (e) => {
     startX.current = e.touches[0].clientX;
@@ -187,9 +214,9 @@ export default function ReviewsSection() {
     if (!firstCard) return;
     const vw = viewport.clientWidth;
     const cw = firstCard.offsetWidth;
-    const x = vw / 2 - active * (cw + CARD_GAP) - cw / 2;
+    const x = vw / 2 - slideIndex * (cw + CARD_GAP) - cw / 2;
     setMobileTrackX(Math.round(x * 100) / 100);
-  }, [active]);
+  }, [slideIndex]);
 
   useLayoutEffect(() => {
     updateMobileCarouselTransform();
@@ -213,7 +240,11 @@ export default function ReviewsSection() {
   const reviewsTrackTransform =
     isMobileCarousel && mobileTrackX !== null
       ? `translateX(${mobileTrackX}px)`
-      : `translateX(calc(50vw - ${PAGE_GUTTER_X} - ${active} * (${CARD_W} + ${CARD_GAP}px) - (${CARD_W}) / 2))`;
+      : `translateX(calc(50vw - ${PAGE_GUTTER_X} - ${slideIndex} * (${CARD_W} + ${CARD_GAP}px) - (${CARD_W}) / 2))`;
+
+  const trackTransition = noTrackTransition
+    ? "none"
+    : "transform .5s cubic-bezier(.4,0,.2,1)";
 
   return (
     <section
@@ -269,21 +300,22 @@ export default function ReviewsSection() {
         <div
           ref={trackRef}
           className="reviews-carousel-track"
+          onTransitionEnd={handleTrackTransitionEnd}
           style={{
             display: "flex",
             gap: `${CARD_GAP}px`,
-            transition: "transform .5s cubic-bezier(.4,0,.2,1)",
+            transition: trackTransition,
             transform: reviewsTrackTransform,
             willChange: "transform",
             paddingLeft: 0,
           }}
         >
-          {REVIEWS.map((r, i) => {
-            const isActive = i === active;
-            const dist = Math.abs(i - active);
+          {loopReviews.map((r, i) => {
+            const isActive = i === slideIndex;
+            const dist = Math.abs(i - slideIndex);
             return (
               <ReviewCard
-                key={r.id}
+                key={`${r.id}-loop-${i}`}
                 label={r.label}
                 text={r.text}
                 isActive={isActive}
@@ -291,7 +323,7 @@ export default function ReviewsSection() {
                 cardWidth={cardWidth}
                 isMobileLayout={isMobileCarousel}
                 onSelect={() => {
-                  if (!dragMoved.current) setActive(i);
+                  if (!dragMoved.current) setSlideIndex(i);
                 }}
               />
             );
@@ -404,13 +436,13 @@ export default function ReviewsSection() {
               <button
                 key={r.id}
                 type="button"
-                onClick={() => setActive(i)}
+                onClick={() => setSlideIndex(n + i)}
                 aria-label={`Відгук ${i + 1}`}
                 style={{
-                  width: active === i ? 28 : 10,
+                  width: activeMod === i ? 28 : 10,
                   height: 10,
                   borderRadius: "5px",
-                  background: active === i ? "#92B2FF" : "#c8d8f0",
+                  background: activeMod === i ? "#92B2FF" : "#c8d8f0",
                   border: "none",
                   cursor: "pointer",
                   padding: 0,
@@ -460,6 +492,14 @@ export default function ReviewsSection() {
         .reviews-practicum-cta-wrap {
           display: flex;
           justify-content: flex-end;
+        }
+        @media (min-width: 769px) {
+          .reviews-carousel-viewport .reviews-nav-btn--overlay {
+            background: #fff !important;
+            border: 1.5px solid #b8ccf0 !important;
+            color: #7a9ae0 !important;
+            box-shadow: none !important;
+          }
         }
         @media (max-width: 768px) {
           #відгуки {
@@ -518,7 +558,7 @@ export default function ReviewsSection() {
             background: #fff !important;
             border: 1.5px solid #b8ccf0 !important;
             color: #7a9ae0 !important;
-            box-shadow: 0 2px 12px rgba(100, 140, 200, 0.12) !important;
+            box-shadow: none !important;
           }
           .reviews-practicum-cta-wrap {
             margin-top: 10px !important;

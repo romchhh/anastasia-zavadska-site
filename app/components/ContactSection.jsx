@@ -2,7 +2,12 @@
 
 import { CONTACTS } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
-import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import {
+  PAGE_GUTTER_X,
+  SECTION_INTRO_LEAD,
+  SECTION_INTRO_TITLE,
+  SECTION_LAYOUT_MAX_WIDTH,
+} from "./sectionIntroStyles";
 
 const accent = "#92B2FF";
 
@@ -54,7 +59,7 @@ export default function ContactSection() {
       <div
         className="contact-inner"
         style={{
-          maxWidth: "min(1120px, 100%)",
+          maxWidth: SECTION_LAYOUT_MAX_WIDTH,
           margin: 0,
           width: "100%",
           textAlign: "left",
@@ -104,7 +109,7 @@ export default function ContactSection() {
             display: "flex",
             alignItems: "center",
             gap: "clamp(28px, 5vw, 44px)",
-            maxWidth: "min(1120px, 100%)",
+            maxWidth: SECTION_LAYOUT_MAX_WIDTH,
           }}
         >
           {iconLinks.map(({ href, label, icon, external }) => (

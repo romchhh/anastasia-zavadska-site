@@ -274,6 +274,7 @@ export default function ServiceBookingSection({
           slotSummary={slotSummary}
           requireSlot={showBookingCalendar}
           onlinePayment={onlinePayment}
+          showOptionalFields={bookingNotifyKind !== "event"}
           successTitle={bookingSuccessCopy.successTitle}
           successText={bookingSuccessCopy.successText}
           onSubmit={handleFormSubmit}

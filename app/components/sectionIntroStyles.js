@@ -1,8 +1,8 @@
 /**
  * Горизонтальні поля контенту — як у hero (`HeroSection`) та `.main-nav`.
- * Трохи компактніше за замовчуванням, щоб при 100% масштабі сторінка не виглядала завеликою.
+ * Більші поля на широких екранах — стрічка контенту вужча від країв вікна.
  */
-export const PAGE_GUTTER_X = "clamp(32px, 6.5vw, 96px)";
+export const PAGE_GUTTER_X = "clamp(44px, 8.6vw, 132px)";
 
 /** Висота липкого навбару (десктоп) — узгоджено з `.main-nav` у Navbar.jsx */
 export const NAV_HEIGHT_DESKTOP = 76;
@@ -10,8 +10,11 @@ export const NAV_HEIGHT_DESKTOP = 76;
 /** scroll-margin для якорів під липким навбаром */
 export const SECTION_SCROLL_MARGIN_TOP = "80px";
 
-/** Максимальна ширина стовпа секційних заголовків (узгоджено з текстовими блоками). */
-export const SECTION_TITLE_MAX_WIDTH = "min(100%, 920px)";
+/** Максимальна ширина стовпа секційних заголовків і основних текстових колонок. */
+export const SECTION_TITLE_MAX_WIDTH = "min(100%, 820px)";
+
+/** Ширші сітки секцій (практикум, контакти, блок «З чим я працюю» тощо). */
+export const SECTION_LAYOUT_MAX_WIDTH = "min(100%, 980px)";
 
 /**
  * Типографіка заголовка секцій — обмежена ширина та вирівнювання в тій самій колонці, що й hero.

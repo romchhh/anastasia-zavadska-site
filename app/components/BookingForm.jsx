@@ -89,6 +89,7 @@ function toUaE164(normalized10) {
  *   onlinePayment {bool} – «Оплатити» + ціна; false — запит без оплати на сайті
  *   successTitle, successText — після відправки без редіректу на оплату (опційно)
  *   onSubmit  {fn}      – після валідації; якщо повертає false — не показувати екран «дякуємо» (наприклад редірект на оплату)
+ *   showOptionalFields {bool} – соцмережі та опис проблеми (за замовчуванням true; для бранчів — false)
  */
 export default function BookingForm({
   duration = "50 хв",
@@ -96,6 +97,7 @@ export default function BookingForm({
   slotSummary,
   requireSlot = true,
   onlinePayment = true,
+  showOptionalFields = true,
   successTitle,
   successText,
   onSubmit,
@@ -217,22 +219,26 @@ export default function BookingForm({
               autoComplete="tel"
             />
 
-            <Field
-              label="Соц-мережі (для зв'язку)"
-              hint="Необов'язково до заповнення"
-              placeholder="Напишіть ваші соц-мережі"
-              value={fields.social}
-              onChange={set("social")}
-            />
+            {showOptionalFields ? (
+              <>
+                <Field
+                  label="Соц-мережі (для зв'язку)"
+                  hint="Необов'язково до заповнення"
+                  placeholder="Напишіть ваші соц-мережі"
+                  value={fields.social}
+                  onChange={set("social")}
+                />
 
-            <Field
-              label="Опис проблеми (пару слів)"
-              hint="Необов'язково до заповнення"
-              placeholder=""
-              value={fields.description}
-              onChange={set("description")}
-              multiline
-            />
+                <Field
+                  label="Опис проблеми (пару слів)"
+                  hint="Необов'язково до заповнення"
+                  placeholder=""
+                  value={fields.description}
+                  onChange={set("description")}
+                  multiline
+                />
+              </>
+            ) : null}
           </div>
 
           {/* Right: info badge */}
@@ -400,7 +406,7 @@ const formStyles = `
     text-transform: uppercase;
     color: #111;
     width: 100%;
-    max-width: min(100%, 920px);
+    max-width: min(100%, 820px);
     margin-top: 0;
     margin-left: auto;
     margin-right: auto;

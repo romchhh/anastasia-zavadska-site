@@ -1,5 +1,10 @@
 import CtaPillButton from "./CtaPillButton";
-import { PAGE_GUTTER_X, SECTION_INTRO_LEAD, SECTION_INTRO_TITLE } from "./sectionIntroStyles";
+import {
+  PAGE_GUTTER_X,
+  SECTION_INTRO_LEAD,
+  SECTION_INTRO_TITLE,
+  SECTION_TITLE_MAX_WIDTH,
+} from "./sectionIntroStyles";
 
 const font = "'Montserrat', sans-serif";
 
@@ -40,7 +45,7 @@ export default function ServicePageHero({ service }) {
             ...SECTION_INTRO_LEAD,
             textAlign: "left",
             color: "#444",
-            maxWidth: "min(100%, 920px)",
+            maxWidth: SECTION_TITLE_MAX_WIDTH,
             margin: "0 0 clamp(16px, 2.5vw, 24px) 0",
           }}
         >
@@ -132,7 +137,7 @@ export default function ServicePageHero({ service }) {
               color: "#4b5f87",
               lineHeight: 1.65,
               margin: "0 0 28px 0",
-              maxWidth: "min(100%, 920px)",
+              maxWidth: SECTION_TITLE_MAX_WIDTH,
             }}
           >
             {service.note}
@@ -190,12 +195,28 @@ export default function ServicePageHero({ service }) {
           height: auto;
           align-self: center;
           position: relative;
+          box-shadow:
+            0 0 0 5px #fff,
+            0 10px 32px rgba(120, 150, 200, 0.2);
+          transition: box-shadow 0.28s ease, transform 0.28s ease;
         }
         .service-page-hero__img {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (hover: hover) {
+          .service-page-hero .service-page-hero__visual:hover {
+            box-shadow:
+              0 0 0 5px #fff,
+              0 18px 44px rgba(100, 130, 200, 0.28);
+            transform: translateY(-4px);
+          }
+          .service-page-hero .service-page-hero__visual:hover .service-page-hero__img {
+            transform: scale(1.05);
+          }
         }
         .service-page-hero__cta {
           flex-shrink: 0;

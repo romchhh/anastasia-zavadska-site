@@ -244,7 +244,7 @@ export default function EducationSection() {
             style={{
               ...SECTION_INTRO_LEAD,
               margin: "0 0 clamp(24px, 3vw, 32px) 0",
-              maxWidth: "min(100%, 920px)",
+              maxWidth: SECTION_TITLE_MAX_WIDTH,
               textAlign: "left",
             }}
           >
@@ -426,7 +426,7 @@ export default function EducationSection() {
               style={{
                 position: "relative",
                 width: "100%",
-                maxWidth: "min(920px, 100%)",
+                maxWidth: SECTION_TITLE_MAX_WIDTH,
                 height: "min(88vh, 900px)",
                 display: "flex",
                 flexDirection: "column",

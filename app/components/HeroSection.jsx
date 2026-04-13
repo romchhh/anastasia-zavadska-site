@@ -2,7 +2,12 @@
 
 import { HERO_PHOTO, INDIVIDUAL_BOOKING_PAGE } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
-import { NAV_HEIGHT_DESKTOP, PAGE_GUTTER_X, SECTION_INTRO_LEAD } from "./sectionIntroStyles";
+import {
+  NAV_HEIGHT_DESKTOP,
+  PAGE_GUTTER_X,
+  SECTION_INTRO_LEAD,
+  SECTION_TITLE_MAX_WIDTH,
+} from "./sectionIntroStyles";
 
 const accent = "#92B2FF";
 
@@ -23,20 +28,31 @@ export default function HeroSection() {
       }}
     >
       <div className="hero-column">
-        <div className="hero-text" style={{ minWidth: 0 }}>
+        <div
+          className="hero-copy"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            maxWidth: SECTION_TITLE_MAX_WIDTH,
+            width: "100%",
+            boxSizing: "border-box",
+          }}
+        >
+        <div className="hero-text" style={{ minWidth: 0, width: "100%" }}>
         <h1
           className="hero-title"
           style={{
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "clamp(40px, 6vw, 96px)",
+            fontSize: "clamp(32px, 5.2vw, 80px)",
             fontWeight: 900,
             lineHeight: "0.94",
             color: "#111",
             textTransform: "uppercase",
             letterSpacing: "-0.03em",
-            margin: "0 0 clamp(22px, 2.8vw, 34px) 0",
+            margin: "0 0 clamp(18px, 2.4vw, 28px) 0",
             width: "100%",
-            maxWidth: "min(100%, 980px)",
+            maxWidth: "100%",
             boxSizing: "border-box",
           }}
         >
@@ -49,14 +65,14 @@ export default function HeroSection() {
           style={{
             display: "inline-block",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "clamp(15px, 2.35vw, 30px)",
+            fontSize: "clamp(13px, 2vw, 26px)",
             fontWeight: 600,
             fontStyle: "normal",
             color: "#fff",
             background: accent,
-            padding: "clamp(10px, 1.2vw, 14px) clamp(18px, 2.2vw, 32px)",
+            padding: "clamp(8px, 1.05vw, 12px) clamp(14px, 1.9vw, 28px)",
             borderRadius: "999px",
-            marginBottom: "clamp(20px, 2.8vw, 32px)",
+            marginBottom: "clamp(16px, 2.4vw, 28px)",
             letterSpacing: "0",
             lineHeight: "100%",
           }}
@@ -72,9 +88,9 @@ export default function HeroSection() {
             padding: 0,
             display: "flex",
             flexDirection: "column",
-            gap: "clamp(10px, 1.4vw, 14px)",
+            gap: "clamp(8px, 1.2vw, 12px)",
             width: "100%",
-            maxWidth: "min(100%, 38ch)",
+            maxWidth: "100%",
             textAlign: "left",
           }}
         >
@@ -84,7 +100,7 @@ export default function HeroSection() {
               className="hero-bullet-item"
               style={{
                 fontFamily: "'Montserrat', sans-serif",
-                fontSize: "clamp(15px, 1.65vw, 19px)",
+                fontSize: "clamp(14px, 1.45vw, 17px)",
                 fontWeight: 500,
                 color: "#111",
                 lineHeight: 1.35,
@@ -114,11 +130,11 @@ export default function HeroSection() {
           className="hero-tagline"
           style={{
             ...SECTION_INTRO_LEAD,
-            fontSize: "clamp(19px, 2.35vw, 27px)",
+            fontSize: "clamp(16px, 2vw, 22px)",
             fontWeight: 600,
             textAlign: "left",
-            margin: "0 0 clamp(16px, 2.2vw, 26px) 0",
-            maxWidth: "min(100%, 48ch)",
+            margin: "0 0 clamp(14px, 2vw, 22px) 0",
+            maxWidth: "100%",
           }}
         >
           Терапія, що допомагає повернутися до себе
@@ -128,6 +144,7 @@ export default function HeroSection() {
         <CtaPillButton className="hero-cta" href={INDIVIDUAL_BOOKING_PAGE}>
           Записатися на сесію
         </CtaPillButton>
+        </div>
       </div>
 
       <div
@@ -187,47 +204,63 @@ export default function HeroSection() {
           grid-column: 2;
           grid-row: 1;
           align-self: center;
+          box-shadow:
+            0 0 0 5px #fff,
+            0 12px 36px rgba(120, 150, 200, 0.22);
+          transition: box-shadow 0.28s ease, transform 0.28s ease;
+        }
+        .hero-photo img {
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (hover: hover) {
+          .hero-section .hero-photo:hover {
+            box-shadow:
+              0 0 0 5px #fff,
+              0 22px 52px rgba(95, 130, 200, 0.32);
+            transform: translateY(-5px);
+          }
+          .hero-section .hero-photo:hover img {
+            transform: scale(1.04);
+          }
         }
         @media (min-width: 769px) {
           .hero-section {
             padding-top: clamp(36px, 4.6vw, 64px) !important;
             padding-bottom: clamp(48px, 6.2vw, 88px) !important;
-            padding-left: clamp(32px, 6.5vw, 96px) !important;
-            padding-right: clamp(32px, 6.5vw, 96px) !important;
             column-gap: clamp(40px, 5vw, 76px) !important;
           }
           .hero-badge {
-            font-size: clamp(17px, 2.55vw, 34px) !important;
-            padding: clamp(12px, 1.35vw, 17px) clamp(20px, 2.45vw, 38px) !important;
-            margin-bottom: clamp(24px, 3vw, 38px) !important;
+            font-size: clamp(15px, 2.2vw, 28px) !important;
+            padding: clamp(10px, 1.15vw, 14px) clamp(16px, 2.1vw, 30px) !important;
+            margin-bottom: clamp(20px, 2.6vw, 32px) !important;
           }
           .hero-bullet-list {
-            gap: clamp(12px, 1.55vw, 18px) !important;
-            margin-bottom: clamp(22px, 2.8vw, 30px) !important;
-            max-width: min(100%, 42ch) !important;
+            gap: clamp(10px, 1.35vw, 14px) !important;
+            margin-bottom: clamp(18px, 2.4vw, 26px) !important;
+            max-width: 100% !important;
           }
           .hero-bullet-item {
-            font-size: clamp(17px, 1.85vw, 22px) !important;
-            gap: 14px !important;
+            font-size: clamp(15px, 1.55vw, 18px) !important;
+            gap: 12px !important;
             line-height: 1.4 !important;
           }
           .hero-bullet-item > span[aria-hidden] {
-            font-size: 1.2em !important;
+            font-size: 1.12em !important;
             margin-top: 0.04em !important;
           }
           .hero-cta.cta-pill {
-            font-size: 22px !important;
-            padding: 17px 20px 17px 34px !important;
-            gap: 18px !important;
-            border-radius: 60px !important;
+            font-size: 19px !important;
+            padding: 15px 18px 15px 28px !important;
+            gap: 14px !important;
+            border-radius: 56px !important;
           }
           .hero-cta .cta-pill__arrow {
-            width: 56px !important;
-            height: 46px !important;
-            min-width: 56px !important;
+            width: 50px !important;
+            height: 42px !important;
+            min-width: 50px !important;
           }
           .hero-cta .cta-pill__arrow img {
-            height: 22px !important;
+            height: 19px !important;
             width: auto !important;
           }
           /* Ширше за колишні 3/4, висота як раніше від clamp(288px, 32vw, 456px) */
@@ -239,7 +272,7 @@ export default function HeroSection() {
         }
         @media (max-width: 768px) {
           .hero-title {
-            font-size: clamp(36px, 10.5vw, 52px) !important;
+            font-size: clamp(30px, 9.2vw, 46px) !important;
             line-height: 0.96 !important;
             letter-spacing: -0.025em !important;
           }
@@ -253,16 +286,24 @@ export default function HeroSection() {
           .hero-column {
             display: contents;
           }
+          .hero-copy {
+            display: contents;
+          }
           .hero-text {
             order: 1;
             align-items: flex-start;
+            width: 100%;
+            max-width: min(100%, 820px);
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
           }
           .hero-text .hero-bullet-list,
           .hero-text .hero-tagline {
             text-align: left !important;
           }
           .hero-text .hero-tagline {
-            font-size: clamp(17px, 4.2vw, 22px) !important;
+            font-size: clamp(15px, 3.8vw, 20px) !important;
           }
           .hero-photo {
             order: 2;
@@ -276,13 +317,13 @@ export default function HeroSection() {
             order: 3;
             align-self: center;
             width: fit-content !important;
-            max-width: 100%;
+            max-width: min(100%, 820px);
             box-sizing: border-box;
           }
         }
         @media (max-width: 420px) {
           .hero-title {
-            font-size: clamp(32px, 11vw, 44px) !important;
+            font-size: clamp(28px, 10vw, 40px) !important;
           }
         }
       `}</style>

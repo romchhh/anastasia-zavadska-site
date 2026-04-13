@@ -13,6 +13,7 @@ export default function AboutSection() {
     <>
       <section
         id="про-мене"
+        lang="uk"
         style={{
           position: "relative",
           overflow: "hidden",
@@ -94,13 +95,13 @@ export default function AboutSection() {
             position: "relative",
             zIndex: 2,
             marginLeft: "auto",
-            width: "72%",
-            maxWidth: "920px",
+            width: "78%",
+            maxWidth: "min(100%, 880px)",
             display: "flex",
             flexDirection: "column",
             alignItems: "stretch",
             justifyContent: "center",
-            padding: `72px 80px 120px ${PAGE_GUTTER_X}`,
+            padding: `72px ${PAGE_GUTTER_X} 120px clamp(20px, 2.8vw, 48px)`,
             textAlign: "left",
             boxSizing: "border-box",
           }}
@@ -120,10 +121,12 @@ export default function AboutSection() {
               className="about-intro-heading"
               style={{
                 ...SECTION_INTRO_TITLE,
-                fontSize: "clamp(30px, 6.3vw, 62px)",
-                lineHeight: "1.04",
+                fontSize: "clamp(28px, 4.75vw, 62px)",
+                lineHeight: "1.06",
+                letterSpacing: "-0.028em",
                 maxWidth: "100%",
                 width: "100%",
+                minWidth: 0,
                 marginLeft: 0,
                 marginRight: 0,
                 textAlign: "left",
@@ -137,25 +140,48 @@ export default function AboutSection() {
               </span>
             </h2>
 
-            {[
-              "Я психологиня, працюю в гештальт-підході. Проводжу індивідуальну та групову терапію онлайн.",
-              "У своїй роботі я не про «швидко полагодити». Я про процес — коли ти поступово повертаєшся до себе: до своїх відчуттів, бажань і внутрішньої опори. Я не даю готових відповідей і не «виправляю». Я поруч — щоб ти міг/могла краще зрозуміти себе і знайти свій шлях.",
-              "До того, як стати магістром психології, я працювала в ІТ — пройшла шлях від офіс-менеджера до HRD/COO. Тому добре розумію тих, хто живе в режимі ефективності, виснаження і постійного «треба більше».",
-            ].map((p, i) => (
-              <p
-                key={i}
-                style={{
-                  ...SECTION_INTRO_LEAD,
-                  fontWeight: i === 0 ? 600 : 400,
-                  maxWidth: "100%",
-                  width: "100%",
-                  margin: "0 0 20px 0",
-                  textAlign: "left",
-                }}
-              >
-                {p}
-              </p>
-            ))}
+            <p
+              className="about-intro-body"
+              style={{
+                ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 600,
+                maxWidth: "100%",
+                width: "100%",
+                margin: "0 0 clamp(14px, 1.8vw, 20px) 0",
+                textAlign: "left",
+              }}
+            >
+              Я психологиня, працюю в гештальт-підході. Проводжу індивідуальну та групову терапію онлайн.
+            </p>
+            <p
+              className="about-intro-body"
+              style={{
+                ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 400,
+                maxWidth: "100%",
+                width: "100%",
+                margin: "0 0 clamp(14px, 1.8vw, 20px) 0",
+                textAlign: "left",
+              }}
+            >
+              У своїй роботі я не про «швидко полагодити». Я про процес — коли ти поступово повертаєшся до себе: до своїх відчуттів, бажань і внутрішньої опори. Я не даю готових відповідей і не «виправляю». Я поруч — щоб ти міг/могла краще зрозуміти себе і знайти свій шлях.
+            </p>
+            <p
+              className="about-intro-body"
+              style={{
+                ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 400,
+                maxWidth: "100%",
+                width: "100%",
+                margin: 0,
+                textAlign: "left",
+              }}
+            >
+              До того, як стати магістром психології, я працювала в ІТ — пройшла шлях від офіс-менеджера до HRD/COO. Тому добре розумію тих, хто живе в режимі ефективності, виснаження і постійного «треба більше».
+            </p>
           </div>
         </div>
 
@@ -230,19 +256,20 @@ export default function AboutSection() {
         <div
           className="about-work-stack"
           style={{
-            maxWidth: "1180px",
+            width: "100%",
+            maxWidth: "none",
             margin: "0 auto",
             display: "flex",
             flexDirection: "column",
             gap: "clamp(28px, 4vw, 52px)",
           }}
         >
-          {/* Верх: заголовок, текст, картки, CTA — по центру */}
+          {/* Верх: заголовок, текст, картки, CTA — по центру (ширше за типову колонку 820px, не на весь екран) */}
           <div
             className="about-work-intro"
             style={{
               textAlign: "center",
-              maxWidth: "min(100%, 1040px)",
+              maxWidth: "min(100%, 960px)",
               margin: "0 auto",
               width: "100%",
             }}
@@ -251,6 +278,10 @@ export default function AboutSection() {
               className="about-work-intro-heading"
               style={{
                 ...SECTION_INTRO_TITLE,
+                maxWidth: "100%",
+                width: "100%",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
             >
               З чим я працюю
@@ -260,7 +291,7 @@ export default function AboutSection() {
               style={{
                 ...SECTION_INTRO_LEAD,
                 margin: "0 auto clamp(10px, 1.5vw, 16px)",
-                maxWidth: "min(100%, 920px)",
+                maxWidth: "100%",
                 width: "100%",
               }}
             >
@@ -271,7 +302,7 @@ export default function AboutSection() {
               style={{
                 ...SECTION_INTRO_LEAD,
                 margin: "0 auto clamp(20px, 3vw, 32px)",
-                maxWidth: "min(100%, 920px)",
+                maxWidth: "100%",
                 width: "100%",
               }}
             >
@@ -286,7 +317,7 @@ export default function AboutSection() {
                 gap: "clamp(16px, 2.5vw, 28px)",
                 margin: "0 0 clamp(22px, 3.5vw, 36px) 0",
                 width: "100%",
-                maxWidth: "1000px",
+                maxWidth: "100%",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}
@@ -398,12 +429,15 @@ export default function AboutSection() {
             className="about-work-split"
             style={{
               display: "grid",
-              gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)",
+              gridTemplateColumns: "minmax(0, 1.22fr) minmax(0, 0.78fr)",
               gap: "clamp(20px, 3.5vw, 40px)",
               alignItems: "stretch",
             }}
           >
-            <div className="about-work-list-col">
+            <div
+              className="about-work-list-col"
+              style={{ minWidth: 0, width: "100%" }}
+            >
               <h3
                 className="about-work-states-heading"
                 style={{
@@ -411,6 +445,10 @@ export default function AboutSection() {
                   fontSize: "clamp(26px, 5.2vw, 52px)",
                   margin: "0 0 clamp(16px, 2.2vw, 24px) 0",
                   textAlign: "left",
+                  maxWidth: "100%",
+                  width: "100%",
+                  marginLeft: 0,
+                  marginRight: 0,
                 }}
               >
                 Я працюю з індивідуальними запитами:
@@ -439,8 +477,9 @@ export default function AboutSection() {
                     key={item}
                     style={{
                       display: "flex",
-                      alignItems: "center",
+                      alignItems: "flex-start",
                       gap: "clamp(12px, 2vw, 18px)",
+                      minWidth: 0,
                     }}
                   >
                     <span
@@ -472,6 +511,8 @@ export default function AboutSection() {
                         fontWeight: 500,
                         color: "#000",
                         lineHeight: 1.55,
+                        minWidth: 0,
+                        flex: "1 1 auto",
                       }}
                     >
                       {item}
@@ -485,8 +526,11 @@ export default function AboutSection() {
               className="about-work-visual"
               style={{
                 borderRadius: "clamp(20px, 3vw, 32px)",
-                minHeight: "clamp(280px, 42vw, 420px)",
                 width: "100%",
+                minHeight: 0,
+                alignSelf: "stretch",
+                display: "flex",
+                flexDirection: "column",
                 overflow: "hidden",
                 background: "#C7D4FF",
                 position: "relative",
@@ -497,8 +541,8 @@ export default function AboutSection() {
                 alt=""
                 style={{
                   width: "100%",
-                  height: "100%",
-                  minHeight: "clamp(280px, 42vw, 420px)",
+                  flex: "1 1 auto",
+                  minHeight: 0,
                   objectFit: "cover",
                   objectPosition: "center",
                   display: "block",
@@ -513,7 +557,7 @@ export default function AboutSection() {
               position: "relative",
               marginTop: 0,
               width: "100%",
-              maxWidth: "980px",
+              maxWidth: "min(100%, 760px)",
               marginLeft: "auto",
               marginRight: "auto",
               padding: "clamp(4px, 1vw, 12px)",
@@ -546,7 +590,7 @@ export default function AboutSection() {
                   color: "#111",
                   margin: 0,
                   textAlign: "center",
-                  maxWidth: "920px",
+                  maxWidth: SECTION_TITLE_MAX_WIDTH,
                   marginInline: "auto",
                 }}
               >
@@ -604,6 +648,18 @@ export default function AboutSection() {
         .about-intro-mobile {
           display: none;
         }
+        @media (min-width: 769px) {
+          #про-мене .about-intro-copy p.about-intro-body {
+            text-align: justify;
+            text-justify: inter-word;
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            text-wrap: pretty;
+            text-align-last: left;
+            line-height: 1.52;
+            overflow-wrap: break-word;
+          }
+        }
         .about-work-intro-hint__break {
           display: none;
         }
@@ -642,13 +698,13 @@ export default function AboutSection() {
             width: 100% !important;
             margin-left: 0 !important;
             /* Висота липкого навбару 68px — без додаткового «повітря», заголовок майже впритул під меню */
-            padding: 68px 28px 64px !important;
+            padding: 68px ${PAGE_GUTTER_X} 64px !important;
             justify-content: flex-start !important;
             align-items: stretch !important;
             text-align: left !important;
           }
           #про-мене .about-content h2.about-intro-heading {
-            font-size: clamp(28px, 9.2vw, 44px) !important;
+            font-size: clamp(30px, 9.6vw, 46px) !important;
             line-height: 1.05 !important;
             text-align: left !important;
           }
@@ -667,8 +723,10 @@ export default function AboutSection() {
           #про-мене .about-content h2.about-intro-heading .about-intro-mobile-line {
             display: block !important;
           }
-          #про-мене .about-content p {
+          #про-мене .about-content p.about-intro-body {
             text-align: left !important;
+            font-size: clamp(16px, 4.2vw, 19px) !important;
+            line-height: 1.42 !important;
           }
           .about-mobile-photo {
             display: block !important;
@@ -680,7 +738,7 @@ export default function AboutSection() {
         }
         @media (max-width: 768px) {
           .about-work-section {
-            padding: 44px 28px 52px !important;
+            padding: 44px ${PAGE_GUTTER_X} 52px !important;
             margin-top: -24px;
             position: relative;
             z-index: 3;
@@ -732,26 +790,27 @@ export default function AboutSection() {
             font-size: clamp(22px, 7vw, 36px) !important;
           }
           .about-work-tags-line.about-work-tags {
-            font-size: clamp(12px, 3.2vw, 16px) !important;
-            line-height: 1.42 !important;
-            padding-top: 6px !important;
-            margin-top: -8px !important;
-            padding-bottom: 0 !important;
+            font-size: clamp(15px, 4.4vw, 19px) !important;
+            line-height: 1.48 !important;
+            padding-top: clamp(8px, 2vw, 14px) !important;
+            margin-top: -4px !important;
+            padding-bottom: 2px !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
             width: 100% !important;
-            justify-content: space-evenly !important;
-            column-gap: clamp(8px, 2.2vw, 18px) !important;
-            row-gap: 0.55em !important;
+            justify-content: center !important;
+            column-gap: clamp(12px, 3.2vw, 22px) !important;
+            row-gap: 0.72em !important;
             max-width: 100% !important;
             margin-left: auto !important;
             margin-right: auto !important;
             box-sizing: border-box !important;
           }
           .about-work-tags-line .about-work-tags__sep {
-            padding: 0 !important;
+            padding: 0 0.04em !important;
             flex-shrink: 0 !important;
             opacity: 0.88 !important;
+            font-size: 1.05em !important;
           }
           .about-work-tags-line .about-work-tags__item {
             text-align: center !important;
@@ -770,7 +829,7 @@ export default function AboutSection() {
             flex-direction: row !important;
             align-items: center !important;
             justify-content: flex-start !important;
-            text-align: center !important;
+            text-align: left !important;
             padding: 12px 14px !important;
             gap: 14px !important;
             border-radius: 16px !important;
@@ -780,15 +839,16 @@ export default function AboutSection() {
             min-width: 56px !important;
             max-height: 56px !important;
             flex-shrink: 0 !important;
+            justify-content: flex-start !important;
           }
           .about-work-card > div:first-of-type img {
             max-height: 52px !important;
             width: auto !important;
             max-width: 100% !important;
-            margin: 0 auto !important;
+            margin: 0 !important;
           }
           .about-work-card p {
-            text-align: center !important;
+            text-align: left !important;
             margin-top: 0 !important;
             font-size: clamp(13px, 3.6vw, 16px) !important;
             line-height: 1.45 !important;
@@ -818,7 +878,7 @@ export default function AboutSection() {
         }
         @media (max-width: 420px) {
           .about-work-section {
-            padding: 44px 20px 52px !important;
+            padding: 44px ${PAGE_GUTTER_X} 52px !important;
           }
           .about-work-card {
             padding: 10px 12px !important;

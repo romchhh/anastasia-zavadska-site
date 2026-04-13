@@ -7,6 +7,7 @@ import {
   PAGE_GUTTER_X,
   SECTION_INTRO_LEAD,
   SECTION_INTRO_TITLE,
+  SECTION_LAYOUT_MAX_WIDTH,
   SECTION_TITLE_MAX_WIDTH,
 } from "./sectionIntroStyles";
 import { PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH, PRAKTIKUM_SELF_PRICE_UAH } from "@/utils/price";
@@ -313,7 +314,10 @@ export default function PraktikumSection() {
           pointerEvents: "none",
         }}
       />
-      <div className="praktikum-inner" style={{ position: "relative", zIndex: 1, maxWidth: "1120px", margin: "0 auto" }}>
+      <div
+        className="praktikum-inner"
+        style={{ position: "relative", zIndex: 1, maxWidth: SECTION_LAYOUT_MAX_WIDTH, margin: "0 auto" }}
+      >
         <h2
           className="praktikum-section-heading"
           style={{

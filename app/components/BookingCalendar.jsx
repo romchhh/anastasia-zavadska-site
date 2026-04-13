@@ -355,7 +355,7 @@ export default function BookingCalendar({ onSelect }) {
           text-transform: uppercase;
           color: #6391FF;
           width: 100%;
-          max-width: min(100%, 920px);
+          max-width: min(100%, 820px);
           margin: 0 auto;
           box-sizing: border-box;
         }

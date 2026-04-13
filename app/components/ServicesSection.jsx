@@ -9,6 +9,7 @@ import {
   SECTION_INTRO_LEAD,
   SECTION_INTRO_TITLE,
   SECTION_SCROLL_MARGIN_TOP,
+  SECTION_TITLE_MAX_WIDTH,
 } from "./sectionIntroStyles";
 
 /** Повний опис на картці лише для індивідуальної сесії; група/бранчі — формат, ціна чи статус на сторінці послуги */
@@ -166,7 +167,7 @@ export default function ServicesSection() {
             ...SECTION_INTRO_LEAD,
             fontSize: "clamp(15px, 1.95vw, 18px)",
             margin: "0 auto",
-            maxWidth: "min(100%, 920px)",
+            maxWidth: SECTION_TITLE_MAX_WIDTH,
           }}
         >
           Терапія онлайн, щоб працювати у твоєму темпі та просторі
@@ -545,6 +546,14 @@ export default function ServicesSection() {
         }
         .services-nav-mobile {
           display: none;
+        }
+        @media (min-width: 769px) {
+          .services-carousel-viewport .services-nav-btn--overlay {
+            background: #fff !important;
+            border: 1.5px solid #b8ccf0 !important;
+            color: #7a9ae0 !important;
+            box-shadow: 0 2px 12px rgba(100, 140, 200, 0.12) !important;
+          }
         }
         @media (max-width: 768px) {
           .services-section-lead {
