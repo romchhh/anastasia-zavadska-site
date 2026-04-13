@@ -569,7 +569,7 @@ export default function AboutSection() {
               maxWidth: "min(100%, 960px)",
               marginLeft: "auto",
               marginRight: "auto",
-              padding: "clamp(4px, 1vw, 12px)",
+              padding: "clamp(4px, 1vw, 12px) clamp(4px, 1vw, 12px) clamp(0px, 0.4vw, 6px)",
               boxSizing: "border-box",
             }}
           >
@@ -579,7 +579,8 @@ export default function AboutSection() {
                 position: "relative",
                 border: "1px solid rgba(200, 215, 245, 0.45)",
                 borderRadius: "clamp(20px, 2.8vw, 28px)",
-                padding: "clamp(24px, 3vw, 40px) clamp(24px, 4vw, 48px)",
+                padding:
+                  "clamp(24px, 3vw, 40px) clamp(24px, 4vw, 48px) clamp(18px, 2.2vw, 30px)",
                 background:
                   "linear-gradient(168deg, #ffffff 0%, #fafcff 32%, #f3f6fd 68%, #ecf1fb 100%)",
                 boxShadow: `
@@ -627,8 +628,8 @@ export default function AboutSection() {
             style={{
               width: "100%",
               maxWidth: "100%",
-              margin: "clamp(18px, 2.8vw, 32px) 0 0",
-              paddingTop: "clamp(4px, 1vw, 12px)",
+              margin: "clamp(6px, 1.2vw, 14px) 0 0",
+              paddingTop: 0,
               boxSizing: "border-box",
             }}
           >
@@ -953,10 +954,11 @@ export default function AboutSection() {
           }
           .about-thought-cloud-wrap {
             max-width: 100% !important;
+            padding-bottom: 0 !important;
           }
           .about-thought-cloud {
             border-radius: 20px !important;
-            padding: 24px 18px !important;
+            padding: 22px 18px 18px !important;
             border: 1px solid rgba(200, 215, 245, 0.38) !important;
             background: linear-gradient(
               168deg,
@@ -970,6 +972,9 @@ export default function AboutSection() {
               8px 0 28px -8px rgba(160, 188, 255, 0.28),
               -8px 0 28px -8px rgba(160, 188, 255, 0.28),
               0 0 32px rgba(150, 175, 235, 0.1) !important;
+          }
+          .about-work-topic-pills {
+            margin-top: clamp(4px, 1.5vw, 10px) !important;
           }
           .about-work-topic-pills__inner {
             gap: 10px !important;

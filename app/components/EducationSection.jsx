@@ -1,5 +1,6 @@
 "use client";
 
+import { FileText } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { EDUCATION_DOCUMENTS } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
@@ -62,8 +63,10 @@ function DiplomaSlide({ doc, onOpen }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "22px",
-          }}>📄</div>
+            color: "#5a7bc4",
+          }}>
+            <FileText size={26} strokeWidth={1.85} aria-hidden />
+          </div>
           <span style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "11px",
@@ -206,6 +209,7 @@ export default function EducationSection() {
           gap: "clamp(28px, 4vw, 52px)",
           alignItems: "center",
           boxShadow: "0 16px 48px rgba(90, 110, 180, 0.12)",
+          border: "1px solid rgba(255, 255, 255, 0.55)",
           boxSizing: "border-box",
         }}
       >

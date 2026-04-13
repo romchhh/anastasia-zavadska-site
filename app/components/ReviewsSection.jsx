@@ -1,5 +1,6 @@
 "use client";
 
+import { User } from "lucide-react";
 import { useState, useRef, useMemo, useSyncExternalStore, useLayoutEffect, useCallback } from "react";
 import { REVIEWS, PRAKTIKUM_JOURNEY_URL } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
@@ -75,19 +76,9 @@ function ReviewCard({ label, text, isActive, dist, onSelect, cardWidth = CARD_W,
           alignItems: "center",
           justifyContent: "center",
           flexShrink: 0,
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,1), 0 2px 10px rgba(80,110,160,0.12)",
         }}>
-          <img
-            src="/practicum-participant.png"
-            alt=""
-            width={24}
-            height={24}
-            style={{
-              width: 24,
-              height: 24,
-              objectFit: "contain",
-              display: "block",
-            }}
-          />
+          <User size={22} strokeWidth={2} color="#7a9ae0" aria-hidden />
         </div>
         <span
           style={{

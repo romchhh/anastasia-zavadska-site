@@ -94,7 +94,7 @@ export default function ServicePageHero({ service }) {
                 fontFamily: font,
                 fontSize: "clamp(15px, 1.35vw, 17px)",
                 fontWeight: 600,
-                color: "#999",
+                color: "var(--price-dark-soft)",
                 textTransform: "uppercase",
                 lineHeight: "1",
                 letterSpacing: "0.04em",
@@ -107,7 +107,7 @@ export default function ServicePageHero({ service }) {
                 fontFamily: font,
                 fontSize: "clamp(28px, 3.5vw, 44px)",
                 fontWeight: 900,
-                color: "#111",
+                color: "var(--price-dark)",
               }}
             >
               {service.priceEmphasis}
@@ -119,7 +119,7 @@ export default function ServicePageHero({ service }) {
               fontFamily: font,
               fontSize: "clamp(18px, 2vw, 26px)",
               fontWeight: 800,
-              color: "#111",
+              color: "var(--price-dark)",
               margin: "0 0 28px 0",
             }}
           >

@@ -28,21 +28,19 @@ export default function StickyJoinCta() {
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: 12,
-        minHeight: 56,
-        padding: "16px 22px 16px 26px",
+        gap: 14,
+        minHeight: 68,
+        padding: "18px 28px 18px 32px",
         borderRadius: 999,
         background: "#fff",
         border: "2px solid #5f7ad4",
         color: "#3d5696",
         fontFamily: "'Montserrat', sans-serif",
-        fontSize: "clamp(14px, 3.4vw, 17px)",
+        fontSize: "clamp(15px, 3.7vw, 19px)",
         fontWeight: 800,
         letterSpacing: "0.06em",
         textTransform: "uppercase",
         textDecoration: "none",
-        boxShadow:
-          "inset 0 1px 0 rgba(255, 255, 255, 0.92), inset 0 -1px 0 rgba(95, 122, 212, 0.12), 0 10px 36px rgba(95, 122, 212, 0.24), 0 3px 12px rgba(0, 0, 0, 0.07)",
         boxSizing: "border-box",
         transition:
           "transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease",
@@ -59,7 +57,7 @@ export default function StickyJoinCta() {
         }}
         aria-hidden
       >
-        <ArrowIcon variant="blue" height={22} />
+        <ArrowIcon variant="blue" height={26} />
       </span>
     </Link>
   );

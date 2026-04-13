@@ -18,7 +18,12 @@
   --shadow-md:   0 6px 28px rgba(100,140,200,.14);
   --shadow-lg:   0 12px 48px rgba(100,140,200,.18);
   --transition:  .22s cubic-bezier(.4,0,.2,1);
+  --ease-out:    cubic-bezier(.22, 1, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.2, .64, 1);
   --font:        'Montserrat', sans-serif;
+  /* Акцентний колір суми / ціни на світлому тлі та блакитних картках */
+  --price-dark:  #152a52;
+  --price-dark-soft: #1e3f6e;
 }
 
 *, *::before, *::after {
@@ -33,9 +38,18 @@ html {
 
 body {
   font-family: var(--font);
-  background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(196, 216, 240, 0.45) 0%, transparent 55%),
+    radial-gradient(90% 50% at 100% 0%, rgba(238, 244, 252, 0.9) 0%, transparent 50%),
+    linear-gradient(180deg, #f9fbff 0%, #ffffff 38%, #ffffff 100%);
+}
+
+::selection {
+  background: rgba(146, 178, 255, 0.35);
+  color: var(--text);
 }
 
 img { display: block; max-width: 100%; }
@@ -177,10 +191,18 @@ a { text-decoration: none; }
 }
 
 /* Плаваюча кнопка «Приєднатися» → онлайн-запис */
+.sticky-join-cta {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -1px 0 rgba(95, 122, 212, 0.12),
+    0 10px 36px rgba(95, 122, 212, 0.24),
+    0 3px 12px rgba(0, 0, 0, 0.07);
+}
 .sticky-join-cta:hover {
   transform: translateY(-2px);
   background: #f7f9ff !important;
   border-color: #4a63ad !important;
+  animation: none !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
     inset 0 -1px 0 rgba(95, 122, 212, 0.1),
@@ -195,4 +217,151 @@ a { text-decoration: none; }
   .sticky-join-cta {
     display: none !important;
   }
+}
+
+/* ── Секції: поява при скролі ── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.65s var(--ease-out),
+    transform 0.65s var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+/* ── Hero: перша поява (класи на елементах у HeroSection) ── */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@supports (text-wrap: balance) {
+  .hero-section .hero-title {
+    text-wrap: balance;
+  }
+}
+
+.hero-section .hero-title-line {
+  animation: hero-rise 0.72s var(--ease-out) both;
+}
+.hero-section .hero-title-line:nth-child(1) {
+  animation-delay: 0.04s;
+}
+.hero-section .hero-title-line:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.hero-section .hero-badge {
+  animation: hero-rise 0.65s var(--ease-out) 0.28s both;
+}
+
+.hero-section .hero-bullet-item {
+  animation: hero-rise 0.6s var(--ease-out) both;
+}
+.hero-section .hero-bullet-item:nth-child(1) {
+  animation-delay: 0.38s;
+}
+.hero-section .hero-bullet-item:nth-child(2) {
+  animation-delay: 0.48s;
+}
+
+.hero-section .hero-tagline {
+  animation: hero-rise 0.65s var(--ease-out) 0.52s both;
+}
+
+.hero-section .hero-cta {
+  animation: hero-rise 0.65s var(--ease-out) 0.62s both;
+}
+
+.hero-section .hero-photo {
+  animation: hero-rise 0.85s var(--ease-out) 0.28s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-section .hero-title-line,
+  .hero-section .hero-badge,
+  .hero-section .hero-bullet-item,
+  .hero-section .hero-tagline,
+  .hero-section .hero-cta,
+  .hero-section .hero-photo {
+    animation: none !important;
+  }
+}
+
+/* ── Футер: легкий розділювач ── */
+.site-footer {
+  position: relative;
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 30%,
+    rgba(255, 255, 255, 0.55) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Плаваюча CTA: ледь помітний «пульс» тіні ── */
+@keyframes sticky-cta-glow {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      inset 0 -1px 0 rgba(95, 122, 212, 0.12),
+      0 10px 36px rgba(95, 122, 212, 0.24),
+      0 3px 12px rgba(0, 0, 0, 0.07);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(95, 122, 212, 0.1),
+      0 14px 44px rgba(95, 122, 212, 0.32),
+      0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sticky-join-cta:not(:hover) {
+    animation: sticky-cta-glow 4.5s ease-in-out infinite;
+  }
+}
+
+/* ── Навбар при скролі (клас додає Navbar) ── */
+.main-nav {
+  transition:
+    background 0.28s var(--ease-out),
+    box-shadow 0.28s var(--ease-out),
+    backdrop-filter 0.28s ease;
+}
+.main-nav--scrolled {
+  background: rgba(146, 178, 255, 0.94) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 4px 28px rgba(70, 100, 170, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.12) inset;
 }

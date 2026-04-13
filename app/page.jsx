@@ -7,6 +7,7 @@ import ReviewsSection from "./components/ReviewsSection";
 import EducationSection from "./components/EducationSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import RevealOnScroll from "./components/RevealOnScroll";
 import { CONTACTS } from "./data/siteData";
 
 export default function HomePage() {
@@ -47,13 +48,27 @@ export default function HomePage() {
       />
       <Navbar />
       <HeroSection />
-      <AboutSection />
-      <ServicesSection />
-      <PraktikumSection />
-      <ReviewsSection />
-      <EducationSection />
-      <ContactSection />
-      <Footer />
+      <RevealOnScroll>
+        <AboutSection />
+      </RevealOnScroll>
+      <RevealOnScroll>
+        <ServicesSection />
+      </RevealOnScroll>
+      <RevealOnScroll>
+        <PraktikumSection />
+      </RevealOnScroll>
+      <RevealOnScroll>
+        <ReviewsSection />
+      </RevealOnScroll>
+      <RevealOnScroll>
+        <EducationSection />
+      </RevealOnScroll>
+      <RevealOnScroll>
+        <ContactSection />
+      </RevealOnScroll>
+      <RevealOnScroll>
+        <Footer />
+      </RevealOnScroll>
     </main>
   );
 }

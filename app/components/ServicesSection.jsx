@@ -371,7 +371,7 @@ export default function ServicesSection() {
                   {s.priceLine && s.priceEmphasis ? (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      color: "#FFFFFF",
+                      color: "var(--price-dark-soft)",
                       textAlign: "left",
                       margin: `0 0 ${priceMarginB} 0`,
                       lineHeight: 1.25,
@@ -379,14 +379,14 @@ export default function ServicesSection() {
                       fontWeight: 800,
                     }}>
                       <span>{s.priceLine} </span>
-                      <span>{s.priceEmphasis}</span>
+                      <span style={{ color: "var(--price-dark)" }}>{s.priceEmphasis}</span>
                     </p>
                   ) : s.price ? (
                     <p style={{
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: priceLineSize,
                       fontWeight: 800,
-                      color: "#FFFFFF",
+                      color: "var(--price-dark)",
                       textAlign: "left",
                       margin: `0 0 ${priceMarginB} 0`,
                       lineHeight: 1.25,

@@ -1,3 +1,6 @@
+"use client";
+
+import { Clock, CreditCard, Lock } from "lucide-react";
 import { useId, useState } from "react";
 
 /**
@@ -245,14 +248,14 @@ export default function BookingForm({
           <div className="bf-sidebar">
             <div className="bf-badge">
               <div className="bf-badge-item">
-                <ClockIcon />
+                <Clock size={22} strokeWidth={2} aria-hidden />
                 <span>Тривалість: {duration}</span>
               </div>
               {onlinePayment ? (
                 <>
                   <div className="bf-badge-divider" />
                   <div className="bf-badge-item">
-                    <LockIcon />
+                    <Lock size={22} strokeWidth={2} aria-hidden />
                     <span>Ціна: {price}</span>
                   </div>
                 </>
@@ -272,7 +275,7 @@ export default function BookingForm({
           <button type="button" className="bf-cta" onClick={handleSubmit} disabled={!canSubmit}>
             {onlinePayment ? (
               <>
-                <CreditCardIcon />
+                <CreditCard size={22} strokeWidth={2} className="bf-cta-card-icon" aria-hidden />
                 <span>Перейти до оплати</span>
               </>
             ) : (
@@ -337,45 +340,6 @@ function Field({
       )}
       {error && <span className="bf-error">{error}</span>}
     </div>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  );
-}
-
-function LockIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-    </svg>
-  );
-}
-
-function CreditCardIcon() {
-  return (
-    <svg
-      className="bf-cta-card-icon"
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <line x1="2" y1="10" x2="22" y2="10" />
-      <line x1="6" y1="16" x2="10" y2="16" />
-    </svg>
   );
 }
 

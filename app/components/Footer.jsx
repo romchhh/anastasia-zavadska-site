@@ -1,5 +1,6 @@
 "use client";
 
+import { Heart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FOOTER_MENU, FOOTER_LEGAL_LINKS, navLinkHref } from "../data/siteData";
@@ -70,7 +71,15 @@ export default function Footer() {
                 margin: 0,
               }}
             >
-              © <span suppressHydrationWarning>{year}</span> Anastasiia Zavadska
+              © <span suppressHydrationWarning>{year}</span> Anastasiia Zavadska{" "}
+              <Heart
+                aria-hidden
+                size={13}
+                strokeWidth={2}
+                fill="rgba(255,255,255,0.35)"
+                color="rgba(255,255,255,0.95)"
+                style={{ display: "inline-block", verticalAlign: "-0.15em", marginLeft: 4 }}
+              />
             </p>
           </div>
         </div>

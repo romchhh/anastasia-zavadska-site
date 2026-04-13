@@ -17,7 +17,10 @@
   text-transform: uppercase;
   letter-spacing: 0;
   line-height: 1;
-  transition: box-shadow 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  transition:
+    box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.28s ease;
   white-space: nowrap;
   box-sizing: border-box;
   text-decoration: none;
@@ -32,12 +35,12 @@
 @media (hover: hover) {
   .cta-pill:hover {
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.32),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-      0 14px 36px rgba(45, 72, 150, 0.38),
-      0 6px 14px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-    filter: brightness(1.03);
+      inset 0 1px 0 rgba(255, 255, 255, 0.34),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+      0 16px 40px rgba(45, 72, 150, 0.42),
+      0 6px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px) scale(1.01);
+    filter: brightness(1.04);
   }
 }
 
@@ -66,11 +69,18 @@
   justify-content: center;
   flex-shrink: 0;
   box-sizing: border-box;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
     inset 0 -1px 2px rgba(80, 100, 160, 0.08),
     0 2px 8px rgba(0, 0, 0, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+@media (hover: hover) {
+  .cta-pill:hover .cta-pill__arrow {
+    transform: translateX(2px);
+  }
 }
 
 .cta-pill--full {

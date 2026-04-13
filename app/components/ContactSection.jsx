@@ -17,20 +17,22 @@ const ICON = 48;
 
 function SocialIcon({ src, alt }) {
   return (
-    <img
-      className="contact-social-icon"
-      src={src}
-      alt={alt}
-      width={ICON}
-      height={ICON}
-      style={{
-        width: ICON,
-        height: ICON,
-        objectFit: "contain",
-        display: "block",
-        flexShrink: 0,
-      }}
-    />
+    <span className="contact-icon-surface">
+      <img
+        className="contact-social-icon"
+        src={src}
+        alt={alt}
+        width={ICON}
+        height={ICON}
+        style={{
+          width: ICON,
+          height: ICON,
+          objectFit: "contain",
+          display: "block",
+          flexShrink: 0,
+        }}
+      />
+    </span>
   );
 }
 
@@ -126,15 +128,6 @@ export default function ContactSection() {
                 justifyContent: "center",
                 textDecoration: "none",
                 color: accent,
-                transition: "opacity 0.2s, transform 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "0.85";
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "1";
-                e.currentTarget.style.transform = "none";
               }}
             >
               {icon}
@@ -155,6 +148,39 @@ export default function ContactSection() {
       </div>
 
       <style>{`
+        .contact-head {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .contact-icon-surface {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: clamp(52px, 11vw, 64px);
+          height: clamp(52px, 11vw, 64px);
+          border-radius: 18px;
+          background: linear-gradient(145deg, #ffffff 0%, #f3f7ff 100%);
+          border: 1px solid rgba(146, 178, 255, 0.45);
+          box-shadow:
+            0 4px 18px rgba(100, 130, 200, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.95);
+          transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease,
+            border-color 0.2s ease;
+        }
+        .contact-icon-link:hover .contact-icon-surface {
+          transform: translateY(-3px);
+          box-shadow:
+            0 12px 36px rgba(100, 130, 200, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 1);
+          border-color: rgba(146, 178, 255, 0.75);
+        }
+        .contact-social-icon {
+          transition: transform 0.25s ease;
+        }
+        .contact-icon-link:hover .contact-social-icon {
+          transform: scale(1.06);
+        }
         .contact-cta-wrap {
           flex-shrink: 0;
           margin-left: auto;
@@ -189,11 +215,6 @@ export default function ContactSection() {
           .contact-social-icon {
             width: 40px !important;
             height: 40px !important;
-          }
-          .contact-head {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
           }
           .contact-hero-title,
           .contact-hero-sub {

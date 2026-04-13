@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { INDIVIDUAL_BOOKING_PAGE, NAV_LINKS, navLinkHref } from "../data/siteData";
@@ -18,8 +18,16 @@ function scrollToElementById(id) {
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleNavBookingCta = () => {
     if (pathname === INDIVIDUAL_BOOKING_PAGE || pathname.startsWith(`${INDIVIDUAL_BOOKING_PAGE}/`)) {
@@ -36,7 +44,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className="main-nav"
+        className={`main-nav${scrolled ? " main-nav--scrolled" : ""}`}
         style={{
           background: "#92B2FF",
           display: "flex",

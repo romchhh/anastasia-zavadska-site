@@ -1,5 +1,6 @@
 "use client";
 
+import { CalendarDays, CheckCircle2, Infinity, X } from "lucide-react";
 import { useCallback, useState } from "react";
 import { PRAKTIKUM_SELF_FEATURES, PRAKTIKUM_WITH_FEATURES } from "../data/siteData";
 import { ArrowIcon } from "./ArrowIcon";
@@ -45,35 +46,27 @@ function FeatureCell({ active, text }) {
         <span
           aria-hidden
           style={{
-            width: FEATURE_ICON,
-            height: FEATURE_ICON,
-            marginTop: 1,
-            borderRadius: "50%",
-            border: `2px solid ${RING_BLUE}`,
-            flexShrink: 0,
-            boxSizing: "border-box",
-            background: "transparent",
-          }}
-        />
-      ) : (
-        <span
-          aria-hidden
-          style={{
-            width: FEATURE_ICON,
-            height: FEATURE_ICON,
-            marginTop: 0,
             flexShrink: 0,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "clamp(20px, 2.88vw, 25px)",
-            fontWeight: 500,
-            color: "#9ca8c4",
-            lineHeight: 0.85,
+            marginTop: 1,
           }}
         >
-          ×
+          <CheckCircle2 size={FEATURE_ICON} strokeWidth={2.25} color={RING_BLUE} aria-hidden />
+        </span>
+      ) : (
+        <span
+          aria-hidden
+          style={{
+            flexShrink: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 0,
+          }}
+        >
+          <X size={FEATURE_ICON} strokeWidth={2} color="#9ca8c4" aria-hidden />
         </span>
       )}
       <span
@@ -369,8 +362,24 @@ export default function PraktikumSection() {
               boxSizing: "border-box",
             }}
           >
-            <span style={{ display: "block" }}>7-денна психологічна програма</span>
-            <span style={{ display: "block", opacity: 0.98, marginTop: 6 }}>Почати можна будь-коли</span>
+            <span className="praktikum-tagline-line">
+              <CalendarDays
+                className="praktikum-tagline-icon"
+                aria-hidden
+                strokeWidth={2}
+                color="#fff"
+              />
+              <span>7-денна психологічна програма</span>
+            </span>
+            <span className="praktikum-tagline-line praktikum-tagline-line--sub">
+              <Infinity
+                className="praktikum-tagline-icon"
+                aria-hidden
+                strokeWidth={2}
+                color="#fff"
+              />
+              <span>Почати можна будь-коли</span>
+            </span>
           </p>
         </div>
 
@@ -447,6 +456,21 @@ export default function PraktikumSection() {
         #практикум .praktikum-cta-btn {
           leading-trim: none;
         }
+        #практикум .praktikum-tagline-line {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+        }
+        #практикум .praktikum-tagline-line--sub {
+          margin-top: 8px;
+          opacity: 0.98;
+        }
+        #практикум .praktikum-tagline-icon {
+          flex-shrink: 0;
+          width: clamp(20px, 2.2vw, 24px);
+          height: clamp(20px, 2.2vw, 24px);
+        }
         #практикум .praktikum-price-block {
           display: flex;
           flex-wrap: wrap;
@@ -461,7 +485,7 @@ export default function PraktikumSection() {
           font-family: "Montserrat", sans-serif;
           font-size: clamp(14px, 1.4vw, 16px);
           font-weight: 600;
-          color: #333;
+          color: var(--price-dark-soft);
         }
         #практикум .praktikum-price-old {
           font-family: "Montserrat", sans-serif;
@@ -475,7 +499,7 @@ export default function PraktikumSection() {
           font-family: "Montserrat", sans-serif;
           font-size: clamp(23px, 2.52vw, 29px);
           font-weight: 800;
-          color: #111;
+          color: var(--price-dark);
           letter-spacing: -0.02em;
           white-space: nowrap;
         }
@@ -515,6 +539,10 @@ export default function PraktikumSection() {
           #практикум .praktikum-tagline-pill {
             padding: 14px 22px !important;
             font-size: clamp(16px, 3.9vw, 17px) !important;
+          }
+          #практикум .praktikum-tagline-icon {
+            width: clamp(18px, 4.2vw, 24px) !important;
+            height: clamp(18px, 4.2vw, 24px) !important;
           }
           /* Ширші картки: на всю ширину екрана з вужчим gutter за секційного (як картки послуг) */
           #практикум .praktikum-cards {

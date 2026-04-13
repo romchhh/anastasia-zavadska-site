@@ -1,5 +1,6 @@
 "use client";
 
+import { CircleCheck, UserRound } from "lucide-react";
 import { HERO_PHOTO, INDIVIDUAL_BOOKING_PAGE } from "../data/siteData";
 import CtaPillButton from "./CtaPillButton";
 import {
@@ -63,7 +64,9 @@ export default function HeroSection() {
         <span
           className="hero-badge"
           style={{
-            display: "inline-block",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "clamp(8px, 1.2vw, 12px)",
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "clamp(13px, 2vw, 26px)",
             fontWeight: 600,
@@ -74,9 +77,15 @@ export default function HeroSection() {
             borderRadius: "999px",
             marginBottom: "clamp(16px, 2.4vw, 28px)",
             letterSpacing: "0",
-            lineHeight: "100%",
+            lineHeight: "1.15",
           }}
         >
+          <UserRound
+            className="hero-badge-icon"
+            aria-hidden
+            strokeWidth={2}
+            color="#fff"
+          />
           Психологиня
         </span>
 
@@ -111,15 +120,15 @@ export default function HeroSection() {
             >
               <span
                 aria-hidden
+                className="hero-bullet-check"
                 style={{
-                  color: accent,
-                  fontWeight: 600,
                   flexShrink: 0,
-                  lineHeight: "inherit",
-                  marginTop: "0.06em",
+                  display: "flex",
+                  alignItems: "center",
+                  paddingTop: "0.06em",
                 }}
               >
-                ✓
+                <CircleCheck size={20} strokeWidth={2.25} color={accent} aria-hidden />
               </span>
               <span>{line}</span>
             </li>
@@ -200,6 +209,11 @@ export default function HeroSection() {
           flex-shrink: 0;
           margin-top: 0;
         }
+        .hero-badge-icon {
+          flex-shrink: 0;
+          width: clamp(18px, 1.75vw, 26px);
+          height: clamp(18px, 1.75vw, 26px);
+        }
         .hero-photo {
           grid-column: 2;
           grid-row: 1;
@@ -249,9 +263,9 @@ export default function HeroSection() {
             gap: 12px !important;
             line-height: 1.4 !important;
           }
-          .hero-bullet-item > span[aria-hidden] {
-            font-size: 1.12em !important;
-            margin-top: 0.04em !important;
+          .hero-bullet-check svg {
+            width: clamp(18px, 1.45vw, 22px) !important;
+            height: clamp(18px, 1.45vw, 22px) !important;
           }
           .hero-cta {
             margin-top: clamp(28px, 4.2vw, 56px) !important;
