@@ -62,7 +62,10 @@ export default function Navbar() {
           className="nav-brand"
           style={{
             display: "inline-flex",
+            flexDirection: "column",
             alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "22px",
             fontWeight: 800,
@@ -356,6 +359,8 @@ export default function Navbar() {
           .nav-brand {
             font-size: 16px !important;
             line-height: 1.08 !important;
+            text-align: center !important;
+            align-items: center !important;
           }
           .nav-desktop { display: none !important; }
           .nav-cta-btn { display: none !important; }

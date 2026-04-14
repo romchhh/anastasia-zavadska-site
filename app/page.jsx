@@ -7,7 +7,6 @@ import ReviewsSection from "./components/ReviewsSection";
 import EducationSection from "./components/EducationSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
-import RevealOnScroll from "./components/RevealOnScroll";
 import { CONTACTS } from "./data/siteData";
 
 export default function HomePage() {
@@ -48,27 +47,17 @@ export default function HomePage() {
       />
       <Navbar />
       <HeroSection />
-      <RevealOnScroll>
-        <AboutSection />
-      </RevealOnScroll>
-      <RevealOnScroll>
-        <ServicesSection />
-      </RevealOnScroll>
-      <RevealOnScroll>
-        <PraktikumSection />
-      </RevealOnScroll>
-      <RevealOnScroll className="reveal-wrap-reviews">
+      <AboutSection />
+      <ServicesSection />
+      <PraktikumSection />
+      <div className="reveal-wrap-reviews">
         <ReviewsSection />
-      </RevealOnScroll>
-      <RevealOnScroll className="reveal-wrap-education">
+      </div>
+      <div className="reveal-wrap-education">
         <EducationSection />
-      </RevealOnScroll>
-      <RevealOnScroll>
-        <ContactSection />
-      </RevealOnScroll>
-      <RevealOnScroll>
-        <Footer />
-      </RevealOnScroll>
+      </div>
+      <ContactSection />
+      <Footer />
     </main>
   );
 }

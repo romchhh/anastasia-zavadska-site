@@ -219,28 +219,13 @@ a { text-decoration: none; }
   }
 }
 
-/* ── Секції: поява при скролі ── */
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translate3d(0, 22px, 0);
-  transition:
-    opacity 0.65s var(--ease-out),
-    transform 0.65s var(--ease-out);
-  will-change: opacity, transform;
-}
-.reveal-on-scroll.is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  will-change: auto;
-}
-
-/* Відгуки поверх «Освіти», щоб тінь/градієнт кнопки не обрізалась між обгортками RevealOnScroll */
-.reveal-on-scroll.reveal-wrap-reviews {
+/* Відгуки поверх «Освіти», щоб тінь/градієнт кнопки не обрізалась між секціями */
+.reveal-wrap-reviews {
   position: relative;
   z-index: 2;
   overflow: visible;
 }
-.reveal-on-scroll.reveal-wrap-education {
+.reveal-wrap-education {
   position: relative;
   z-index: 1;
   overflow: visible;
@@ -301,11 +286,6 @@ a { text-decoration: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-on-scroll {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
   .hero-section .hero-title-line,
   .hero-section .hero-badge,
   .hero-section .hero-bullet-item,

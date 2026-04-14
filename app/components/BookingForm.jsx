@@ -93,6 +93,7 @@ function toUaE164(normalized10) {
  *   successTitle, successText — після відправки без редіректу на оплату (опційно)
  *   onSubmit  {fn}      – після валідації; якщо повертає false — не показувати екран «дякуємо» (наприклад редірект на оплату)
  *   showOptionalFields {bool} – соцмережі та опис проблеми (за замовчуванням true; для бранчів — false)
+ *   offlineSubmitLabel {string} – текст кнопки без оплати (за замовчуванням «НАДІСЛАТИ ЗАПИТ»)
  */
 export default function BookingForm({
   duration = "50 хв",
@@ -101,6 +102,7 @@ export default function BookingForm({
   requireSlot = true,
   onlinePayment = true,
   showOptionalFields = true,
+  offlineSubmitLabel,
   successTitle,
   successText,
   onSubmit,
@@ -279,7 +281,7 @@ export default function BookingForm({
                 <span>Перейти до оплати</span>
               </>
             ) : (
-              "НАДІСЛАТИ ЗАПИТ"
+              offlineSubmitLabel || "НАДІСЛАТИ ЗАПИТ"
             )}
           </button>
         </div>

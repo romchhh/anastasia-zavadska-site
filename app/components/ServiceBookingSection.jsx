@@ -124,7 +124,7 @@ export default function ServiceBookingSection({
       return {
         successTitle: "Успішно зафіксовано",
         successText:
-          "Дякуємо! Ваш запит на оновлення про бранчі та ретрити надіслано. Я зв’яжуся з вами, коли з’являться новини.",
+          "Дякуємо! Ваш запит на зустріч (бранчі та ретрити) надіслано. Я зв’яжуся з вами найближчим часом.",
       };
     }
     if (!onlinePayment) {
@@ -275,6 +275,7 @@ export default function ServiceBookingSection({
           requireSlot={showBookingCalendar}
           onlinePayment={onlinePayment}
           showOptionalFields={bookingNotifyKind !== "event"}
+          offlineSubmitLabel={!onlinePayment ? service.btnLabel : undefined}
           successTitle={bookingSuccessCopy.successTitle}
           successText={bookingSuccessCopy.successText}
           onSubmit={handleFormSubmit}

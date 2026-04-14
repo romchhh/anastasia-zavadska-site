@@ -466,21 +466,26 @@ export default function PraktikumSection() {
         #практикум .praktikum-cta-btn {
           leading-trim: none;
         }
-        /* Два рядки в одній сітці: однакова колонка іконок + текст — вирівняно на всіх ширинах */
+        /* Два рядки: іконка + текст, кожен ряд відцентровано в плашці */
         #практикум .praktikum-tagline-pill {
-          display: grid;
-          grid-template-columns: 1.35em minmax(0, 1fr);
-          column-gap: 10px;
-          row-gap: 8px;
-          align-items: start;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
           width: fit-content;
           max-width: min(100%, 480px);
           margin-left: auto;
           margin-right: auto;
-          text-align: left;
+          text-align: center;
         }
         #практикум .praktikum-tagline-line {
-          display: contents;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          width: 100%;
+          box-sizing: border-box;
         }
         #практикум .praktikum-tagline-line--sub {
           opacity: 0.98;
@@ -491,8 +496,6 @@ export default function PraktikumSection() {
           justify-content: center;
           flex-shrink: 0;
           line-height: 0;
-          justify-self: center;
-          align-self: start;
         }
         #практикум .praktikum-tagline-icon {
           flex-shrink: 0;
@@ -505,7 +508,7 @@ export default function PraktikumSection() {
         }
         #практикум .praktikum-tagline-text {
           min-width: 0;
-          text-align: left;
+          text-align: center;
           line-height: 1.35;
         }
         #практикум .praktikum-price-block {
@@ -557,7 +560,7 @@ export default function PraktikumSection() {
             margin-right: 0 !important;
             padding: 12px 16px !important;
             font-size: clamp(16px, 3.9vw, 17px) !important;
-            text-align: left !important;
+            text-align: center !important;
           }
           #практикум h2.praktikum-section-heading {
             display: flex;
@@ -598,7 +601,7 @@ export default function PraktikumSection() {
             min-height: 1.2em !important;
           }
           #практикум .praktikum-tagline-text {
-            text-align: left !important;
+            text-align: center !important;
             line-height: 1.38 !important;
             display: block;
           }

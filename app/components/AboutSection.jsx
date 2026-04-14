@@ -151,9 +151,17 @@ export default function AboutSection() {
                 textAlign: "left",
               }}
             >
-              Я психологиня, працюю в гештальт-підході.
-              <br />
-              Проводжу індивідуальну та групову терапію онлайн.
+              <span className="about-intro-lead-desktop">
+                Я психологиня, працюю в гештальт-підході.
+                <br />
+                Проводжу індивідуальну та групову терапію онлайн.
+              </span>
+              <span className="about-intro-lead-mobile">
+                <span className="about-intro-lead-mobile-line">Я психологиня,</span>
+                <span className="about-intro-lead-mobile-line">працюю в гештальт-підході.</span>
+                <span className="about-intro-lead-mobile-line">Проводжу індивідуальну</span>
+                <span className="about-intro-lead-mobile-line">та групову терапію онлайн</span>
+              </span>
             </p>
             <p
               className="about-intro-body"
@@ -167,7 +175,7 @@ export default function AboutSection() {
                 textAlign: "left",
               }}
             >
-              У своїй роботі я не про «швидко полагодити». Я про процес — коли ти поступово повертаєшся до себе: до своїх відчуттів, бажань і внутрішньої опори. Я не даю готових відповідей і не «виправляю». Я поруч — щоб ти міг/могла краще зрозуміти себе і знайти свій шлях.
+              У своїй роботі я не про «швидко полагодити». Я про процес — коли ви поступово повертаєтеся до себе: до своїх відчуттів, бажань і внутрішньої опори. Я не даю готових відповідей і не «виправляю». Я поруч — щоб ви могли краще зрозуміти себе і знайти свій шлях.
             </p>
             <p
               className="about-intro-body"
@@ -207,10 +215,11 @@ export default function AboutSection() {
       <div className="about-mobile-photo" style={{ display: "none", position: "relative", background: "#e8e8e8" }}>
 
         {/* photo with top fade overlay */}
-        <div style={{ position: "relative", lineHeight: 0 }}>
+        <div className="about-mobile-photo-inner" style={{ position: "relative", lineHeight: 0 }}>
           <img
             src={ABOUT_PHOTO}
             alt="Анастасія"
+            className="about-mobile-photo-img"
             style={{
               width: "100%",
               height: "auto",
@@ -297,26 +306,32 @@ export default function AboutSection() {
               З чим я працюю
             </h3>
             <p
-              className="about-work-intro-lead"
+              className="about-work-intro-lead about-work-intro-body-copy"
               style={{
                 ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 400,
+                lineHeight: 1.52,
                 margin: "0 auto clamp(10px, 1.5vw, 16px)",
                 maxWidth: "100%",
                 width: "100%",
               }}
             >
-              Буває, що проблему не завжди легко назвати одним словом на першому сеансі. Іноді ти просто відчуваєш, що щось не так.
+              Буває, що проблему не завжди легко назвати одним словом. Іноді просто відчувається, що щось не так.
             </p>
             <p
-              className="about-work-intro-lead about-work-intro-lead-second"
+              className="about-work-intro-lead about-work-intro-lead-second about-work-intro-body-copy"
               style={{
                 ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 400,
+                lineHeight: 1.52,
                 margin: "0 auto clamp(20px, 3vw, 32px)",
                 maxWidth: "100%",
                 width: "100%",
               }}
             >
-              Ми починаємо з цього відчуття і поступово розбираємося, що за ним стоїть.
+              Тому в терапії ми починаємо працювати з цим відчуттям і поступово розбираємося, що за ним стоїть:
             </p>
 
             <div
@@ -688,6 +703,12 @@ export default function AboutSection() {
         .about-intro-mobile {
           display: none;
         }
+        .about-intro-lead-desktop {
+          display: block;
+        }
+        .about-intro-lead-mobile {
+          display: none;
+        }
         @media (min-width: 769px) {
           /* Рівні краї абзаців зліва/справа для довгого вступного тексту */
           #про-мене .about-intro-copy p.about-intro-body {
@@ -818,6 +839,29 @@ export default function AboutSection() {
           #про-мене .about-content h2.about-intro-heading .about-intro-mobile-line {
             display: block !important;
           }
+          #про-мене .about-content p.about-intro-body.about-intro-body--compact-spacing .about-intro-lead-desktop {
+            display: none !important;
+          }
+          #про-мене .about-content p.about-intro-body.about-intro-body--compact-spacing .about-intro-lead-mobile {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            gap: 0.08em !important;
+            box-sizing: border-box !important;
+          }
+          #про-мене .about-content p.about-intro-body.about-intro-body--compact-spacing .about-intro-lead-mobile-line {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            line-height: 1.42 !important;
+            overflow-wrap: break-word !important;
+            word-break: normal !important;
+            hyphens: manual !important;
+            -webkit-hyphens: manual !important;
+          }
           #про-мене .about-content p.about-intro-body {
             text-align: justify !important;
             text-justify: inter-word;
@@ -833,13 +877,38 @@ export default function AboutSection() {
             text-justify: auto;
             hyphens: none !important;
             -webkit-hyphens: none !important;
+            /* Як у інших абзаців опису (#про-мене .about-intro-body) */
+            font-size: clamp(16px, 4.2vw, 19px) !important;
+            line-height: 1.42 !important;
           }
           .about-mobile-photo {
             display: block !important;
             margin-top: -200px;
           }
-          .about-mobile-photo img {
+          .about-mobile-photo-inner {
+            overflow: hidden !important;
+            position: relative !important;
+          }
+          /* Смуга під піднятою хвилею — біла, щоб не просвічувався сірий фон блоку */
+          .about-mobile-photo-inner::after {
+            content: "" !important;
+            position: absolute !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            height: 10% !important;
+            background: #fff !important;
+            z-index: 1 !important;
+            pointer-events: none !important;
+          }
+          .about-mobile-photo img,
+          .about-mobile-photo-img {
             margin-top: 0 !important;
+            /* Нижні 10% кадру не показуємо */
+            clip-path: inset(0 0 10% 0) !important;
+          }
+          .about-mobile-photo-wave {
+            bottom: 10% !important;
           }
           /* Хвиля вища + менше наїзду білої секції — інакше вигин ховається й видно «лінію» */
           .about-mobile-photo-wave svg {

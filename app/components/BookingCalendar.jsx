@@ -97,7 +97,7 @@ function monthsCoveringWeek(weekStart) {
   return [...set].sort();
 }
 
-/** Парсить "9:00–10:00" (en dash або hyphen) */
+/** Парсить "9:00–9:50" / "15:00–15:50" (en dash або hyphen) */
 function parseSlotRange(slot) {
   const m = String(slot).match(/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
   if (!m) return null;

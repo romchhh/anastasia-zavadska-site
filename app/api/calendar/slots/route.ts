@@ -5,11 +5,11 @@ import { isGoogleCalendarConfigured } from "@/lib/googleCalendarServer";
 
 export const runtime = "nodejs";
 
-const CACHE_SECONDS = 300;
+const CACHE_SECONDS = 60;
 
 /**
  * GET ?month=YYYY-MM (календар Києва) — усі слоти місяця одним запитом до Google.
- * Кеш даних 5 хв (Data Cache Next.js).
+ * Кеш даних 1 хв (Data Cache Next.js).
  */
 export async function GET(req: NextRequest) {
   if (!isGoogleCalendarConfigured()) {
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
   try {
     const getCached = unstable_cache(
       async () => buildMonthSlotsData(month),
-      ["calendar-month-slots", "v1", month],
+      ["calendar-month-slots", "v2-50min", month],
       { revalidate: CACHE_SECONDS }
     );
 

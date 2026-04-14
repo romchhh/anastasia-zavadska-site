@@ -60,7 +60,9 @@ export default function Footer() {
                 display: "inline-block",
               }}
             >
-              ANASTASIIA ZAVADSKA
+              ANASTASIIA
+              <br />
+              ZAVADSKA
             </Link>
             <p
               className="footer-copyright"

@@ -175,7 +175,7 @@ export default function ServicesSection() {
             maxWidth: SECTION_TITLE_MAX_WIDTH,
           }}
         >
-          Терапія онлайн, щоб працювати у твоєму темпі та просторі
+          Формат—онлайн
         </p>
       </div>
 
@@ -214,6 +214,7 @@ export default function ServicesSection() {
               ? "2px solid rgba(255,255,255,0.65)"
               : "2px solid rgba(255,255,255,0.45)";
             const longCopy = showCardDescription(s);
+            const cardDescriptionText = longCopy ? s.desc : s.descCard ?? null;
             const titleSize = desktop
               ? isActive
                 ? "clamp(18px, 2.35vw, 26px)"
@@ -262,11 +263,19 @@ export default function ServicesSection() {
             const headingMb = desktop
               ? "clamp(8px, 1.1vw, 12px)"
               : "clamp(13px, 1.8vw, 16px)";
-            const descMarginB = desktop ? "8px" : "11px";
             const metaMarginB = desktop ? "7px" : "9px";
-            const statusMarginB = desktop ? "8px" : "11px";
             const priceMarginB = desktop ? "14px" : "18px";
             const descLineHeight = desktop ? 1.45 : 1.55;
+            /** Формат, тривалість, статус — один стиль (легкий наголос, як раніше «формат»). */
+            const serviceCardMetaLineStyle = {
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: metaFont,
+              fontWeight: 600,
+              color: "#FFFFFF",
+              textAlign: "left",
+              margin: `0 0 ${metaMarginB} 0`,
+              lineHeight: 1.45,
+            };
 
             return (
               <div
@@ -309,103 +318,95 @@ export default function ServicesSection() {
                   )}
                 </div>
 
-                {/* Контент: зображення → заголовок → опис → тривалість → ціна → кнопка */}
+                {/* Контент: зверху — заголовок і опис; знизу (над кнопкою) — тривалість/формат, статус, ціна */}
                 <div style={{
                   display: "flex",
                   flexDirection: "column",
                   flex: 1,
                   minHeight: 0,
                 }}>
-                  <h3 style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: titleSize,
-                    fontWeight: 900,
-                    color: "#FFFFFF",
-                    textTransform: "uppercase",
-                    letterSpacing: ".03em",
-                    lineHeight: 1.06,
-                    margin: `0 0 ${headingMb} 0`,
-                    textAlign: "left",
-                    transition: "font-size .3s",
-                  }}>
-                    {s.title}
-                  </h3>
-
-                  {longCopy && (
-                    <p style={{
+                  <div style={{ flexShrink: 0 }}>
+                    <h3 style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: descFont,
-                      fontWeight: 400,
+                      fontSize: titleSize,
+                      fontWeight: 900,
                       color: "#FFFFFF",
-                      lineHeight: descLineHeight,
+                      textTransform: "uppercase",
+                      letterSpacing: ".03em",
+                      lineHeight: 1.06,
+                      margin: `0 0 ${headingMb} 0`,
                       textAlign: "left",
-                      margin: `0 0 ${descMarginB} 0`,
+                      transition: "font-size .3s",
                     }}>
-                      {s.desc}
-                    </p>
-                  )}
+                      {s.title}
+                    </h3>
 
-                  {s.extra && (
-                    <p style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: metaFont,
-                      fontWeight: longCopy ? 400 : 600,
-                      color: "#FFFFFF",
-                      textAlign: "left",
-                      margin: `0 0 ${metaMarginB} 0`,
-                      lineHeight: 1.45,
-                    }}>{s.extra}</p>
-                  )}
+                    {cardDescriptionText && (
+                      <p style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: descFont,
+                        fontWeight: 400,
+                        color: "#FFFFFF",
+                        lineHeight: descLineHeight,
+                        textAlign: "left",
+                        margin: 0,
+                      }}>
+                        {cardDescriptionText}
+                      </p>
+                    )}
+                  </div>
 
-                  {s.status && (
-                    <p style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: metaFont,
-                      fontWeight: 700,
-                      fontStyle: "italic",
-                      color: "#3d62d8",
-                      textAlign: "left",
-                      margin: `0 0 ${statusMarginB} 0`,
-                    }}>{s.status}</p>
-                  )}
-
-                  {s.priceLine && s.priceEmphasis ? (
-                    <p style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      color: "var(--price-dark-soft)",
-                      textAlign: "left",
-                      margin: `0 0 ${priceMarginB} 0`,
-                      lineHeight: 1.25,
-                      fontSize: priceLineSize,
-                      fontWeight: 800,
-                    }}>
-                      <span>{s.priceLine} </span>
-                      <span style={{ color: "var(--price-dark)" }}>{s.priceEmphasis}</span>
-                    </p>
-                  ) : s.price ? (
-                    <p style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: priceLineSize,
-                      fontWeight: 800,
-                      color: "var(--price-dark)",
-                      textAlign: "left",
-                      margin: `0 0 ${priceMarginB} 0`,
-                      lineHeight: 1.25,
-                    }}>{s.price}</p>
-                  ) : null}
-
-                  <CtaPillButton
-                    fullWidth
-                    href={`/poslugy/${s.slug}`}
-                    className={
-                      s.slug === "branchi-ta-retryty"
-                        ? "services-carousel-cta services-carousel-cta--long-label"
-                        : "services-carousel-cta"
-                    }
-                    onClick={(e) => e.stopPropagation()}
+                  <div
+                    style={{
+                      marginTop: "auto",
+                      display: "flex",
+                      flexDirection: "column",
+                      flexShrink: 0,
+                      paddingTop: "clamp(12px, 2vw, 22px)",
+                    }}
                   >
-                    {s.btnLabel}
-                  </CtaPillButton>
+                    {s.extra && <p style={serviceCardMetaLineStyle}>{s.extra}</p>}
+
+                    {s.status && <p style={serviceCardMetaLineStyle}>{s.status}</p>}
+
+                    {s.priceLine && s.priceEmphasis ? (
+                      <p style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        color: "var(--price-dark-soft)",
+                        textAlign: "left",
+                        margin: `0 0 ${priceMarginB} 0`,
+                        lineHeight: 1.25,
+                        fontSize: priceLineSize,
+                        fontWeight: 800,
+                      }}>
+                        <span>{s.priceLine} </span>
+                        <span style={{ color: "var(--price-dark)" }}>{s.priceEmphasis}</span>
+                      </p>
+                    ) : s.price ? (
+                      <p style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: priceLineSize,
+                        fontWeight: 800,
+                        color: "var(--price-dark)",
+                        textAlign: "left",
+                        margin: `0 0 ${priceMarginB} 0`,
+                        lineHeight: 1.25,
+                      }}>{s.price}</p>
+                    ) : null}
+
+                    <CtaPillButton
+                      fullWidth
+                      href={`/poslugy/${s.slug}`}
+                      className={
+                        s.slug === "branchi-ta-retryty"
+                          ? "services-carousel-cta services-carousel-cta--long-label"
+                          : "services-carousel-cta"
+                      }
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {s.btnLabel}
+                    </CtaPillButton>
+                  </div>
                 </div>
               </div>
             );
@@ -541,7 +542,7 @@ export default function ServicesSection() {
         .services-carousel-cta.cta-pill {
           background: linear-gradient(180deg, #ffffff 0%, #f5f7ff 100%) !important;
           color: #a3beff !important;
-          margin-top: auto;
+          margin-top: 0;
           width: 100% !important;
           max-width: 100% !important;
           box-shadow:

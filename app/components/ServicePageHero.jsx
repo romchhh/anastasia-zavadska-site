@@ -11,10 +11,16 @@ const font = "'Montserrat', sans-serif";
 /**
  * Херо окремої послуги — двоколонковий макет як на референсі: текст зліва, акцентний квадрат справа.
  */
+function heroBookingCtaLabel(service) {
+  if (service.showBookingCalendar === true) return "Записатися на сесію";
+  return service.btnLabel || "Записатися";
+}
+
 export default function ServicePageHero({ service }) {
   const hasSplitPrice = service.priceLine && service.priceEmphasis;
   const bookingCtaHref =
     service.showBookingCalendar === true ? "#booking-calendar" : "#booking-form";
+  const bookingCtaLabel = heroBookingCtaLabel(service);
 
   return (
     <section
@@ -74,9 +80,8 @@ export default function ServicePageHero({ service }) {
             style={{
               fontFamily: font,
               fontSize: "clamp(15px, 1.35vw, 17px)",
-              fontWeight: 700,
-              fontStyle: "italic",
-              color: "#4a74c8",
+              fontWeight: 600,
+              color: "#999",
               textTransform: "uppercase",
               lineHeight: "1",
               letterSpacing: "0.04em",
@@ -145,7 +150,7 @@ export default function ServicePageHero({ service }) {
         )}
 
         <CtaPillButton className="service-page-hero__cta" href={bookingCtaHref}>
-          Записатися на сесію
+          {bookingCtaLabel}
         </CtaPillButton>
       </div>
 
