@@ -194,6 +194,9 @@ export default function EducationSection() {
         background: "#fff",
         padding: `clamp(40px, 5vw, 68px) ${PAGE_GUTTER_X} clamp(48px, 6.5vw, 80px)`,
         boxSizing: "border-box",
+        position: "relative",
+        zIndex: 1,
+        marginTop: "clamp(-14px, -2vw, -8px)",
       }}
       className="education-section-outer"
     >

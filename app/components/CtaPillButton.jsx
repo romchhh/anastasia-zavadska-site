@@ -1,4 +1,5 @@
 import "./CtaPillButton.css";
+import { CalendarDays } from "lucide-react";
 import { ArrowIcon } from "./ArrowIcon";
 
 /**
@@ -9,6 +10,7 @@ export default function CtaPillButton({
   children,
   href,
   className = "",
+  icon = "arrow",
   fullWidth = false,
   /** Трохи інший відтінок для блоку контактів; compact — менша кнопка (напр. відгуки) */
   variant = "default",
@@ -26,12 +28,21 @@ export default function CtaPillButton({
 
   const arrowHeight =
     variant === "compact" ? 16 : variant === "periwinkle" ? 12 : 20;
+  const calendarSize =
+    variant === "compact" ? 18 : variant === "periwinkle" ? 16 : 22;
 
   const inner = (
     <>
       {children}
-      <span className="cta-pill__arrow" aria-hidden>
-        <ArrowIcon variant="blue" height={arrowHeight} />
+      <span
+        className={`cta-pill__arrow ${icon === "calendar" ? "cta-pill__arrow--calendar" : ""}`}
+        aria-hidden
+      >
+        {icon === "calendar" ? (
+          <CalendarDays className="cta-pill__icon" size={calendarSize} strokeWidth={2.2} />
+        ) : (
+          <ArrowIcon variant="blue" height={arrowHeight} />
+        )}
       </span>
     </>
   );

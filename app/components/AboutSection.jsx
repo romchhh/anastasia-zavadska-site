@@ -431,7 +431,7 @@ export default function AboutSection() {
                 justifyContent: "center",
               }}
             >
-              <CtaPillButton href={INDIVIDUAL_BOOKING_PAGE}>Записатися на сесію</CtaPillButton>
+              <CtaPillButton href={INDIVIDUAL_BOOKING_PAGE} icon="calendar">Записатися на сесію</CtaPillButton>
             </div>
           </div>
 

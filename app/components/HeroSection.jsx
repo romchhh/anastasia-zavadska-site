@@ -150,7 +150,7 @@ export default function HeroSection() {
         </p>
         </div>
 
-        <CtaPillButton className="hero-cta" href={INDIVIDUAL_BOOKING_PAGE}>
+        <CtaPillButton className="hero-cta" href={INDIVIDUAL_BOOKING_PAGE} icon="calendar">
           Записатися на сесію
         </CtaPillButton>
         </div>
@@ -339,7 +339,11 @@ export default function HeroSection() {
             max-width: 100% !important;
             margin-left: auto;
             margin-right: auto;
+            margin-top: clamp(12px, 3.5vw, 24px) !important;
             aspect-ratio: 5 / 6;
+            box-shadow:
+              0 0 0 2px #fff,
+              0 8px 20px rgba(120, 150, 200, 0.18) !important;
           }
           .hero-cta {
             order: 3;
@@ -347,7 +351,7 @@ export default function HeroSection() {
             width: fit-content !important;
             max-width: min(100%, 820px);
             box-sizing: border-box;
-            margin-top: clamp(20px, 5vw, 36px) !important;
+            margin-top: clamp(30px, 7vw, 52px) !important;
           }
         }
         @media (max-width: 420px) {

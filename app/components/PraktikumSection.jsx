@@ -387,16 +387,24 @@ export default function PraktikumSection() {
         </div>
 
         <p
-          className="praktikum-intro-lead"
+          className="praktikum-intro-lead praktikum-intro-lead--first"
+          style={{
+            ...SECTION_INTRO_LEAD,
+            margin: "0 auto clamp(14px, 2.2vw, 22px)",
+            maxWidth: SECTION_TITLE_MAX_WIDTH,
+          }}
+        >
+          Щодня — короткі тексти, запитання й практики. 15–20 хвилин на день,
+          які повертають ясність, живість і розуміння, куди рухатися далі.
+        </p>
+        <p
+          className="praktikum-intro-lead praktikum-intro-lead--second"
           style={{
             ...SECTION_INTRO_LEAD,
             margin: "0 auto clamp(40px, 6vw, 56px)",
             maxWidth: SECTION_TITLE_MAX_WIDTH,
           }}
         >
-          Щодня — короткі тексти, запитання й практики. 15–20 хвилин на день,
-          які повертають ясність, живість і розуміння, куди рухатися далі.
-          <br />
           Не марафон. Не самооптимізація. М&apos;який вхід у контакт із собою.
         </p>
 
@@ -574,17 +582,16 @@ export default function PraktikumSection() {
           #практикум .praktikum-tagline-pill {
             padding: 12px 16px !important;
             font-size: clamp(16px, 3.9vw, 17px) !important;
-            text-align: left !important;
+            text-align: center !important;
           }
-          /* Іконка навпроти першого рядка тексту (не по центру всього блоку при переносі) */
           #практикум .praktikum-tagline-line {
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
+            align-items: center !important;
+            justify-content: center !important;
             gap: 10px !important;
           }
           #практикум .praktikum-tagline-icon-wrap {
-            align-self: flex-start !important;
-            margin-top: 0.12em;
+            align-self: center !important;
+            margin-top: 0;
             flex-shrink: 0 !important;
           }
           #практикум .praktikum-tagline-icon {
@@ -594,7 +601,7 @@ export default function PraktikumSection() {
             min-height: 1.2em !important;
           }
           #практикум .praktikum-tagline-text {
-            text-align: left !important;
+            text-align: center !important;
             line-height: 1.38 !important;
             display: block;
           }

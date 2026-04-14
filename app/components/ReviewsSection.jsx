@@ -244,10 +244,12 @@ export default function ReviewsSection() {
       id="відгуки"
       style={{
         marginTop: "clamp(-48px, -6vw, -36px)",
-        padding: `clamp(88px, 10vw, 118px) ${PAGE_GUTTER_X} 52px`,
-        overflow: "hidden",
+        padding: `clamp(88px, 10vw, 118px) ${PAGE_GUTTER_X} clamp(52px, 7vw, 72px)`,
+        overflow: "visible",
+        position: "relative",
+        zIndex: 2,
         boxSizing: "border-box",
-        background: "transparent",
+        background: "#fff",
       }}
     >
       <div style={{
@@ -322,33 +324,6 @@ export default function ReviewsSection() {
             );
           })}
         </div>
-
-        <div
-          className="reviews-edge-fade reviews-edge-fade-left"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            width: "120px",
-            background: "linear-gradient(to right, #fff 0%, transparent 100%)",
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
-        <div
-          className="reviews-edge-fade reviews-edge-fade-right"
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bottom: 0,
-            width: "120px",
-            background: "linear-gradient(to left, #fff 0%, transparent 100%)",
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
 
         <button
           type="button"
@@ -485,6 +460,10 @@ export default function ReviewsSection() {
         .reviews-practicum-cta-wrap {
           display: flex;
           justify-content: flex-end;
+          position: relative;
+          z-index: 2;
+          padding-bottom: clamp(6px, 1.2vw, 14px);
+          margin-bottom: clamp(-10px, -1.5vw, -4px);
         }
         @media (min-width: 769px) {
           .reviews-carousel-viewport .reviews-nav-btn--overlay {
@@ -497,9 +476,10 @@ export default function ReviewsSection() {
         @media (max-width: 768px) {
           #відгуки {
             padding-top: clamp(28px, 5vw, 44px) !important;
-            padding-bottom: 28px !important;
+            padding-bottom: clamp(32px, 6vw, 48px) !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
+            overflow: visible !important;
           }
           .reviews-header {
             margin-bottom: 14px !important;
@@ -515,15 +495,6 @@ export default function ReviewsSection() {
           }
           .reviews-carousel-viewport {
             min-height: 240px !important;
-          }
-          .reviews-carousel-viewport .reviews-edge-fade-left,
-          .reviews-carousel-viewport .reviews-edge-fade-right {
-            display: none !important;
-            visibility: hidden !important;
-            width: 0 !important;
-            min-width: 0 !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
           }
           /* Стрілки по боках карток, по вертикалі по центру в’юпорту */
           .reviews-carousel-viewport .reviews-nav-btn--overlay {

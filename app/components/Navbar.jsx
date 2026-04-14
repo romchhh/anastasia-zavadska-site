@@ -56,25 +56,25 @@ export default function Navbar() {
           boxSizing: "border-box",
         }}
       >
-        {/* Логотип-текст на мобільній приховано (див. .nav-mobile-brand у стилях) */}
+        {/* Логотип-текст зліва */}
         <Link
           href="/"
-          className="nav-mobile-brand"
+          className="nav-brand"
           style={{
-            display: "none",
+            display: "inline-flex",
             alignItems: "center",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "13px",
+            fontSize: "22px",
             fontWeight: 800,
             color: "#fff",
             letterSpacing: ".06em",
             textTransform: "uppercase",
-            lineHeight: 1.2,
-            maxWidth: "55%",
+            lineHeight: 1.05,
+            maxWidth: "fit-content",
             textDecoration: "none",
           }}
         >
-          Анастасія<br />Завадська
+          ANASTASIIA<br />ZAVADSKA
         </Link>
 
         {/* Desktop nav links */}
@@ -83,8 +83,11 @@ export default function Navbar() {
           alignItems: "center",
           height: "100%",
           gap: "36px",
+          marginLeft: "clamp(28px, 3.2vw, 64px)",
           listStyle: "none",
-          margin: 0,
+          marginTop: 0,
+          marginRight: 0,
+          marginBottom: 0,
           padding: 0,
         }}
           className="nav-desktop"
@@ -112,7 +115,7 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Right side: CTA button + burger */}
+        {/* Right side: CTA + burger */}
         <div
           className="nav-right"
           style={{ display: "flex", alignItems: "center", gap: "16px", height: "100%", marginLeft: "auto" }}
@@ -350,7 +353,10 @@ export default function Navbar() {
             height: 68px;
             padding: 0 ${PAGE_GUTTER_X};
           }
-          .nav-mobile-brand { display: none !important; }
+          .nav-brand {
+            font-size: 16px !important;
+            line-height: 1.08 !important;
+          }
           .nav-desktop { display: none !important; }
           .nav-cta-btn { display: none !important; }
           .burger-btn { display: flex !important; }

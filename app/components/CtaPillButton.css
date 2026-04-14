@@ -77,6 +77,15 @@
     0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
+.cta-pill__arrow .cta-pill__icon {
+  color: #5a72c8;
+  display: block;
+}
+
+.cta-pill__arrow--calendar {
+  transform: none !important;
+}
+
 @media (hover: hover) {
   .cta-pill:hover .cta-pill__arrow {
     transform: translateX(2px);
