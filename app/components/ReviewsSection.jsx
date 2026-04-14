@@ -244,12 +244,10 @@ export default function ReviewsSection() {
       id="відгуки"
       style={{
         marginTop: "clamp(-48px, -6vw, -36px)",
-        padding: `clamp(88px, 10vw, 118px) ${PAGE_GUTTER_X} clamp(52px, 7vw, 72px)`,
+        padding: `clamp(88px, 10vw, 118px) ${PAGE_GUTTER_X} clamp(56px, 8vw, 80px)`,
         overflow: "visible",
-        position: "relative",
-        zIndex: 2,
         boxSizing: "border-box",
-        background: "#fff",
+        background: "transparent",
       }}
     >
       <div style={{
@@ -435,7 +433,7 @@ export default function ReviewsSection() {
             href={PRAKTIKUM_JOURNEY_URL}
             target="_blank"
             rel="noopener noreferrer"
-            variant="compact"
+            variant="compactSolid"
           >
             Ознайомитися з програмою
           </CtaPillButton>
@@ -447,6 +445,16 @@ export default function ReviewsSection() {
           margin-top: 28px;
           padding: 0;
           box-sizing: border-box;
+          background: transparent;
+        }
+        #відгуки .reviews-header {
+          background: #fff;
+        }
+        #відгуки .reviews-carousel-viewport {
+          background: #fff;
+        }
+        #відгуки .reviews-dots-toolbar {
+          background: #fff;
         }
         .reviews-dots-toolbar {
           display: block;
@@ -461,9 +469,9 @@ export default function ReviewsSection() {
           display: flex;
           justify-content: flex-end;
           position: relative;
-          z-index: 2;
-          padding-bottom: clamp(6px, 1.2vw, 14px);
-          margin-bottom: clamp(-10px, -1.5vw, -4px);
+          z-index: 3;
+          padding-bottom: clamp(12px, 2.2vw, 22px);
+          margin-bottom: clamp(-18px, -2.5vw, -10px);
         }
         @media (min-width: 769px) {
           .reviews-carousel-viewport .reviews-nav-btn--overlay {
@@ -476,10 +484,11 @@ export default function ReviewsSection() {
         @media (max-width: 768px) {
           #відгуки {
             padding-top: clamp(28px, 5vw, 44px) !important;
-            padding-bottom: clamp(32px, 6vw, 48px) !important;
+            padding-bottom: clamp(40px, 7vw, 56px) !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
             overflow: visible !important;
+            background: transparent !important;
           }
           .reviews-header {
             margin-bottom: 14px !important;

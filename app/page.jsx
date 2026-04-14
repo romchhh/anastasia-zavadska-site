@@ -57,10 +57,10 @@ export default function HomePage() {
       <RevealOnScroll>
         <PraktikumSection />
       </RevealOnScroll>
-      <RevealOnScroll>
+      <RevealOnScroll className="reveal-wrap-reviews">
         <ReviewsSection />
       </RevealOnScroll>
-      <RevealOnScroll>
+      <RevealOnScroll className="reveal-wrap-education">
         <EducationSection />
       </RevealOnScroll>
       <RevealOnScroll>

@@ -234,6 +234,18 @@ a { text-decoration: none; }
   will-change: auto;
 }
 
+/* Відгуки поверх «Освіти», щоб тінь/градієнт кнопки не обрізалась між обгортками RevealOnScroll */
+.reveal-on-scroll.reveal-wrap-reviews {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+}
+.reveal-on-scroll.reveal-wrap-education {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
 /* ── Hero: перша поява (класи на елементах у HeroSection) ── */
 @keyframes hero-rise {
   from {

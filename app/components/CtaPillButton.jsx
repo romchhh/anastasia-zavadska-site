@@ -12,7 +12,7 @@ export default function CtaPillButton({
   className = "",
   icon = "arrow",
   fullWidth = false,
-  /** Трохи інший відтінок для блоку контактів; compact — менша кнопка (напр. відгуки) */
+  /** Трохи інший відтінок для блоку контактів; compact / compactSolid — менша кнопка (compactSolid — суцільний фон без градієнта) */
   variant = "default",
   target,
   rel,
@@ -23,13 +23,15 @@ export default function CtaPillButton({
     fullWidth && "cta-pill--full",
     variant === "periwinkle" && "cta-pill--periwinkle",
     variant === "compact" && "cta-pill--compact",
+    variant === "compactSolid" && "cta-pill--compact-solid",
     className,
   ].filter(Boolean).join(" ");
 
+  const isCompactLike = variant === "compact" || variant === "compactSolid";
   const arrowHeight =
-    variant === "compact" ? 16 : variant === "periwinkle" ? 12 : 20;
+    isCompactLike ? 16 : variant === "periwinkle" ? 12 : 20;
   const calendarSize =
-    variant === "compact" ? 18 : variant === "periwinkle" ? 16 : 22;
+    isCompactLike ? 18 : variant === "periwinkle" ? 16 : 22;
 
   const inner = (
     <>
