@@ -140,7 +140,7 @@ export default function AboutSection() {
             </h2>
 
             <p
-              className="about-intro-body"
+              className="about-intro-body about-intro-body--compact-spacing"
               style={{
                 ...SECTION_INTRO_LEAD,
                 fontSize: "clamp(16px, 2.2vw, 22px)",
@@ -151,7 +151,9 @@ export default function AboutSection() {
                 textAlign: "left",
               }}
             >
-              Я психологиня, працюю в гештальт-підході. Проводжу індивідуальну та групову терапію онлайн.
+              Я психологиня, працюю в гештальт-підході.
+              <br />
+              Проводжу індивідуальну та групову терапію онлайн.
             </p>
             <p
               className="about-intro-body"
@@ -698,6 +700,13 @@ export default function AboutSection() {
             overflow-wrap: break-word;
             word-break: normal;
           }
+          #про-мене .about-intro-copy p.about-intro-body.about-intro-body--compact-spacing {
+            text-align: left !important;
+            text-justify: auto;
+            hyphens: none;
+            -webkit-hyphens: none;
+            white-space: normal;
+          }
         }
         .about-work-intro-hint__break {
           display: none;
@@ -810,13 +819,20 @@ export default function AboutSection() {
             display: block !important;
           }
           #про-мене .about-content p.about-intro-body {
-            text-align: left !important;
+            text-align: justify !important;
+            text-justify: inter-word;
             font-size: clamp(16px, 4.2vw, 19px) !important;
             line-height: 1.42 !important;
-            hyphens: none !important;
-            -webkit-hyphens: none !important;
+            hyphens: auto !important;
+            -webkit-hyphens: auto !important;
             text-wrap: pretty;
             overflow-wrap: break-word;
+          }
+          #про-мене .about-content p.about-intro-body.about-intro-body--compact-spacing {
+            text-align: left !important;
+            text-justify: auto;
+            hyphens: none !important;
+            -webkit-hyphens: none !important;
           }
           .about-mobile-photo {
             display: block !important;
