@@ -353,7 +353,6 @@ export default function PraktikumSection() {
               lineHeight: 1.38,
               letterSpacing: "0.01em",
               color: "#fff",
-              textAlign: "center",
               margin: 0,
               maxWidth: "min(100%, 480px)",
               padding: "clamp(16px, 2vw, 20px) clamp(28px, 4vw, 40px)",
@@ -363,7 +362,7 @@ export default function PraktikumSection() {
               boxSizing: "border-box",
             }}
           >
-            <span className="praktikum-tagline-line">
+            <span className="praktikum-tagline-line praktikum-tagline-line--main">
               <span className="praktikum-tagline-icon-wrap" aria-hidden>
                 <CalendarDays
                   className="praktikum-tagline-icon"
@@ -467,16 +466,23 @@ export default function PraktikumSection() {
         #практикум .praktikum-cta-btn {
           leading-trim: none;
         }
+        /* Два рядки в одній сітці: однакова колонка іконок + текст — вирівняно на всіх ширинах */
+        #практикум .praktikum-tagline-pill {
+          display: grid;
+          grid-template-columns: 1.35em minmax(0, 1fr);
+          column-gap: 10px;
+          row-gap: 8px;
+          align-items: start;
+          width: fit-content;
+          max-width: min(100%, 480px);
+          margin-left: auto;
+          margin-right: auto;
+          text-align: left;
+        }
         #практикум .praktikum-tagline-line {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          width: 100%;
+          display: contents;
         }
         #практикум .praktikum-tagline-line--sub {
-          margin-top: 8px;
           opacity: 0.98;
         }
         #практикум .praktikum-tagline-icon-wrap {
@@ -485,6 +491,8 @@ export default function PraktikumSection() {
           justify-content: center;
           flex-shrink: 0;
           line-height: 0;
+          justify-self: center;
+          align-self: start;
         }
         #практикум .praktikum-tagline-icon {
           flex-shrink: 0;
@@ -496,9 +504,8 @@ export default function PraktikumSection() {
           display: block;
         }
         #практикум .praktikum-tagline-text {
-          flex: 0 1 auto;
           min-width: 0;
-          text-align: center;
+          text-align: left;
           line-height: 1.35;
         }
         #практикум .praktikum-price-block {
@@ -546,6 +553,11 @@ export default function PraktikumSection() {
           #практикум .praktikum-tagline-pill {
             max-width: 100% !important;
             width: 100%;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding: 12px 16px !important;
+            font-size: clamp(16px, 3.9vw, 17px) !important;
+            text-align: left !important;
           }
           #практикум h2.praktikum-section-heading {
             display: flex;
@@ -579,21 +591,6 @@ export default function PraktikumSection() {
             margin-left: 0 !important;
             margin-right: 0 !important;
           }
-          #практикум .praktikum-tagline-pill {
-            padding: 12px 16px !important;
-            font-size: clamp(16px, 3.9vw, 17px) !important;
-            text-align: center !important;
-          }
-          #практикум .praktikum-tagline-line {
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 10px !important;
-          }
-          #практикум .praktikum-tagline-icon-wrap {
-            align-self: center !important;
-            margin-top: 0;
-            flex-shrink: 0 !important;
-          }
           #практикум .praktikum-tagline-icon {
             width: 1.2em !important;
             height: 1.2em !important;
@@ -601,7 +598,7 @@ export default function PraktikumSection() {
             min-height: 1.2em !important;
           }
           #практикум .praktikum-tagline-text {
-            text-align: center !important;
+            text-align: left !important;
             line-height: 1.38 !important;
             display: block;
           }
