@@ -488,7 +488,7 @@ export default function PraktikumSection() {
           display: block;
         }
         #практикум .praktikum-tagline-text {
-          flex: 1 1 auto;
+          flex: 0 1 auto;
           min-width: 0;
           text-align: center;
           line-height: 1.35;

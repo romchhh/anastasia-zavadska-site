@@ -247,7 +247,7 @@ export default function ReviewsSection() {
         padding: `clamp(88px, 10vw, 118px) ${PAGE_GUTTER_X} 52px`,
         overflow: "hidden",
         boxSizing: "border-box",
-        background: "#fff",
+        background: "transparent",
       }}
     >
       <div style={{

@@ -495,9 +495,10 @@ export default function AboutSection() {
                       style={{
                         flexShrink: 0,
                         display: "flex",
-                        alignItems: "center",
+                        alignItems: "flex-start",
                         justifyContent: "center",
-                        width: "clamp(26px, 3vw, 32px)",
+                        width: "clamp(20px, 2.1vw, 24px)",
+                        marginTop: "0.2em",
                       }}
                       aria-hidden
                     >
@@ -507,8 +508,8 @@ export default function AboutSection() {
                         width={22}
                         height={23}
                         style={{
-                          width: "clamp(20px, 2.4vw, 26px)",
-                          height: "auto",
+                          width: "auto",
+                          height: "clamp(15px, 1.35vw, 20px)",
                           display: "block",
                         }}
                       />
@@ -536,8 +537,8 @@ export default function AboutSection() {
               style={{
                 borderRadius: "clamp(20px, 3vw, 32px)",
                 width: "100%",
-                minHeight: 0,
-                alignSelf: "stretch",
+                height: "clamp(400px, 46vw, 520px)",
+                alignSelf: "flex-start",
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden",
@@ -550,8 +551,7 @@ export default function AboutSection() {
                 alt=""
                 style={{
                   width: "100%",
-                  flex: "1 1 auto",
-                  minHeight: 0,
+                  height: "100%",
                   objectFit: "cover",
                   objectPosition: "center",
                   display: "block",
@@ -687,12 +687,12 @@ export default function AboutSection() {
           display: none;
         }
         @media (min-width: 769px) {
-          /* Як у заголовка: лівий край, без «розтягування» рядків і без авто-переносів по складах */
+          /* Рівні краї абзаців зліва/справа для довгого вступного тексту */
           #про-мене .about-intro-copy p.about-intro-body {
-            text-align: left !important;
-            text-justify: auto;
-            hyphens: none;
-            -webkit-hyphens: none;
+            text-align: justify !important;
+            text-justify: inter-word;
+            hyphens: auto;
+            -webkit-hyphens: auto;
             text-wrap: pretty;
             line-height: 1.52;
             overflow-wrap: break-word;
