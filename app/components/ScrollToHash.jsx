@@ -1,31 +1,52 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
 
-function scrollToHashTarget() {
-  if (typeof window === "undefined") return;
-  const { hash } = window.location;
-  if (!hash || hash.length < 2) return;
-  const id = decodeURIComponent(hash.slice(1));
-  requestAnimationFrame(() => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  });
+/** Миттєвий скрол нагору без анімації (сумісність з усіма браузерами) */
+function scrollTopInstant() {
+  window.scrollTo(0, 0);
 }
 
-/** Після client navigation на сторінку з #якорем прокручує до відповідного id. */
+/**
+ * Після client navigation: якщо в URL є #якір — прокрутка до id; інакше — на початок сторінки.
+ * Інакше Next.js інколи залишає позицію скролу з попереднього маршруту (сторінка відкривається «з середини»).
+ */
 export default function ScrollToHash() {
   const pathname = usePathname();
 
-  useEffect(() => {
-    scrollToHashTarget();
+  useLayoutEffect(() => {
+    const { hash } = window.location;
+    if (!hash || hash.length < 2) {
+      scrollTopInstant();
+      return;
+    }
+    const id = decodeURIComponent(hash.slice(1));
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        scrollTopInstant();
+      }
+    });
   }, [pathname]);
 
   useEffect(() => {
-    const onHashChange = () => scrollToHashTarget();
+    const onHashChange = () => {
+      const { hash } = window.location;
+      if (!hash || hash.length < 2) {
+        scrollTopInstant();
+        return;
+      }
+      const id = decodeURIComponent(hash.slice(1));
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    };
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
