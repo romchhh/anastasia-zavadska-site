@@ -6,8 +6,9 @@ import ScrollToHash from "../../components/ScrollToHash";
 import ServicePageHero from "../../components/ServicePageHero";
 import ServiceBookingSection from "../../components/ServiceBookingSection";
 import Footer from "../../components/Footer";
+import MetaViewContent from "../../components/meta/MetaViewContent";
 import { getServiceBySlug, getServiceSlugs, SERVICES } from "../../data/siteData";
-import { getSessionPriceUah } from "@/utils/price";
+import { getSessionPriceUsd } from "@/utils/price";
 
 export function generateStaticParams() {
   return getServiceSlugs().map((slug) => ({ slug }));
@@ -44,19 +45,21 @@ export default async function ServicePage({ params }) {
   if (!service) notFound();
 
   const bookingNotifyKind = service.slug === "branchi-ta-retryty" ? "event" : "service";
-  const sessionPriceUah =
-    slug === INDIVIDUAL_SESSION_SLUG ? getSessionPriceUah() : undefined;
+  const viewContentUsd =
+    slug === INDIVIDUAL_SESSION_SLUG ? getSessionPriceUsd() : undefined;
 
   return (
     <main>
+      <MetaViewContent
+        contentName={service.title}
+        contentIds={[service.slug]}
+        value={viewContentUsd}
+        currency={slug === INDIVIDUAL_SESSION_SLUG ? "USD" : "UAH"}
+      />
       <ScrollToHash />
       <Navbar />
       <ServicePageHero service={service} />
-      <ServiceBookingSection
-        service={service}
-        sessionPriceUah={sessionPriceUah}
-        bookingNotifyKind={bookingNotifyKind}
-      />
+      <ServiceBookingSection service={service} bookingNotifyKind={bookingNotifyKind} />
       <Footer />
     </main>
   );

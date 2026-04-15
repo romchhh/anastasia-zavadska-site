@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MetaPurchasePixel from "../meta/MetaPurchasePixel";
 
 const TG_DEFAULT = "https://t.me/anastasia_zavadska";
 
@@ -68,7 +69,11 @@ function buildVariants(sessionTgUrl, selfHref, psychHref, journeyHref) {
   };
 }
 
-export default function PaymentSuccessView({ variantKey, sessionSlotLine = "" }) {
+export default function PaymentSuccessView({
+  variantKey,
+  sessionSlotLine = "",
+  purchaseMeta = null,
+}) {
   const sessionTg =
     process.env.NEXT_PUBLIC_PAYMENT_SUCCESS_TELEGRAM_URL || TG_DEFAULT;
   const selfHref = WORKSHOP_BOT_SELF;
@@ -79,6 +84,14 @@ export default function PaymentSuccessView({ variantKey, sessionSlotLine = "" })
 
   return (
     <>
+      {purchaseMeta?.orderRef ? (
+        <MetaPurchasePixel
+          orderRef={purchaseMeta.orderRef}
+          value={purchaseMeta.value}
+          currency={purchaseMeta.currency || "UAH"}
+          contentName={purchaseMeta.contentName}
+        />
+      ) : null}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap');
         .pay-result-page {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import StickyJoinCta from "./components/StickyJoinCta";
+import MetaPixelRoot from "./components/meta/MetaPixelRoot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -85,6 +86,11 @@ export const metadata: Metadata = {
     address: false,
     email: false,
   },
+  verification: {
+    other: {
+      "facebook-domain-verification": ["n3kcib5q1o640lnz0l9k0ewdv59y1g"],
+    },
+  },
 };
 
 export default function RootLayout({
@@ -98,6 +104,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <MetaPixelRoot />
         {children}
         <StickyJoinCta />
       </body>

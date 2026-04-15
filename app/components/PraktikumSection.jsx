@@ -11,7 +11,13 @@ import {
   SECTION_LAYOUT_MAX_WIDTH,
   SECTION_TITLE_MAX_WIDTH,
 } from "./sectionIntroStyles";
-import { PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH, PRAKTIKUM_SELF_PRICE_UAH } from "@/utils/price";
+import {
+  PRAKTIKUM_PSYCHOLOGIST_OLD_PRICE_UAH,
+  PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH,
+  PRAKTIKUM_SELF_OLD_PRICE_UAH,
+  PRAKTIKUM_SELF_PRICE_UAH,
+  formatPriceUah,
+} from "@/utils/price";
 import { submitWayForPayForm } from "@/lib/wayforpayClientSubmit";
 
 const PILL_BLUE = "#B4C7F9";
@@ -422,8 +428,8 @@ export default function PraktikumSection() {
           <PrCard
             title={"Самостійний старт\n\n"}
             features={PRAKTIKUM_SELF_FEATURES}
-            oldPrice="4500 грн"
-            price="595 грн"
+            oldPrice={formatPriceUah(PRAKTIKUM_SELF_OLD_PRICE_UAH)}
+            price={formatPriceUah(PRAKTIKUM_SELF_PRICE_UAH)}
             btnLabel="Почати самостійно"
             onPay={() => startPraktikumPayment("self")}
             payDisabled={payLoading === "self"}
@@ -431,8 +437,8 @@ export default function PraktikumSection() {
           <PrCard
             title={"З підтримкою\nпсихолога"}
             features={PRAKTIKUM_WITH_FEATURES}
-            oldPrice="10500 грн"
-            price="5400 грн"
+            oldPrice={formatPriceUah(PRAKTIKUM_PSYCHOLOGIST_OLD_PRICE_UAH)}
+            price={formatPriceUah(PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH)}
             btnLabel="Почати з психологом"
             onPay={() => startPraktikumPayment("psychologist")}
             payDisabled={payLoading === "psych"}

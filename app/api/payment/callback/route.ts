@@ -4,13 +4,17 @@ import { takePendingSessionBooking } from '@/lib/pendingSessionBookings';
 import { appendSessionPayment } from '@/lib/sessionPayments';
 import { insertConsultationEvent, isGoogleCalendarConfigured } from '@/lib/googleCalendarServer';
 import { sendTelegramGroupMessage } from '@/utils/telegram';
+import { sendMetaCapiEvent } from '@/lib/metaConversionsServer';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const WFP_LINE = 'Оплата підтверджена (WayForPay)';
 
-const g = globalThis as typeof globalThis & { __wfpTelegramOrderRefs?: Set<string> };
+const g = globalThis as typeof globalThis & {
+  __wfpTelegramOrderRefs?: Set<string>;
+  __metaPurchaseOrderRefs?: Set<string>;
+};
 
 function wasTelegramSentForOrder(ref: string): boolean {
   if (!g.__wfpTelegramOrderRefs) g.__wfpTelegramOrderRefs = new Set();
@@ -20,6 +24,16 @@ function wasTelegramSentForOrder(ref: string): boolean {
 function markTelegramSentForOrder(ref: string) {
   if (!g.__wfpTelegramOrderRefs) g.__wfpTelegramOrderRefs = new Set();
   g.__wfpTelegramOrderRefs.add(ref);
+}
+
+function wasMetaPurchaseSentForOrder(ref: string): boolean {
+  if (!g.__metaPurchaseOrderRefs) g.__metaPurchaseOrderRefs = new Set();
+  return g.__metaPurchaseOrderRefs.has(ref);
+}
+
+function markMetaPurchaseSentForOrder(ref: string) {
+  if (!g.__metaPurchaseOrderRefs) g.__metaPurchaseOrderRefs = new Set();
+  g.__metaPurchaseOrderRefs.add(ref);
 }
 
 /** Рядки після «Оплата підтверджена (WayForPay)». */
@@ -249,6 +263,29 @@ export async function POST(request: NextRequest) {
       } else {
         await sendTelegramGroupMessage(telegramText);
         markTelegramSentForOrder(ref);
+      }
+
+      if (!wasMetaPurchaseSentForOrder(ref)) {
+        const site = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/+$/, '');
+        const amountNum = Number(amount);
+        const value =
+          Number.isFinite(amountNum) && amountNum >= 0 ? amountNum : 0;
+        await sendMetaCapiEvent({
+          request,
+          eventName: 'Purchase',
+          eventId: ref,
+          eventSourceUrl: site ? `${site}/` : undefined,
+          userData: {
+            email: emailStr || undefined,
+            phone: phoneStr || undefined,
+          },
+          customData: {
+            value,
+            currency: String(currency || 'UAH'),
+            order_id: ref,
+          },
+        });
+        markMetaPurchaseSentForOrder(ref);
       }
 
       if (isSession) {

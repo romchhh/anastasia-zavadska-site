@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { savePendingSessionBooking } from '@/lib/pendingSessionBookings';
 import { savePaymentReturnHint } from '@/lib/paymentReturnHints';
 import type { BookingNotifyFields } from '@/lib/bookingNotifyFormat';
-import { getCurrentPrice, getSessionPriceUah } from '@/utils/price';
+import {
+  getCurrentPrice,
+  getSessionPriceUsd,
+  PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH,
+} from '@/utils/price';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -55,15 +59,20 @@ export async function POST(request: NextRequest) {
       (paymentKind === 'session'
         ? 'Індивідуальна терапевтична сесія (онлайн)'
         : 'Подорож до себе | 7-денний практикум у закритому Telegram-каналі');
+    const payCurrency = paymentKind === 'session' ? 'USD' : 'UAH';
     const amount =
       customPrice != null && Number.isFinite(customPrice) && customPrice > 0
         ? customPrice
         : paymentKind === 'session'
-          ? getSessionPriceUah()
+          ? getSessionPriceUsd()
           : getCurrentPrice();
     const tariffType =
       body?.tariffType ||
-      (paymentKind === 'session' ? 'session' : amount === 5400 ? 'psychologist' : 'self');
+      (paymentKind === 'session'
+        ? 'session'
+        : amount === PRAKTIKUM_PSYCHOLOGIST_PRICE_UAH
+          ? 'psychologist'
+          : 'self');
 
     // Генеруємо унікальний ID замовлення (префікс для callback / return)
     const orderReference =
@@ -129,7 +138,7 @@ export async function POST(request: NextRequest) {
       String(orderReference),
       String(orderDate),
       amountStr, // З двома знаками після коми
-      'UAH',
+      payCurrency,
       // Всі productName
       ...productNames.map(name => String(name)),
       // Всі productCount
@@ -199,7 +208,7 @@ export async function POST(request: NextRequest) {
       orderReference,
       orderDate,
       amount: amountStr, // З двома знаками після коми
-      currency: 'UAH',
+      currency: payCurrency,
       productName: productNames,
       productCount: productCounts,
       productPrice: productPrices.map(price => price.toFixed(2)), // З двома знаками після коми

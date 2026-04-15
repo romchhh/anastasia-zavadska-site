@@ -9,7 +9,10 @@ export async function GET(request: NextRequest) {
     console.log('[PAYMENT RETURN] Received GET to payment return URL');
 
     const url = new URL(request.url);
-    const orderRef = url.searchParams.get('orderRef') || '';
+    const orderRef =
+      url.searchParams.get('orderRef') ||
+      url.searchParams.get('orderReference') ||
+      '';
     const tariffType = url.searchParams.get('tariffType') || 'self';
     const hint = orderRef ? await getPaymentReturnHint(orderRef) : null;
     const slotLine = hint?.slotLine || url.searchParams.get('slotLine') || '';
@@ -17,6 +20,12 @@ export async function GET(request: NextRequest) {
                              url.searchParams.get('status') || 
                              '';
     const reasonCode = url.searchParams.get('reasonCode') || '';
+    const amount =
+      url.searchParams.get('amount') ||
+      url.searchParams.get('merchantAmount') ||
+      url.searchParams.get('merchantsAmount') ||
+      '';
+    const currency = url.searchParams.get('currency') || 'UAH';
 
     console.log('[PAYMENT RETURN] GET params:', {
       orderRef,
@@ -41,6 +50,11 @@ export async function GET(request: NextRequest) {
       );
       if (tariffType === 'session' && slotLine) {
         successUrl.searchParams.set('slotLine', slotLine);
+      }
+      if (orderRef) {
+        successUrl.searchParams.set('orderRef', orderRef);
+        if (amount) successUrl.searchParams.set('amount', String(amount));
+        successUrl.searchParams.set('currency', currency);
       }
       console.log('[PAYMENT RETURN] GET redirect to success:', successUrl.toString());
       return NextResponse.redirect(successUrl.toString(), 303);
@@ -157,6 +171,21 @@ export async function POST(request: NextRequest) {
       );
       if (tariffType === 'session' && slotLineFromQs) {
         successUrl.searchParams.set('slotLine', slotLineFromQs);
+      }
+      const amountVal =
+        data.amount != null && data.amount !== ''
+          ? String(data.amount)
+          : data.merchantAmount != null && data.merchantAmount !== ''
+            ? String(data.merchantAmount)
+            : '';
+      const currencyVal =
+        typeof data.currency === 'string' && data.currency.trim() !== ''
+          ? data.currency.trim()
+          : 'UAH';
+      if (refStr) {
+        successUrl.searchParams.set('orderRef', refStr);
+        if (amountVal) successUrl.searchParams.set('amount', amountVal);
+        successUrl.searchParams.set('currency', currencyVal);
       }
       console.log('[PAYMENT RETURN] POST redirect to success:', successUrl.toString());
       return NextResponse.redirect(successUrl.toString(), 303);

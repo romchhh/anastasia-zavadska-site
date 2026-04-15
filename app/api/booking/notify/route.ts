@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { formatBookingNotifyTelegramText } from '@/lib/bookingNotifyFormat';
 import { sendTelegramGroupMessage } from '@/utils/telegram';
+import { sendMetaCapiEvent } from '@/lib/metaConversionsServer';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,6 +14,12 @@ type Body = {
   phone?: string;
   social?: string;
   description?: string;
+  meta?: {
+    eventId?: string;
+    eventSourceUrl?: string;
+    fbp?: string;
+    fbc?: string;
+  };
 };
 
 export async function POST(request: NextRequest) {
@@ -41,6 +48,23 @@ export async function POST(request: NextRequest) {
     });
 
     await sendTelegramGroupMessage(text);
+
+    const site = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/+$/, '');
+    await sendMetaCapiEvent({
+      request,
+      eventName: 'Lead',
+      eventId: body.meta?.eventId,
+      eventSourceUrl: body.meta?.eventSourceUrl || (site ? `${site}/` : undefined),
+      userData: {
+        phone,
+        fbp: body.meta?.fbp,
+        fbc: body.meta?.fbc,
+      },
+      customData: {
+        content_name: body.serviceTitle || 'Запит з сайту',
+        content_category: body.kind === 'event' ? 'event' : 'service',
+      },
+    });
 
     return NextResponse.json({ ok: true });
   } catch (e) {

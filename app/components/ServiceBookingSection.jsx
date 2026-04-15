@@ -8,6 +8,7 @@ import { submitWayForPayForm } from "@/lib/wayforpayClientSubmit";
 import { PAGE_GUTTER_X, SECTION_SCROLL_MARGIN_TOP } from "./sectionIntroStyles";
 import { kyivYmdKey } from "@/lib/kyivDate";
 import { slotRangeToStartTime } from "@/lib/calendarSlots";
+import { getSessionPriceUsd } from "@/utils/price";
 
 const UA_MONTHS = [
   "січня",
@@ -50,6 +51,20 @@ function bookingPriceLabel(service) {
 
 const ICON = 44;
 const accent = "#92B2FF";
+
+function readBrowserCookie(name) {
+  if (typeof document === "undefined") return undefined;
+  const parts = `; ${document.cookie}`.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift() || undefined;
+  return undefined;
+}
+
+function newMetaLeadEventId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+}
 
 const BOOKING_SECTION_STYLES = `
   .service-booking-section {
@@ -106,7 +121,6 @@ const hiddenCalendarAnchor = (
 
 export default function ServiceBookingSection({
   service,
-  sessionPriceUah,
   bookingNotifyKind = "service",
 }) {
   const [confirmedSlot, setConfirmedSlot] = useState(null);
@@ -169,6 +183,16 @@ export default function ServiceBookingSection({
       };
 
       if (!onlinePayment) {
+        const leadEventId = newMetaLeadEventId();
+        const meta =
+          typeof window !== "undefined"
+            ? {
+                eventId: leadEventId,
+                eventSourceUrl: window.location.href,
+                fbp: readBrowserCookie("_fbp"),
+                fbc: readBrowserCookie("_fbc"),
+              }
+            : undefined;
         const notifyRes = await fetch("/api/booking/notify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -180,16 +204,25 @@ export default function ServiceBookingSection({
             phone: fields.phone,
             social: fields.social,
             description: fields.description,
+            meta,
           }),
         });
         if (!notifyRes.ok) {
           throw new Error("notify failed");
         }
+        if (typeof window !== "undefined" && typeof window.fbq === "function") {
+          window.fbq(
+            "track",
+            "Lead",
+            { content_name: service.title },
+            { eventID: leadEventId }
+          );
+        }
         await bookGoogleIfSlot();
         return;
       }
 
-      const uah = typeof sessionPriceUah === "number" ? sessionPriceUah : 2100;
+      const sessionUsd = getSessionPriceUsd();
       const eventTitleBase = `${service.title} (онлайн)`;
       const eventTitle = slotLine ? `${eventTitleBase} | ${slotLine}` : eventTitleBase;
       const payRes = await fetch("/api/payment/create", {
@@ -197,7 +230,7 @@ export default function ServiceBookingSection({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           paymentKind: "session",
-          price: uah,
+          price: sessionUsd,
           eventTitle,
           tariffType: "session",
           clientFirstName: fields.name.trim().slice(0, 100),
@@ -224,14 +257,7 @@ export default function ServiceBookingSection({
       submitWayForPayForm(payJson.data);
       return false;
     },
-    [
-      service,
-      confirmedSlot,
-      onlinePayment,
-      sessionPriceUah,
-      bookingNotifyKind,
-      showBookingCalendar,
-    ]
+    [service, confirmedSlot, onlinePayment, bookingNotifyKind, showBookingCalendar]
   );
 
   const instagramHref = `https://www.instagram.com/${CONTACTS.instagram.replace(/^@/, "")}/`;

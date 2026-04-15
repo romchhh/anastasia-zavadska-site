@@ -2,6 +2,7 @@
 
 import { Clock, CreditCard, Lock } from "lucide-react";
 import { useId, useState } from "react";
+import { SESSION_CONSULTATION_PRICE_LABEL } from "@/utils/price";
 
 /**
  * Національний номер UA: 10 цифр, формат 0XXXXXXXXX (0671234567).
@@ -86,7 +87,7 @@ function toUaE164(normalized10) {
  *
  * Props:
  *   duration  {string}  – e.g. "50 хв"
- *   price     {string}  – e.g. "50 $"
+ *   price     {string}  – e.g. "$50"
  *   slotSummary {string} – обраний у календарі час (показується над полями)
  *   requireSlot {bool}   – чи обов’язковий вибір слоту (календар)
  *   onlinePayment {bool} – «Оплатити» + ціна; false — запит без оплати на сайті
@@ -97,7 +98,7 @@ function toUaE164(normalized10) {
  */
 export default function BookingForm({
   duration = "50 хв",
-  price = "50 $",
+  price = SESSION_CONSULTATION_PRICE_LABEL,
   slotSummary,
   requireSlot = true,
   onlinePayment = true,

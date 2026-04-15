@@ -28,11 +28,28 @@ export default async function PaymentSuccessPage({ params, searchParams }) {
   const variantKey = normalizeSuccessVariant(tariffType);
   const sessionSlotLine =
     variantKey === "session" && sp?.slotLine ? String(sp.slotLine) : "";
+  const orderRef = sp?.orderRef != null && String(sp.orderRef).trim() !== "" ? String(sp.orderRef) : "";
+  const amountRaw = sp?.amount != null && String(sp.amount).trim() !== "" ? Number(sp.amount) : NaN;
+  const currencyFromQs =
+    sp?.currency != null && String(sp.currency).trim() !== "" ? String(sp.currency).trim() : "";
+  const defaultCurrency = variantKey === "session" ? "USD" : "UAH";
+  const purchaseMeta = orderRef
+    ? {
+        orderRef,
+        value: Number.isFinite(amountRaw) ? amountRaw : undefined,
+        currency: currencyFromQs || defaultCurrency,
+        contentName: TITLES[variantKey] || TITLES.journey,
+      }
+    : null;
 
   return (
     <main>
       <Navbar />
-      <PaymentSuccessView variantKey={variantKey} sessionSlotLine={sessionSlotLine} />
+      <PaymentSuccessView
+        variantKey={variantKey}
+        sessionSlotLine={sessionSlotLine}
+        purchaseMeta={purchaseMeta}
+      />
       <Footer />
     </main>
   );
