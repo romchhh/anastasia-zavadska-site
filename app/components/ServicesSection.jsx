@@ -175,7 +175,7 @@ export default function ServicesSection() {
             maxWidth: SECTION_TITLE_MAX_WIDTH,
           }}
         >
-          Формат—онлайн
+          Терапія онлайн, щоб працювати у вашому темпі та просторі
         </p>
       </div>
 
