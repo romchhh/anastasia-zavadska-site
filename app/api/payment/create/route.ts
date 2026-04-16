@@ -59,9 +59,17 @@ export async function POST(request: NextRequest) {
       (paymentKind === 'session'
         ? 'Індивідуальна терапевтична сесія (онлайн)'
         : 'Подорож до себе | 7-денний практикум у закритому Telegram-каналі');
-    const payCurrency = paymentKind === 'session' ? 'USD' : 'UAH';
-    const amount =
-      customPrice != null && Number.isFinite(customPrice) && customPrice > 0
+
+    /** Тест WayForPay: 1 UAH за сесію. Вимкніть у .env (видаліть змінну), щоб знову USD за SESSION_PRICE_USD */
+    const sessionTest1Uah = process.env.SESSION_WAYFORPAY_TEST_1UAH?.trim();
+    const useSession1UahTest =
+      paymentKind === 'session' &&
+      (sessionTest1Uah === '1' || sessionTest1Uah?.toLowerCase() === 'true');
+
+    const payCurrency = paymentKind === 'session' ? (useSession1UahTest ? 'UAH' : 'USD') : 'UAH';
+    const amount = useSession1UahTest
+      ? 1
+      : customPrice != null && Number.isFinite(customPrice) && customPrice > 0
         ? customPrice
         : paymentKind === 'session'
           ? getSessionPriceUsd()
@@ -119,6 +127,8 @@ export async function POST(request: NextRequest) {
       orderReference,
       orderDate,
       amount: amount.toFixed(2),
+      currency: payCurrency,
+      sessionWayforpayTest1Uah: useSession1UahTest,
       eventTitle,
     });
 
