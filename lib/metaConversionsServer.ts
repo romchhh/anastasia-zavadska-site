@@ -3,6 +3,8 @@ import type { NextRequest } from "next/server";
 
 const GRAPH_VERSION = "v21.0";
 
+let warnedMissingMetaConfig = false;
+
 function metaPixelId(): string | undefined {
   const v = process.env.META_PIXEL_ID?.trim() || process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
   return v || undefined;
@@ -72,7 +74,15 @@ export type MetaCapiSendArgs = {
 export async function sendMetaCapiEvent(args: MetaCapiSendArgs): Promise<void> {
   const pixelId = metaPixelId();
   const token = metaAccessToken();
-  if (!pixelId || !token) return;
+  if (!pixelId || !token) {
+    if (!warnedMissingMetaConfig) {
+      warnedMissingMetaConfig = true;
+      console.warn(
+        "[Meta CAPI] Події не відправляються: задайте NEXT_PUBLIC_META_PIXEL_ID (або META_PIXEL_ID) та META_CAPI_ACCESS_TOKEN (або FACEBOOK_ACCESS_TOKEN). На Vercel — у Settings → Environment Variables."
+      );
+    }
+    return;
+  }
 
   const user_data: Record<string, unknown> = {};
   if (args.request) {

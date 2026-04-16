@@ -137,7 +137,7 @@ export default function PaymentFailureView() {
           </p>
           <div className="pay-fail-actions">
             <Link className="pay-fail-primary" href="/#практикум">
-              Спробувати знову — практикум
+              Спробувати знову
             </Link>
             <Link className="pay-fail-secondary" href={INDIVIDUAL_BOOKING_PAGE}>
               Запис на індивідуальну сесію
