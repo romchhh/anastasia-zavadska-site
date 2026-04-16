@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import StickyJoinCta from "./components/StickyJoinCta";
 import MetaPixelRoot from "./components/meta/MetaPixelRoot";
+import { GoogleTagManagerNoScript, GoogleTagManagerScript } from "./components/GoogleTagManager";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -104,6 +105,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <GoogleTagManagerNoScript />
+        <GoogleTagManagerScript />
         <MetaPixelRoot />
         {children}
         <StickyJoinCta />
