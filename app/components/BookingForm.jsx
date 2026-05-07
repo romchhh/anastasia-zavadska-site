@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { Clock, CreditCard, Lock } from "lucide-react";
 import { useId, useState } from "react";
 import { SESSION_CONSULTATION_PRICE_LABEL } from "@/utils/price";
+import { CONTACTS } from "../data/siteData";
 
 /**
  * Національний номер UA: 10 цифр, формат 0XXXXXXXXX (0671234567).
@@ -108,6 +110,11 @@ export default function BookingForm({
   successText,
   onSubmit,
 }) {
+  const instagramLink = CONTACTS?.instagram
+    ? `https://instagram.com/${String(CONTACTS.instagram).replace(/^@/, "")}`
+    : null;
+  const telegramLink = CONTACTS?.telegramLink ?? null;
+
   const [fields, setFields] = useState({
     name: "",
     phone: "",
@@ -263,6 +270,49 @@ export default function BookingForm({
                   </div>
                 </>
               ) : null}
+            </div>
+
+            <div className="bf-contact-note">
+              <em>
+                Якщо актуальний графік вам не підходить, напишіть мені в Direct або Telegram — і
+                ми підберемо комфортний час разом.
+              </em>
+              <div className="bf-contact-actions">
+                {instagramLink ? (
+                  <a
+                    className="bf-contact-btn"
+                    href={instagramLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Image
+                      src="/insta.png"
+                      alt="Instagram"
+                      width={18}
+                      height={18}
+                      className="bf-contact-icon"
+                    />
+                    <span>Instagram</span>
+                  </a>
+                ) : null}
+                {telegramLink ? (
+                  <a
+                    className="bf-contact-btn"
+                    href={telegramLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Image
+                      src="/telegram.png"
+                      alt="Telegram"
+                      width={18}
+                      height={18}
+                      className="bf-contact-icon"
+                    />
+                    <span>Telegram</span>
+                  </a>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
@@ -522,6 +572,55 @@ const formStyles = `
     flex-shrink: 0;
   }
 
+  .bf-contact-note {
+    margin-top: 12px;
+    text-align: left;
+    max-width: 360px;
+  }
+  .bf-contact-note em {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.55;
+    color: rgba(26, 26, 46, 0.78);
+  }
+  .bf-contact-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .bf-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid rgba(99,145,255,.25);
+    color: #1a1a2e;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(110, 140, 200, 0.18);
+    transition: transform .13s, box-shadow .15s, filter .15s;
+  }
+  .bf-contact-icon {
+    flex-shrink: 0;
+    display: block;
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+  .bf-contact-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(110, 140, 200, 0.22);
+    filter: brightness(1.01);
+  }
+  .bf-contact-btn:active {
+    transform: translateY(0);
+  }
+
   /* ── cta ── */
   .bf-cta-wrap {
     display: flex;
@@ -629,6 +728,13 @@ const formStyles = `
     }
     .bf-badge {
       width: 100%;
+      justify-content: center;
+    }
+    .bf-contact-note {
+      max-width: 100%;
+      text-align: center;
+    }
+    .bf-contact-actions {
       justify-content: center;
     }
   }
