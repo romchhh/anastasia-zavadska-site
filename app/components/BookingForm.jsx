@@ -574,8 +574,10 @@ const formStyles = `
 
   .bf-contact-note {
     margin-top: 12px;
-    text-align: left;
-    max-width: 360px;
+    text-align: center;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .bf-contact-note em {
     display: block;
@@ -583,12 +585,16 @@ const formStyles = `
     font-weight: 600;
     line-height: 1.55;
     color: rgba(26, 26, 46, 0.78);
+    text-wrap: pretty;
+    word-break: normal;
+    hyphens: auto;
   }
   .bf-contact-actions {
     margin-top: 10px;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    justify-content: center;
   }
   .bf-contact-btn {
     display: inline-flex;
