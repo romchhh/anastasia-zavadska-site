@@ -151,17 +151,7 @@ export default function AboutSection() {
                 textAlign: "left",
               }}
             >
-              <span className="about-intro-lead-desktop">
-                Я психологиня, працюю в гештальт-підході.
-                <br />
-                Проводжу індивідуальну та групову терапію онлайн.
-              </span>
-              <span className="about-intro-lead-mobile">
-                <span className="about-intro-lead-mobile-line">Я психологиня,</span>
-                <span className="about-intro-lead-mobile-line">працюю в гештальт-підході.</span>
-                <span className="about-intro-lead-mobile-line">Проводжу індивідуальну</span>
-                <span className="about-intro-lead-mobile-line">та групову терапію онлайн</span>
-              </span>
+              Я — гештальт-психотерапевт.
             </p>
             <p
               className="about-intro-body"
@@ -175,7 +165,63 @@ export default function AboutSection() {
                 textAlign: "left",
               }}
             >
-              У своїй роботі я не про «швидко полагодити». Я про процес — коли ви поступово повертаєтеся до себе: до своїх відчуттів, бажань і внутрішньої опори. Я не даю готових відповідей і не «виправляю». Я поруч — щоб ви могли краще зрозуміти себе і знайти свій шлях.
+              До психології понад 13 років працювала в міжнародних компаніях, пройшовши шлях від office-менеджера до HRD та COO.
+            </p>
+            <p
+              className="about-intro-body"
+              style={{
+                ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 400,
+                maxWidth: "100%",
+                width: "100%",
+                margin: "0 0 clamp(14px, 1.8vw, 20px) 0",
+                textAlign: "left",
+              }}
+            >
+              Я добре знаю, що таке відповідальність, постійні рішення, високі очікування та життя в режимі «треба». Я знаю корпоративне середовище зсередини — його темп, навантаження і ціну, яку іноді доводиться платити за професійний успіх.
+            </p>
+            <p
+              className="about-intro-body"
+              style={{
+                ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 400,
+                maxWidth: "100%",
+                width: "100%",
+                margin: "0 0 clamp(14px, 1.8vw, 20px) 0",
+                textAlign: "left",
+              }}
+            >
+              Саме тому до мене часто приходять люди, які багато досягли у професії, але в якийсь момент зрозуміли, що втратили контакт із собою.
+            </p>
+            <p
+              className="about-intro-body"
+              style={{
+                ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 400,
+                maxWidth: "100%",
+                width: "100%",
+                margin: "0 0 clamp(14px, 1.8vw, 20px) 0",
+                textAlign: "left",
+              }}
+            >
+              З 2023 року я веду приватну практику.
+            </p>
+            <p
+              className="about-intro-body"
+              style={{
+                ...SECTION_INTRO_LEAD,
+                fontSize: "clamp(16px, 2.2vw, 22px)",
+                fontWeight: 400,
+                maxWidth: "100%",
+                width: "100%",
+                margin: "0 0 clamp(14px, 1.8vw, 20px) 0",
+                textAlign: "left",
+              }}
+            >
+              Моя робота поєднує понад 10 років професійного навчання, клінічну підготовку, особисту терапію та регулярну супервізію.
             </p>
             <p
               className="about-intro-body"
@@ -189,7 +235,7 @@ export default function AboutSection() {
                 textAlign: "left",
               }}
             >
-              До того, як стати магістром психології, я працювала в ІТ — пройшла шлях від офіс-менеджера до HRD/COO. Тому добре розумію тих, хто живе в режимі ефективності, виснаження і постійного «треба більше».
+              Я допомагаю людям не просто впоратися зі складнощами, а повернути собі відчуття опори, ясності та живого контакту із собою.
             </p>
           </div>
         </div>
@@ -301,126 +347,84 @@ export default function AboutSection() {
                 width: "100%",
                 marginLeft: "auto",
                 marginRight: "auto",
+                marginBottom: "clamp(20px, 3vw, 32px)",
               }}
             >
-              З чим я працюю
+              Коли до мене звертаються
             </h3>
-            <p
-              className="about-work-intro-lead about-work-intro-body-copy"
-              style={{
-                ...SECTION_INTRO_LEAD,
-                fontSize: "clamp(16px, 2.2vw, 22px)",
-                fontWeight: 400,
-                lineHeight: 1.52,
-                margin: "0 auto clamp(10px, 1.5vw, 16px)",
-                maxWidth: "100%",
-                width: "100%",
-              }}
-            >
-              Буває, що проблему не завжди легко назвати одним словом. Іноді просто відчувається, що щось не так.
-            </p>
-            <p
-              className="about-work-intro-lead about-work-intro-lead-second about-work-intro-body-copy"
-              style={{
-                ...SECTION_INTRO_LEAD,
-                fontSize: "clamp(16px, 2.2vw, 22px)",
-                fontWeight: 400,
-                lineHeight: 1.52,
-                margin: "0 auto clamp(20px, 3vw, 32px)",
-                maxWidth: "100%",
-                width: "100%",
-              }}
-            >
-              Тому в терапії ми починаємо працювати з цим відчуттям і поступово розбираємося, що за ним стоїть:
-            </p>
 
-            <div
-              className="about-work-cards"
+            <ul
+              className="about-work-when-list"
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-                gap: "clamp(16px, 2.5vw, 28px)",
+                listStyle: "none",
                 margin: "0 0 clamp(22px, 3.5vw, 36px) 0",
-                width: "100%",
-                maxWidth: "100%",
+                padding: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: "clamp(10px, 1.2vw, 15px)",
+                textAlign: "left",
+                maxWidth: "min(100%, 720px)",
                 marginLeft: "auto",
                 marginRight: "auto",
+                width: "100%",
               }}
             >
               {[
-                {
-                  img: "/work-with/anxiety-empty.png",
-                  label: "важкість, тривога і ніби всередині порожньо",
-                },
-                {
-                  img: "/work-with/emotions-wave.png",
-                  label: "хвиля, яка накриває, і складно впоратися з думками або емоціями",
-                },
-                {
-                  img: "/work-with/facade-inner-tired.png",
-                  label: "ззовні ніби все нормально, але жити так більше не хочеться",
-                },
-              ].map(({ img, label }) => (
-                <div
-                  key={label}
-                  className="about-work-card"
+                "зовні все добре, але всередині вже немає сил;",
+                "живете на автоматі й не розумієте, чого хочете;",
+                "успіх більше не приносить задоволення;",
+                "постійно доводиться бути сильним;",
+                "важко ставити власні потреби на перше місце;",
+                "відчуваєте виснаження, хоча продовжуєте справлятися.",
+              ].map((item) => (
+                <li
+                  key={item}
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    textAlign: "center",
-                    background: "#E8EEFF",
-                    borderRadius: "clamp(20px, 3vw, 28px)",
-                    aspectRatio: "5 / 4",
-                    padding: "clamp(14px, 2.2vw, 22px) clamp(14px, 2vw, 22px)",
-                    boxSizing: "border-box",
-                    gap: "clamp(10px, 1.4vw, 14px)",
+                    alignItems: "flex-start",
+                    gap: "clamp(12px, 2vw, 18px)",
+                    minWidth: 0,
                   }}
                 >
-                  <div
-                    className="about-work-card-thumb"
+                  <span
                     style={{
-                      flex: "0 0 auto",
-                      width: "min(68%, 180px)",
-                      maxHeight: "38%",
+                      flexShrink: 0,
                       display: "flex",
-                      alignItems: "center",
+                      alignItems: "flex-start",
                       justifyContent: "center",
+                      width: "clamp(20px, 2.1vw, 24px)",
+                      marginTop: "0.2em",
                     }}
                     aria-hidden
                   >
                     <img
-                      src={img}
+                      src="/icon.svg"
                       alt=""
+                      width={22}
+                      height={23}
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        maxHeight: "clamp(80px, 17vw, 130px)",
-                        objectFit: "contain",
+                        width: "auto",
+                        height: "clamp(15px, 1.35vw, 20px)",
                         display: "block",
                       }}
                     />
-                  </div>
-                  <p
-                    className="about-work-card-text"
+                  </span>
+                  <span
                     style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "clamp(15px, 1.4vw, 19px)",
-                      fontWeight: 400,
+                      fontSize: "clamp(15px, 1.35vw, 20px)",
+                      fontWeight: 500,
                       color: "#000",
-                      lineHeight: 1.52,
-                      margin: 0,
+                      lineHeight: 1.55,
+                      minWidth: 0,
                       flex: "1 1 auto",
-                      alignSelf: "stretch",
-                      textAlign: "center",
                     }}
                   >
-                    {label}
-                  </p>
-                </div>
+                    {item}
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
 
             <p
               className="about-work-intro-hint"
@@ -477,7 +481,7 @@ export default function AboutSection() {
                   marginRight: 0,
                 }}
               >
-                Я працюю з індивідуальними запитами:
+                Також працюю із запитами
               </h3>
               <ul
                 style={{
@@ -490,14 +494,14 @@ export default function AboutSection() {
                 }}
               >
                 {[
-                  "емоційне виснаження і вигорання",
-                  "складнощі у стосунках",
-                  "відчуття «я не розумію, чого хочу»",
-                  "тривога, напруга, постійне «не відпускає»",
-                  "депресивні стани, втрата енергії і сенсу",
-                  "наслідки травматичного досвіду, ПТСР",
-                  "нав'язливі думки і дії (ОКР)",
-                  "залежності — як хімічні, так і поведінкові",
+                  "емоційне вигорання;",
+                  "тривога;",
+                  "депресивні стани;",
+                  "наслідки психологічної травми;",
+                  "ПТСР;",
+                  "ОКР;",
+                  "залежності;",
+                  "складнощі у стосунках.",
                 ].map((item) => (
                   <li
                     key={item}
@@ -628,11 +632,16 @@ export default function AboutSection() {
                   className="about-thought-cloud-line1"
                   style={{ display: "block", marginBottom: "0.4em" }}
                 >
-                  Ми починаємо з симптому, але{" "}
-                  <strong style={{ fontWeight: 800 }}>робота з психологом — про глибше:</strong>
+                  Ми можемо почати з будь-якого симптому.
                 </span>
-                <span className="about-thought-cloud-line2" style={{ display: "block" }}>
-                  зрозуміти себе і поступово змінювати те, що заважає жити так, як хочеться.
+                <span
+                  className="about-thought-cloud-line2"
+                  style={{ display: "block", marginBottom: "0.4em" }}
+                >
+                  Але терапія — це не лише про зменшення симптомів.
+                </span>
+                <span className="about-thought-cloud-line3" style={{ display: "block" }}>
+                  Це про відновлення контакту із собою, своїми потребами та життям, яке хочеться проживати.
                 </span>
               </p>
             </div>
@@ -701,12 +710,6 @@ export default function AboutSection() {
           white-space: nowrap;
         }
         .about-intro-mobile {
-          display: none;
-        }
-        .about-intro-lead-desktop {
-          display: block;
-        }
-        .about-intro-lead-mobile {
           display: none;
         }
         @media (min-width: 769px) {
@@ -839,29 +842,6 @@ export default function AboutSection() {
           #про-мене .about-content h2.about-intro-heading .about-intro-mobile-line {
             display: block !important;
           }
-          #про-мене .about-content p.about-intro-body.about-intro-body--compact-spacing .about-intro-lead-desktop {
-            display: none !important;
-          }
-          #про-мене .about-content p.about-intro-body.about-intro-body--compact-spacing .about-intro-lead-mobile {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: stretch !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            gap: 0.08em !important;
-            box-sizing: border-box !important;
-          }
-          #про-мене .about-content p.about-intro-body.about-intro-body--compact-spacing .about-intro-lead-mobile-line {
-            display: block !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-            line-height: 1.42 !important;
-            overflow-wrap: break-word !important;
-            word-break: normal !important;
-            hyphens: manual !important;
-            -webkit-hyphens: manual !important;
-          }
           #про-мене .about-content p.about-intro-body {
             text-align: justify !important;
             text-justify: inter-word;
@@ -877,7 +857,6 @@ export default function AboutSection() {
             text-justify: auto;
             hyphens: none !important;
             -webkit-hyphens: none !important;
-            /* Як у інших абзаців опису (#про-мене .about-intro-body) */
             font-size: clamp(16px, 4.2vw, 19px) !important;
             line-height: 1.42 !important;
           }
